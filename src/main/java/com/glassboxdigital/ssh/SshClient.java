@@ -7,16 +7,16 @@ import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.Properties;
 
-public class WorkerSsh implements Runnable {
-    final static Logger logger = Logger.getLogger(WorkerSsh.class);
+public class SshClient {
+    final static Logger logger = Logger.getLogger(SshClient.class);
 
-    private Channel channel = null;
+
     private JSch jsch;
     private String usr;
     private String host;
     String[] commands;
 
-    public WorkerSsh(String host, String[] commands) {
+    public SshClient(String host, String[] commands) {
         this.jsch = new JSch();
         Configuration sshConf = new Configuration("ssh.properties");
         Properties config = new Properties();
@@ -33,23 +33,24 @@ public class WorkerSsh implements Runnable {
         }
     }
 
-    @Override
     public void run() {
         StringBuffer stringBuffer = new StringBuffer();
         try {
+            logger.debug("Open Session: " + host );
             Session session = jsch.getSession(usr, host, 22);
             session.connect();
             for (String cmd : commands) {
                 stringBuffer.append(runCommand(session, cmd));
             }
             session.disconnect();
+            logger.debug("Session: " + host  + " disconnected");
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     private synchronized StringBuffer runCommand(Session session, String command) throws JSchException, IOException {
-        channel = session.openChannel("exec");
+        Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command);
         channel.setInputStream(null);
         ((ChannelExec) channel).setErrStream(System.err);
