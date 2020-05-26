@@ -1,0 +1,32 @@
+2020-05-25 18:29:03 DEBUG WorkerSsh:68 - exit-status: 0
+2020-05-25 18:29:03 INFO  WorkerSsh:77 - MessageConsumerStats.log
+
+2020-05-25 18:29:47 DEBUG WorkerSsh:68 - exit-status: 0
+2020-05-25 18:29:47 INFO  WorkerSsh:77 - MessageConsumerStats.log
+
+2020-05-25 18:33:03 DEBUG WorkerSsh:68 - exit-status: 0
+2020-05-25 18:33:03 INFO  WorkerSsh:77 - MessageConsumerStats.log
+
+2020-05-25 18:33:25 DEBUG WorkerSsh:68 - exit-status: 0
+2020-05-25 18:33:25 INFO  WorkerSsh:77 - total 348
+348 -rw-rw-r--. 1 guy.bitan guy.bitan 355130 May 25 07:34 MessageConsumerStats.log
+
+2020-05-25 18:34:09 DEBUG WorkerSsh:68 - exit-status: 0
+2020-05-25 18:34:09 INFO  WorkerSsh:77 - total 348
+348 -rw-rw-r--. 1 guy.bitan guy.bitan 355130 May 25 07:34 MessageConsumerStats.log
+guy.bitan
+total 368
+drwx------.  3 guy.bitan guy.bitan    143 May 24 09:21 .
+drwxr-xr-x. 13 root      root         213 May 24 06:14 ..
+-rw-------.  1 guy.bitan guy.bitan   2101 May 25 07:51 .bash_history
+-rw-r--r--.  1 guy.bitan guy.bitan     18 Oct 30  2018 .bash_logout
+-rw-r--r--.  1 guy.bitan guy.bitan    193 Oct 30  2018 .bash_profile
+-rw-r--r--.  1 guy.bitan guy.bitan    231 Oct 30  2018 .bashrc
+-rw-------.  1 guy.bitan guy.bitan     70 May 24 08:02 .lesshst
+-rw-rw-r--.  1 guy.bitan guy.bitan 355130 May 25 07:34 MessageConsumerStats.log
+drwx------.  2 guy.bitan guy.bitan     29 May 21 12:48 .ssh
+
+2020-05-25 18:34:41 DEBUG WorkerSsh:68 - exit-status: 1
+2020-05-25 18:34:41 INFO  WorkerSsh:77 - 
+2020-05-25 21:34:14 DEBUG WorkerSsh:68 - exit-status: -1
+2020-05-25 21:34:14 INFO  WorkerSsh:77 - 
