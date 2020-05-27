@@ -21,8 +21,8 @@ public class SshLogger {
         this.fileName = filename;
     }
 
-    public void write(StringBuffer sb) {
-        File logFile = getFileWithTimeStamp();
+    public void write(StringBuffer sb, String ext) {
+        File logFile = getFileWithTimeStamp(ext);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(logFile))) {
             bw.write(sb.toString());
         } catch (IOException e) {
@@ -31,7 +31,10 @@ public class SshLogger {
 
     }
 
-    private File getFileWithTimeStamp() {
+    private File getFileWithTimeStamp(String ext) {
+        if (ext.isEmpty()) {
+            ext = "log";
+        }
         String filePath = System.getProperty("user.dir");
         Path path = Paths.get(filePath + "/logs");
 
@@ -40,7 +43,7 @@ public class SshLogger {
         } catch (IOException e) {
         }
 
-        File file = new File(path + "/" + this.fileName + getCurrentTimeStamp().replace(":", "-").replace(".", "-") + ".log");
+        File file = new File(path + "/" + this.fileName + getCurrentTimeStamp().replace(":", "-").replace(".", "-") + "." + ext);
 
         try {
             if (!file.exists()) {

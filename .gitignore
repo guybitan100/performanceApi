@@ -30,3 +30,4 @@ crawler/.nyc_output
 *.tests-common.logfile.log
 *.log
 /ssh.log.1
+/ssh.log

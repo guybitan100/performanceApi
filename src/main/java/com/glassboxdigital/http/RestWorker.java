@@ -1,4 +1,4 @@
-package com.glassboxdigital.http.utils;
+package com.glassboxdigital.http;
 
 import com.glassboxdigital.http.ApiRestClient;
 

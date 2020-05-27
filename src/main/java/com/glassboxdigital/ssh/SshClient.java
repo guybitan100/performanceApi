@@ -37,6 +37,7 @@ public class SshClient {
 
     public void run() {
         StringBuffer stringBuffer = new StringBuffer();
+        String ext = "log";
         try {
             log4j.debug("Open Session: " + host);
             Session session = jsch.getSession(usr, host, 22);
@@ -45,7 +46,10 @@ public class SshClient {
                 stringBuffer.append("\n\n" + cmd + "\n\n");
                 stringBuffer.append(runCommand(session, cmd));
             }
-            sshLogger.write(stringBuffer);
+            if (stringBuffer.toString().contains(".csv")) {
+                ext = "csv";
+            }
+            sshLogger.write(stringBuffer, ext);
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
         } catch (Exception e) {
