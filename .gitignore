@@ -28,4 +28,5 @@ crawler/work
 crawler/.nyc_output
 *.tests.logfile.log
 *.tests-common.logfile.log
-/ssh.log
+*.log
+/ssh.log.1

@@ -8,15 +8,17 @@ import java.io.*;
 import java.util.Properties;
 
 public class SshClient {
-    final static Logger logger = Logger.getLogger(SshClient.class);
+    final static Logger log4j = Logger.getLogger(SshClient.class);
 
 
     private JSch jsch;
     private String usr;
     private String host;
-    String[] commands;
+    private String[] commands;
+    private SshLogger sshLogger;
 
     public SshClient(String host, String[] commands) {
+        this.sshLogger = new SshLogger(host + "-");
         this.jsch = new JSch();
         Configuration sshConf = new Configuration("ssh.properties");
         Properties config = new Properties();
@@ -36,16 +38,18 @@ public class SshClient {
     public void run() {
         StringBuffer stringBuffer = new StringBuffer();
         try {
-            logger.debug("Open Session: " + host );
+            log4j.debug("Open Session: " + host);
             Session session = jsch.getSession(usr, host, 22);
             session.connect();
             for (String cmd : commands) {
+                stringBuffer.append("\n\n" + cmd + "\n\n");
                 stringBuffer.append(runCommand(session, cmd));
             }
+            sshLogger.write(stringBuffer);
             session.disconnect();
-            logger.debug("Session: " + host  + " disconnected");
+            log4j.debug("Session: " + host + " disconnected");
         } catch (Exception e) {
-            System.out.println(e);
+            log4j.debug(e);
         }
     }
 
@@ -66,7 +70,7 @@ public class SshClient {
             }
             if (channel.isClosed()) {
                 if (in.available() > 0) continue;
-                logger.debug("exit-status: " + channel.getExitStatus());
+                log4j.debug("exit-status: " + channel.getExitStatus());
                 break;
             }
             try {
@@ -75,7 +79,7 @@ public class SshClient {
             }
         }
         channel.disconnect();
-        logger.info(strBuffer);
+        log4j.debug(strBuffer);
         return strBuffer;
     }
 }
