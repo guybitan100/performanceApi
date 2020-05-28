@@ -30,13 +30,7 @@ public class MainManager {
         RestClient apiRestClient = new RestClient(conf);
         HttpHeaders headers = apiRestClient.postEntity(conf.get("login_endpoint"), "").getHeaders();
         String set_cookie = headers.getFirst(headers.SET_COOKIE);
-        HttpHeaders headersReq = new HttpHeaders();
-        headersReq.add("Cookie", set_cookie);
-        headersReq.add("Content-Type", "application/json");
-        headersReq.add("Accept", "*/*");
-        headersReq.add("User-Agent", "PostmanJava");
-        apiRestClient.setHeaders(headersReq);
-
+        apiRestClient.addHeader("Cookie", set_cookie);
         Gson gson = new Gson();
         Sessions sessions = gson.fromJson("{\"timeFrame\": {\"from\":0 ,\"till\": 0},\"limit\": 100000,\"uniqueCount\": {\"field\": \"SESSIONGUID\"},\"steps\": [{\"name\": \"\",\"operator\": \"AND\",\"query\": [{\"field\": \"APPID\",\"value\": [\"3\"],\"operator\": \"AND\"}]}],\"filters\": {\"query\": []}}", Sessions.class);
         sessions.setTimeFrame(new TimeFrame(1590475425153L, 1590479025153L));
