@@ -1,9 +1,13 @@
 
 package com.glassboxdigital.http.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class UniqueCount {
 
+    @SerializedName("field")
+    @Expose
     private String field;
 
     public String getField() {

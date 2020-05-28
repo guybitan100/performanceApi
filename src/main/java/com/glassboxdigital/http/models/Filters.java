@@ -2,9 +2,13 @@
 package com.glassboxdigital.http.models;
 
 import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Filters {
 
+    @SerializedName("query")
+    @Expose
     private List<Object> query = null;
 
     public List<Object> getQuery() {

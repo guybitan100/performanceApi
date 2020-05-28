@@ -2,11 +2,19 @@
 package com.glassboxdigital.http.models;
 
 import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Step {
 
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("operator")
+    @Expose
     private String operator;
+    @SerializedName("query")
+    @Expose
     private List<Query> query = null;
 
     public String getName() {

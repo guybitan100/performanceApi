@@ -2,13 +2,25 @@
 package com.glassboxdigital.http.models;
 
 import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Sessions {
 
+    @SerializedName("timeFrame")
+    @Expose
     private TimeFrame timeFrame;
+    @SerializedName("limit")
+    @Expose
     private Integer limit;
+    @SerializedName("uniqueCount")
+    @Expose
     private UniqueCount uniqueCount;
+    @SerializedName("steps")
+    @Expose
     private List<Step> steps = null;
+    @SerializedName("filters")
+    @Expose
     private Filters filters;
 
     public TimeFrame getTimeFrame() {

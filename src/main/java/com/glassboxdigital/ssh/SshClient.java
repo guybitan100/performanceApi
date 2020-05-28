@@ -1,6 +1,6 @@
 package com.glassboxdigital.ssh;
 
-import com.glassboxdigital.http.utils.Configuration;
+import com.glassboxdigital.http.conf.Configuration;
 import com.jcraft.jsch.*;
 import org.apache.log4j.Logger;
 
