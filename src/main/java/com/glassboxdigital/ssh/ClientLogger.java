@@ -12,19 +12,24 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SshLogger {
-    final static Logger log4j = Logger.getLogger(SshLogger.class);
+public class ClientLogger {
+    final static Logger log4j = Logger.getLogger(ClientLogger.class);
 
     private final String fileName;
 
-    public SshLogger(String filename) {
+    public ClientLogger(String filename) {
         this.fileName = filename;
     }
-
+    public void write(String str) {
+        this.write(str,"");
+    }
     public void write(StringBuffer sb, String ext) {
+        this.write(sb.toString(),ext);
+    }
+    public void write(String str, String ext) {
         File logFile = getFileWithTimeStamp(ext);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(logFile))) {
-            bw.write(sb.toString());
+            bw.write(str);
         } catch (IOException e) {
             log4j.debug(e);
         }

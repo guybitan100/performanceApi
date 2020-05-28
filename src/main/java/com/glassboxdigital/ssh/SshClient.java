@@ -12,7 +12,7 @@ public class SshClient {
     private JSch jsch;
     private String user;
     private String host;
-    private SshLogger sshLogger;
+    private ClientLogger sshLogger;
     private String[] commands;
 
     public SshClient(Configuration sshConf, String serverName, String[] commands) {
@@ -23,7 +23,7 @@ public class SshClient {
     public SshClient(Configuration sshConf, String serverName) {
         this.host = sshConf.get(serverName);
         this.user = sshConf.get("user");
-        this.sshLogger = new SshLogger(host);
+        this.sshLogger = new ClientLogger(host);
         this.jsch = new JSch();
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");

@@ -13920,3 +13920,4 @@ beacon_offline_group beacon_offline  5          33510839        33510839        
 
 2020-05-28 15:08:25 DEBUG SshLogger:50 - File is created; file name is 10.10.1.402020-05-28-15-08-25-208.log
 2020-05-28 15:08:25 DEBUG SshClient:55 - Session: 10.10.1.40 disconnected
+2020-05-28 15:35:56 DEBUG ClientLogger:55 - File is created; file name is null2020-05-28-15-35-56-913.log
