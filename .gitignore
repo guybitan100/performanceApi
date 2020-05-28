@@ -31,3 +31,4 @@ crawler/.nyc_output
 *.log
 /ssh.log.1
 /ssh.log
+/src/main/java/META-INF/MANIFEST.MF

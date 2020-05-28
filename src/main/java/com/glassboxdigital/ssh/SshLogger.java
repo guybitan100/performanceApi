@@ -28,7 +28,6 @@ public class SshLogger {
         } catch (IOException e) {
             log4j.debug(e);
         }
-
     }
 
     private File getFileWithTimeStamp(String ext) {

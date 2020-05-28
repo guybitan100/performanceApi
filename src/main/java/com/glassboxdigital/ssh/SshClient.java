@@ -9,24 +9,25 @@ import java.util.Properties;
 
 public class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
-
-
     private JSch jsch;
-    private String usr;
+    private String user;
     private String host;
-    private String[] commands;
     private SshLogger sshLogger;
+    private String[] commands;
 
-    public SshClient(String host, String[] commands) {
-        this.sshLogger = new SshLogger(host + "-");
+    public SshClient(Configuration sshConf, String serverName, String[] commands) {
+        this(sshConf, serverName);
+        this.commands = commands;
+    }
+
+    public SshClient(Configuration sshConf, String serverName) {
+        this.host = sshConf.get(serverName);
+        this.user = sshConf.get("user");
+        this.sshLogger = new SshLogger(host);
         this.jsch = new JSch();
-        Configuration sshConf = new Configuration("ssh.properties");
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
         jsch.setConfig(config);
-        this.usr = sshConf.get("user");
-        this.host = host;
-        this.commands = commands;
 
         try {
             jsch.addIdentity(sshConf.get("privateKeyLocation"));
@@ -40,7 +41,7 @@ public class SshClient {
         String ext = "log";
         try {
             log4j.debug("Open Session: " + host);
-            Session session = jsch.getSession(usr, host, 22);
+            Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands) {
                 stringBuffer.append("\n\n" + cmd + "\n\n");
@@ -85,5 +86,9 @@ public class SshClient {
         channel.disconnect();
         log4j.debug(strBuffer);
         return strBuffer;
+    }
+
+    public void setCommands(String[] commands) {
+        this.commands = commands;
     }
 }
