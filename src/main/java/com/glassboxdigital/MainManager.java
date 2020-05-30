@@ -4,6 +4,7 @@ import com.glassboxdigital.http.RestClient;
 import com.glassboxdigital.http.models.*;
 import com.glassboxdigital.http.conf.Configuration;
 import com.glassboxdigital.ssh.ClientLogger;
+import com.glassboxdigital.ssh.SshClient;
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
 
@@ -19,21 +20,21 @@ public class MainManager {
 
     public static void main(String[] args) {
         Configuration conf = new Configuration("ssh.properties");
-        // SshClient clingine = new SshClient(conf,"clingine",new String[]{SERVER_ROOT_MSG_CONSUMER_STAT});
-        //clingine.run();
-        // clingine.setCommands(new String[]{SESSION_PIPELINE_METRICS_CSV_FILE});
-//        clingine.run();
-//        new SshClient(conf,"cloff",new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR}).run();
-//        new SshClient(conf,"clifka", new String[]{KAFKA_CONSUMER_GROUP}).run();
+         SshClient clingine = new SshClient(conf,"clingine",new String[]{SERVER_ROOT_MSG_CONSUMER_STAT});
+      //  clingine.run();
+         clingine.setCommands(new String[]{SESSION_PIPELINE_METRICS_CSV_FILE});
+    //clingine.run();
+        //new SshClient(conf,"cloff",new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR}).run();
+        //new SshClient(conf,"clifka", new String[]{KAFKA_CONSUMER_GROUP}).run();
 
         RestClient.disableSslVerification();
-        RestClient apiRestClient = new RestClient(conf);
-        HttpHeaders headers = apiRestClient.postEntity(conf.get("login_endpoint"), "").getHeaders();
+        RestClient apiRestClient = new RestClient(conf.get("base_url"));
+        HttpHeaders headers = apiRestClient.postEntity(conf.get("login_endpoint")).getHeaders();
         String set_cookie = headers.getFirst(headers.SET_COOKIE);
         apiRestClient.addHeader("Cookie", set_cookie);
         Gson gson = new Gson();
         Sessions sessions = gson.fromJson("{\"timeFrame\": {\"from\":0 ,\"till\": 0},\"limit\": 100000,\"uniqueCount\": {\"field\": \"SESSIONGUID\"},\"steps\": [{\"name\": \"\",\"operator\": \"AND\",\"query\": [{\"field\": \"APPID\",\"value\": [\"3\"],\"operator\": \"AND\"}]}],\"filters\": {\"query\": []}}", Sessions.class);
-        sessions.setTimeFrame(new TimeFrame(1590475425153L, 1590479025153L));
+        sessions.setTimeFrame(new TimeFrame(1590880307L, 1590880307L));
         String re = apiRestClient.post(conf.get("session_endpoint"), gson.toJson(sessions));
         System.out.println(re);
     }

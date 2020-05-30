@@ -1,6 +1,5 @@
 package com.glassboxdigital.http;
 
-import com.glassboxdigital.http.conf.Configuration;
 import com.glassboxdigital.ssh.ClientLogger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,21 +15,15 @@ import java.security.cert.X509Certificate;
 
 public class RestClient {
 
-    private String server;
+    private String base_url;
     private RestTemplate rest;
     private HttpHeaders headers;
     private HttpStatus status;
-    private Configuration conf;
     private ClientLogger apiLogger;
 
-    public RestClient(Configuration conf) {
-        this();
-        this.conf = conf;
-        this.server = conf.get("base_url");
-    }
 
     public RestClient() {
-        this.apiLogger = new ClientLogger(server);
+        this.apiLogger = new ClientLogger(base_url);
         this.rest = new RestTemplate();
         this.headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -40,9 +33,9 @@ public class RestClient {
         headers.add("Connection", "keep-alive");
     }
 
-    public RestClient(String ip) {
+    public RestClient(String base_url) {
         this();
-        this.server = ip;
+        this.base_url = base_url;
     }
 
     public void setHeaders(HttpHeaders headers) {
@@ -55,7 +48,7 @@ public class RestClient {
 
     public String get(String uri) {
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-        ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange(base_url + uri, HttpMethod.GET, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
         return responseEntity.getBody();
     }
@@ -66,22 +59,26 @@ public class RestClient {
         return retValue;
     }
 
+    public ResponseEntity postEntity(String uri) {
+        return postEntity(uri, "");
+    }
+
     public ResponseEntity postEntity(String uri, String json) {
         HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
-        ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = rest.exchange(base_url + uri, HttpMethod.POST, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
         return responseEntity;
     }
 
     public void put(String uri, String json) {
         HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
-        ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.PUT, requestEntity, (Class<String>) null);
+        ResponseEntity<String> responseEntity = rest.exchange(base_url + uri, HttpMethod.PUT, requestEntity, (Class<String>) null);
         this.setStatus(responseEntity.getStatusCode());
     }
 
     public void delete(String uri) {
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-        ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.DELETE, requestEntity, (Class<String>) null);
+        ResponseEntity<String> responseEntity = rest.exchange(base_url + uri, HttpMethod.DELETE, requestEntity, (Class<String>) null);
         this.setStatus(responseEntity.getStatusCode());
     }
 

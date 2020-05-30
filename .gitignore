@@ -13,11 +13,6 @@ ant_output
 **/generatedsources
 **/out
 .shelf
-cliffer/clifferng/src/c/cliffer/jpcap_JpcapCaptor.h
-cliffer/clifferng/src/c/cliffer/jpcap_JpcapCaptorV2.h
-cliffer/clifferng/src/c/cliffer/jpcap_JpcapSender.h
-clingine/clistat/conf/elasticsearch/ftsGlobalHitsFilter.json
-clingine/clistat/conf/elasticsearch/elasticClingine.properties
 *.orig
 /target/
 integration.tests.logfile.log
@@ -29,6 +24,6 @@ crawler/.nyc_output
 *.tests.logfile.log
 *.tests-common.logfile.log
 *.log
-/ssh.log.1
 /ssh.log
 /src/main/java/META-INF/MANIFEST.MF
+*.csv
