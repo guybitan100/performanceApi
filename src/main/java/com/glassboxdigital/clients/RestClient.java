@@ -13,7 +13,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
-public class RestClient implements Client{
+public class RestClient{
 
     private String base_url;
     private RestTemplate rest;

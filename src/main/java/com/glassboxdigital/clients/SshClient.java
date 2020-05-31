@@ -3,8 +3,11 @@ package com.glassboxdigital.clients;
 import com.glassboxdigital.ClientLogger;
 import com.glassboxdigital.conf.Configuration;
 import org.apache.log4j.Logger;
+
 import java.util.Properties;
+
 import com.jcraft.jsch.*;
+
 import java.io.*;
 
 
@@ -16,14 +19,11 @@ public class SshClient implements Client {
     private ClientLogger clientLogger;
     private String[] commands;
 
-    public SshClient(Configuration sshConf, String serverName, String[] commands) {
-        this(sshConf, serverName);
-        this.commands = commands;
-    }
 
-    public SshClient(Configuration sshConf, String serverName) {
-        this.host = sshConf.get(serverName);
-        this.user = sshConf.get("user");
+    public SshClient(String host, String user, String privateKeyLocation, String[] commands) {
+        this.host = host;
+        this.user = user;
+        this.commands = commands;
         this.clientLogger = new ClientLogger(host);
         this.jsch = new JSch();
         Properties config = new Properties();
@@ -31,13 +31,13 @@ public class SshClient implements Client {
         jsch.setConfig(config);
 
         try {
-            jsch.addIdentity(sshConf.get("privateKeyLocation"));
+            jsch.addIdentity(privateKeyLocation);
         } catch (JSchException e) {
             e.printStackTrace();
         }
     }
 
-    public void run() {
+    public synchronized void run() {
         StringBuffer stringBuffer = new StringBuffer();
         String ext = "log";
         try {
@@ -87,9 +87,5 @@ public class SshClient implements Client {
         channel.disconnect();
         log4j.debug(strBuffer);
         return strBuffer;
-    }
-
-    public void setCommands(String[] commands) {
-        this.commands = commands;
     }
 }
