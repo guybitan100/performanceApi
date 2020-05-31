@@ -35,6 +35,7 @@ public class MainManager {
         Sessions sessions = gson.fromJson("{\"timeFrame\": {\"from\":0 ,\"till\": 0},\"limit\": 100000,\"uniqueCount\": {\"field\": \"SESSIONGUID\"},\"steps\": [{\"name\": \"\",\"operator\": \"AND\",\"query\": [{\"field\": \"APPID\",\"value\": [\"3\"],\"operator\": \"AND\"}]}],\"filters\": {\"query\": []}}", Sessions.class);
         sessions.setTimeFrame(new TimeFrame(1590475425153L, 1590479025153L));
         String re = apiRestClient.post(conf.get("session_endpoint"), gson.toJson(sessions));
+        Results res = gson.fromJson(re,Results.class);
         System.out.println(re);
     }
 }

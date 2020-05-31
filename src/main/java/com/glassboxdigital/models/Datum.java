@@ -1,106 +1,43 @@
 package com.glassboxdigital.models;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Datum {
 
-    @SerializedName("APPID")
-    @Expose
     private List<String> aPPID = null;
-    @SerializedName("AVAPROBCOUNT")
-    @Expose
+    private List<String> availabilityEvents = null;
     private List<Integer> aVAPROBCOUNT = null;
-    @SerializedName("BEACONCOUNT")
-    @Expose
     private List<Integer> bEACONCOUNT = null;
-    @SerializedName("UABROWSER_")
-    @Expose
     private List<String> uABROWSER = null;
-    @SerializedName("UABROWSERGROUP")
-    @Expose
     private List<String> uABROWSERGROUP = null;
-    @SerializedName("UABROWSERVERSION")
-    @Expose
     private List<String> uABROWSERVERSION = null;
-    @SerializedName("GEOCITY")
-    @Expose
     private List<String> gEOCITY = null;
-    @SerializedName("IPA")
-    @Expose
     private List<String> iPA = null;
-    @SerializedName("GEOCOUNTRY")
-    @Expose
     private List<String> gEOCOUNTRY = null;
-    @SerializedName("UADEVICETYPE")
-    @Expose
     private List<String> uADEVICETYPE = null;
-    @SerializedName("DOMPAGES")
-    @Expose
     private List<Integer> dOMPAGES = null;
-    @SerializedName("EUID")
-    @Expose
     private List<Integer> eUID = null;
-    @SerializedName("HITCOUNT")
-    @Expose
     private List<Integer> hITCOUNT = null;
-    @SerializedName("GEOISP")
-    @Expose
     private List<String> gEOISP = null;
-    @SerializedName("UAOS")
-    @Expose
     private List<String> uAOS = null;
-    @SerializedName("UAOSVENDOR")
-    @Expose
     private List<String> uAOSVENDOR = null;
-    @SerializedName("PACKETIP")
-    @Expose
     private List<String> pACKETIP = null;
-    @SerializedName("PAGEVIEWS")
-    @Expose
     private List<Integer> pAGEVIEWS = null;
-    @SerializedName("REFHOST")
-    @Expose
-    private List<String> rEFHOST = null;
-    @SerializedName("GEOREGION")
-    @Expose
+    private List<String> rECORDINGFEATURES = null;
+    private List<String> rECORDINGFLAGS = null;
     private List<String> gEOREGION = null;
-    @SerializedName("RESTOTALLEN")
-    @Expose
     private List<Double> rESTOTALLEN = null;
-    @SerializedName("SERVERIP")
-    @Expose
     private List<String> sERVERIP = null;
-    @SerializedName("SERVERTIME")
-    @Expose
     private List<Double> sERVERTIME = null;
-    @SerializedName("SESSIONDURATION")
-    @Expose
     private List<Integer> sESSIONDURATION = null;
-    @SerializedName("SESSIONTS")
-    @Expose
     private List<Integer> sESSIONTS = null;
-    @SerializedName("SLOWEVENTS")
-    @Expose
     private List<Integer> sLOWEVENTS = null;
-    @SerializedName("SLOWSERVEREVENTS")
-    @Expose
     private List<Integer> sLOWSERVEREVENTS = null;
-    @SerializedName("SESSIONSTRUGGLESCORE")
-    @Expose
     private List<Double> sESSIONSTRUGGLESCORE = null;
-    @SerializedName("TOTALTIME")
-    @Expose
+    private List<String> status = null;
     private List<Double> tOTALTIME = null;
-    @SerializedName("VERYSLOWEVENTS")
-    @Expose
     private List<Integer> vERYSLOWEVENTS = null;
-    @SerializedName("VERYSLOWSERVEREVENTS")
-    @Expose
     private List<Integer> vERYSLOWSERVEREVENTS = null;
-    @SerializedName("SESSIONGUID")
-    @Expose
     private List<String> sESSIONGUID = null;
 
     public List<String> getAPPID() {
@@ -109,6 +46,14 @@ public class Datum {
 
     public void setAPPID(List<String> aPPID) {
         this.aPPID = aPPID;
+    }
+
+    public List<String> getAvailabilityEvents() {
+        return availabilityEvents;
+    }
+
+    public void setAvailabilityEvents(List<String> availabilityEvents) {
+        this.availabilityEvents = availabilityEvents;
     }
 
     public List<Integer> getAVAPROBCOUNT() {
@@ -247,12 +192,20 @@ public class Datum {
         this.pAGEVIEWS = pAGEVIEWS;
     }
 
-    public List<String> getREFHOST() {
-        return rEFHOST;
+    public List<String> getRECORDINGFEATURES() {
+        return rECORDINGFEATURES;
     }
 
-    public void setREFHOST(List<String> rEFHOST) {
-        this.rEFHOST = rEFHOST;
+    public void setRECORDINGFEATURES(List<String> rECORDINGFEATURES) {
+        this.rECORDINGFEATURES = rECORDINGFEATURES;
+    }
+
+    public List<String> getRECORDINGFLAGS() {
+        return rECORDINGFLAGS;
+    }
+
+    public void setRECORDINGFLAGS(List<String> rECORDINGFLAGS) {
+        this.rECORDINGFLAGS = rECORDINGFLAGS;
     }
 
     public List<String> getGEOREGION() {
@@ -325,6 +278,14 @@ public class Datum {
 
     public void setSESSIONSTRUGGLESCORE(List<Double> sESSIONSTRUGGLESCORE) {
         this.sESSIONSTRUGGLESCORE = sESSIONSTRUGGLESCORE;
+    }
+
+    public List<String> getStatus() {
+        return status;
+    }
+
+    public void setStatus(List<String> status) {
+        this.status = status;
     }
 
     public List<Double> getTOTALTIME() {

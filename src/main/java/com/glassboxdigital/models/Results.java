@@ -1,31 +1,15 @@
 package com.glassboxdigital.models;
 
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Results {
 
-    @SerializedName("success")
-    @Expose
     private Boolean success;
-    @SerializedName("data")
-    @Expose
     private List<Datum> data = null;
-    @SerializedName("messages")
-    @Expose
     private List<Object> messages = null;
-    @SerializedName("dataSources")
-    @Expose
     private List<String> dataSources = null;
-    @SerializedName("schema")
-    @Expose
     private String schema;
-    @SerializedName("restrictedAttributes")
-    @Expose
     private List<Object> restrictedAttributes = null;
-    @SerializedName("tags")
-    @Expose
     private List<String> tags = null;
 
     public Boolean getSuccess() {
