@@ -35,7 +35,6 @@ public class Producer implements Runnable {
     private static final String CLINGINE_CLI_STATUS = "ps aux | grep -v grep |grep \"cli\"";
     private static final String CLINGINE_MEM_STATUS = "cat /proc/meminfo";
     private static final String CLINGINE_CPU_STATUS = "mpstat";
-    private static final String TOP_ONE_TIME = "top -n 1";
 
     public Producer(BlockingQueue<Client> queue) {
         this.queue = queue;
@@ -48,14 +47,17 @@ public class Producer implements Runnable {
         String user = conf.get("user");
         String privateKeyLocation = conf.get("privateKeyLocation");
 
-        queue.add(new SshClient(clingine, user, privateKeyLocation, new String[]{TOP_ONE_TIME,CLINGINE_CPU_STATUS,CLINGINE_MEM_STATUS,CLINGINE_CLI_STATUS,SERVER_ROOT_MSG_CONSUMER_STAT}));
-        queue.add(new SshClient(clingine, user, privateKeyLocation, new String[]{SESSION_PIPELINE_METRICS_CSV_FILE}));
-        queue.add(new SshClient(clingine, user, privateKeyLocation, new String[]{LSOF_ALL,LSOF_FTS, LSOF_RECENT, LSOF_LOG, LSOF_JAR, LSOF_PIPE, LSOF_EVENT_POLL, LSOF_EVENT_JOURNEY}));
-        queue.add(new SshClient(conf.get("cloff"), user, privateKeyLocation, new String[]{TOP_ONE_TIME,CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR}));
-        queue.add(new SshClient(conf.get("clifka"), user, privateKeyLocation, new String[]{TOP_ONE_TIME,KAFKA_CONSUMER_GROUP}));
-        queue.add(new SshClient(conf.get("tg1"), user, privateKeyLocation, new String[]{TOP_ONE_TIME,TG_STATUS}));
-        queue.add(new SshClient(conf.get("tg2"), user, privateKeyLocation, new String[]{TOP_ONE_TIME,TG_STATUS}));
-
+        try {
+            queue.put(new SshClient(clingine, user, privateKeyLocation, new String[]{CLINGINE_CPU_STATUS, CLINGINE_MEM_STATUS, CLINGINE_CLI_STATUS, SERVER_ROOT_MSG_CONSUMER_STAT}));
+            queue.put(new SshClient(clingine, user, privateKeyLocation, new String[]{SESSION_PIPELINE_METRICS_CSV_FILE}));
+            queue.put(new SshClient(clingine, user, privateKeyLocation, new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_LOG, LSOF_JAR, LSOF_PIPE, LSOF_EVENT_POLL, LSOF_EVENT_JOURNEY}));
+            queue.put(new SshClient(conf.get("cloff"), user, privateKeyLocation, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR}));
+            queue.put(new SshClient(conf.get("clifka"), user, privateKeyLocation, new String[]{KAFKA_CONSUMER_GROUP}));
+            queue.put(new SshClient(conf.get("tg1"), user, privateKeyLocation, new String[]{TG_STATUS}));
+            queue.put(new SshClient(conf.get("tg2"), user, privateKeyLocation, new String[]{TG_STATUS}));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         RestClient.disableSslVerification();
         RestClient apiRestClient = new RestClient(conf.get("base_url"));
@@ -69,14 +71,4 @@ public class Producer implements Runnable {
         Results res = gson.fromJson(re, Results.class);
     }
 
-
-    public static void main(String[] args) {
-        BlockingQueue<Client> queue = new LinkedBlockingQueue<>(10);
-        new Thread(new Producer(queue)).start();
-        new Thread(new Consumer(queue)).start();
-        new Thread(new Consumer(queue)).start();
-        new Thread(new Consumer(queue)).start();
-        new Thread(new Consumer(queue)).start();
-        new Thread(new Consumer(queue)).start();
-    }
 }

@@ -14,15 +14,16 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
-
-        try {
-            while (true) {
+        synchronized (queue) {
+            try {
                 Client client = queue.take();
                 client.run();
+                if (queue.isEmpty())
+                    queue.notify(); // notify the producer
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
 
+        }
     }
 }
