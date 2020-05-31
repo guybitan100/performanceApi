@@ -1,6 +1,6 @@
 package com.glassboxdigital.clients;
 
-import com.glassboxdigital.ssh.ClientLogger;
+import com.glassboxdigital.ClientLogger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -29,7 +29,6 @@ public class RestClient {
         headers.add("Content-Type", "application/json");
         headers.add("Accept", "*/*");
         headers.add("User-Agent", "PostmanJava");
-        headers.add("Accept-Encoding", "gzip, deflate, br");
         headers.add("Connection", "keep-alive");
     }
 

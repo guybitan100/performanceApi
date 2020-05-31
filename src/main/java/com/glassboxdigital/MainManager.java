@@ -29,7 +29,7 @@ public class MainManager {
         RestClient.disableSslVerification();
         RestClient apiRestClient = new RestClient(conf.get("base_url"));
         HttpHeaders headers = apiRestClient.postEntity(conf.get("login_endpoint")).getHeaders();
-        String set_cookie = headers.getFirst(headers.SET_COOKIE);
+        String set_cookie = (headers.getFirst(headers.SET_COOKIE)).split(";")[0];
         apiRestClient.addHeader("Cookie", set_cookie);
         Gson gson = new Gson();
         Sessions sessions = gson.fromJson("{\"timeFrame\": {\"from\":0 ,\"till\": 0},\"limit\": 100000,\"uniqueCount\": {\"field\": \"SESSIONGUID\"},\"steps\": [{\"name\": \"\",\"operator\": \"AND\",\"query\": [{\"field\": \"APPID\",\"value\": [\"3\"],\"operator\": \"AND\"}]}],\"filters\": {\"query\": []}}", Sessions.class);
