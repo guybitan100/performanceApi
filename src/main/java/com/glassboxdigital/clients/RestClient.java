@@ -50,7 +50,7 @@ public class RestClient{
 
     public String post(String uri, String json) {
         String retValue = postEntity(uri, json).getBody() + "";
-        apiLogger.write(retValue, "");
+        apiLogger.write(retValue);
         return retValue;
     }
 

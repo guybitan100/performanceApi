@@ -1,13 +1,8 @@
 package com.glassboxdigital.clients;
-
 import com.glassboxdigital.ClientLogger;
-import com.glassboxdigital.conf.Configuration;
 import org.apache.log4j.Logger;
-
 import java.util.Properties;
-
 import com.jcraft.jsch.*;
-
 import java.io.*;
 
 
@@ -39,16 +34,15 @@ public class SshClient implements Client {
 
     public synchronized void run() {
         StringBuffer stringBuffer = new StringBuffer();
-        String ext = "log";
         try {
             log4j.debug("Open Session: " + host);
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands) {
-                stringBuffer.append("\n\n" + cmd + "\n\n");
+                stringBuffer.append("\n\n" + clientLogger.getCurrentTimeStamp() + " " +  cmd + "\n\n");
                 stringBuffer.append(runCommand(session, cmd));
             }
-            clientLogger.write(stringBuffer, ext);
+            clientLogger.write(stringBuffer);
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
         } catch (Exception e) {
