@@ -20,12 +20,15 @@ public class ClientLogger {
     public ClientLogger(String filename) {
         this.fileName = filename;
     }
+
     public void write(String str) {
-        this.write(str,"");
+        this.write(str, "");
     }
+
     public void write(StringBuffer sb, String ext) {
-        this.write(sb.toString(),ext);
+        this.write(sb.toString(), ext);
     }
+
     public void write(String str, String ext) {
         File logFile = getFileWithTimeStamp(ext);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(logFile))) {
@@ -47,7 +50,7 @@ public class ClientLogger {
         } catch (IOException e) {
         }
 
-        File file = new File(path + "/" + this.fileName + getCurrentTimeStamp().replace(":", "-").replace(".", "-") + "." + ext);
+        File file = new File(path + "/" + this.fileName + " [" + getCurrentTimeStamp().replace(":", "-").replace(".", "-") + "]." + ext);
 
         try {
             if (!file.exists()) {
@@ -70,7 +73,7 @@ public class ClientLogger {
     }
 
     private String getCurrentTimeStamp() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss.SSS");
+        SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss.SSS");
         Date now = new Date();
         String strDate = sdfDate.format(now);
         return strDate;

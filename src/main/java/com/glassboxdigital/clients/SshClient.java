@@ -48,9 +48,6 @@ public class SshClient implements Client {
                 stringBuffer.append("\n\n" + cmd + "\n\n");
                 stringBuffer.append(runCommand(session, cmd));
             }
-            if (stringBuffer.toString().contains(".csv")) {
-                ext = "csv";
-            }
             clientLogger.write(stringBuffer, ext);
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
