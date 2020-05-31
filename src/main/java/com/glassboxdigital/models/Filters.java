@@ -1,5 +1,4 @@
-
-package com.glassboxdigital.http.models;
+package com.glassboxdigital.models;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

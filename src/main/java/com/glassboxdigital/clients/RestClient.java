@@ -1,4 +1,4 @@
-package com.glassboxdigital.http;
+package com.glassboxdigital.clients;
 
 import com.glassboxdigital.ssh.ClientLogger;
 import org.springframework.http.HttpEntity;
@@ -23,7 +23,7 @@ public class RestClient {
 
 
     public RestClient() {
-        this.apiLogger = new ClientLogger(base_url);
+        this.apiLogger = new ClientLogger("SiteApi");
         this.rest = new RestTemplate();
         this.headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -69,7 +69,6 @@ public class RestClient {
         this.setStatus(responseEntity.getStatusCode());
         return responseEntity;
     }
-
     public void put(String uri, String json) {
         HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
         ResponseEntity<String> responseEntity = rest.exchange(base_url + uri, HttpMethod.PUT, requestEntity, (Class<String>) null);

@@ -1,4 +1,4 @@
-package com.glassboxdigital.http.conf;
+package com.glassboxdigital.conf;
 
 import java.io.IOException;
 import java.io.InputStream;

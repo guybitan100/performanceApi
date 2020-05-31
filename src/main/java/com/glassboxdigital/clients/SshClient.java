@@ -1,18 +1,19 @@
-package com.glassboxdigital.ssh;
+package com.glassboxdigital.clients;
 
-import com.glassboxdigital.http.conf.Configuration;
-import com.jcraft.jsch.*;
+import com.glassboxdigital.ClientLogger;
+import com.glassboxdigital.conf.Configuration;
 import org.apache.log4j.Logger;
-
-import java.io.*;
 import java.util.Properties;
+import com.jcraft.jsch.*;
+import java.io.*;
+
 
 public class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     private JSch jsch;
     private String user;
     private String host;
-    private ClientLogger sshLogger;
+    private ClientLogger clientLogger;
     private String[] commands;
 
     public SshClient(Configuration sshConf, String serverName, String[] commands) {
@@ -23,7 +24,7 @@ public class SshClient {
     public SshClient(Configuration sshConf, String serverName) {
         this.host = sshConf.get(serverName);
         this.user = sshConf.get("user");
-        this.sshLogger = new ClientLogger(host);
+        this.clientLogger = new ClientLogger(host);
         this.jsch = new JSch();
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
@@ -50,7 +51,7 @@ public class SshClient {
             if (stringBuffer.toString().contains(".csv")) {
                 ext = "csv";
             }
-            sshLogger.write(stringBuffer, ext);
+            clientLogger.write(stringBuffer, ext);
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
         } catch (Exception e) {

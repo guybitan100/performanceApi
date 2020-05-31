@@ -1,4 +1,4 @@
-package com.glassboxdigital.ssh;
+package com.glassboxdigital;
 
 import org.apache.log4j.Logger;
 

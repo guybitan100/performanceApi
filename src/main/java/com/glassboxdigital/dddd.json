@@ -1,0 +1,114 @@
+{
+  "success": true,
+  "data": [
+
+
+    {
+      "APPID": [
+        "3"
+      ],
+      "AVAPROBCOUNT": [
+        0
+      ],
+      "BEACONCOUNT": [
+        0
+      ],
+      "UABROWSER_": [
+        "CHROME75"
+      ],
+      "UABROWSERGROUP": [
+        "CHROME"
+      ],
+      "UABROWSERVERSION": [
+        "75.0.3731.0"
+      ],
+      "GEOCITY": [
+        "Baise"
+      ],
+      "IPA": [
+        "121.31.108.160"
+      ],
+      "GEOCOUNTRY": [
+        "CN"
+      ],
+      "UADEVICETYPE": [
+        "COMPUTER"
+      ],
+      "DOMPAGES": [
+        0
+      ],
+      "EUID": [
+        -1
+      ],
+      "HITCOUNT": [
+        1
+      ],
+      "GEOISP": [
+        "China Unicom Guangxi Province Network"
+      ],
+      "UAOS": [
+        "WINDOWS_10"
+      ],
+      "UAOSVENDOR": [
+        "MICROSOFT"
+      ],
+      "PACKETIP": [
+        "121.31.108.160"
+      ],
+      "PAGEVIEWS": [
+        1
+      ],
+      "REFHOST": [
+        "acdn.adnxs.com"
+      ],
+      "GEOREGION": [
+        "Guangxi"
+      ],
+      "RESTOTALLEN": [
+        826.0
+      ],
+      "SERVERIP": [
+        "192.168.1.1"
+      ],
+      "SERVERTIME": [
+        4513.0
+      ],
+      "SESSIONDURATION": [
+        10358
+      ],
+      "SESSIONTS": [
+        1590478845173
+      ],
+      "SLOWEVENTS": [
+        1
+      ],
+      "SLOWSERVEREVENTS": [
+        1
+      ],
+      "SESSIONSTRUGGLESCORE": [
+        -1.0
+      ],
+      "TOTALTIME": [
+        10358.0
+      ],
+      "VERYSLOWEVENTS": [
+        1
+      ],
+      "VERYSLOWSERVEREVENTS": [
+        0
+      ],
+      "SESSIONGUID": [
+        "3565e2b79f2411ea89190242ecfab34a"
+      ]
+    }
+  ],
+  "messages": [],
+  "dataSources": [
+    "localhost"
+  ],
+  "schema": "measure",
+  "restrictedAttributes": [],
+  "tags": [
+    "status"
+  ]
+}

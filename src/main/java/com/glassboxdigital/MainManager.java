@@ -1,12 +1,11 @@
 package com.glassboxdigital;
 
-import com.glassboxdigital.http.RestClient;
-import com.glassboxdigital.http.models.*;
-import com.glassboxdigital.http.conf.Configuration;
-import com.glassboxdigital.ssh.ClientLogger;
-import com.glassboxdigital.ssh.SshClient;
+import com.glassboxdigital.conf.Configuration;
+import com.glassboxdigital.clients.SshClient;
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
+import com.glassboxdigital.clients.RestClient;
+import com.glassboxdigital.models.*;
 
 public class MainManager {
     private static final String SERVER_ROOT_MSG_CONSUMER_STAT = "grep -r \"MessageConsumerStats\" /opt/glassbox/clingine/log/servers.root.log";
@@ -34,9 +33,8 @@ public class MainManager {
         apiRestClient.addHeader("Cookie", set_cookie);
         Gson gson = new Gson();
         Sessions sessions = gson.fromJson("{\"timeFrame\": {\"from\":0 ,\"till\": 0},\"limit\": 100000,\"uniqueCount\": {\"field\": \"SESSIONGUID\"},\"steps\": [{\"name\": \"\",\"operator\": \"AND\",\"query\": [{\"field\": \"APPID\",\"value\": [\"3\"],\"operator\": \"AND\"}]}],\"filters\": {\"query\": []}}", Sessions.class);
-        sessions.setTimeFrame(new TimeFrame(1590880307L, 1590880307L));
+        sessions.setTimeFrame(new TimeFrame(1590475425153L, 1590479025153L));
         String re = apiRestClient.post(conf.get("session_endpoint"), gson.toJson(sessions));
         System.out.println(re);
     }
-
 }
