@@ -8,7 +8,7 @@ import com.jcraft.jsch.*;
 import java.io.*;
 
 
-public class SshClient {
+public class SshClient implements Client {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     private JSch jsch;
     private String user;

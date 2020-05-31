@@ -13,7 +13,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
-public class RestClient {
+public class RestClient implements Client{
 
     private String base_url;
     private RestTemplate rest;
@@ -35,10 +35,6 @@ public class RestClient {
     public RestClient(String base_url) {
         this();
         this.base_url = base_url;
-    }
-
-    public void setHeaders(HttpHeaders headers) {
-        this.headers = headers;
     }
 
     public void addHeader(String key, String value) {
