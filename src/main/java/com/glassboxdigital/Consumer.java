@@ -1,14 +1,14 @@
 package com.glassboxdigital;
 
-import com.glassboxdigital.clients.Client;
+import com.glassboxdigital.clients.SshClient;
 
 import java.util.concurrent.BlockingQueue;
 
 public class Consumer implements Runnable {
 
-    private final BlockingQueue<Client> queue;
+    private final BlockingQueue<SshClient> queue;
 
-    public Consumer(BlockingQueue<Client> queue) {
+    public Consumer(BlockingQueue<SshClient> queue) {
         this.queue = queue;
     }
 
@@ -16,7 +16,7 @@ public class Consumer implements Runnable {
     public void run() {
         synchronized (queue) {
             try {
-                Client client = queue.take();
+                SshClient client = queue.take();
                 client.run();
                 if (queue.isEmpty())
                     queue.notify(); // notify the producer

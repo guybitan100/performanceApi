@@ -6,14 +6,18 @@ import com.jcraft.jsch.*;
 import java.io.*;
 
 
-public class SshClient implements Client {
+public  class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
+
     private JSch jsch;
     private String user;
     private String host;
     private ClientLogger clientLogger;
-    private String[] commands;
+    public String[] commands;
 
+    public SshClient(String host, String user, String privateKeyLocation) {
+        this(host, user, privateKeyLocation, null);
+    }
 
     public SshClient(String host, String user, String privateKeyLocation, String[] commands) {
         this.host = host;
@@ -39,8 +43,8 @@ public class SshClient implements Client {
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands) {
-                stringBuffer.append("\n\n" + clientLogger.getCurrentTimeStamp() + " " +  cmd + "\n\n");
-                stringBuffer.append(runCommand(session, cmd));
+                stringBuffer.append("\n\n" + clientLogger.getCurrentTimeStamp() + " " + cmd + "\n\n");
+                stringBuffer.append(execCommand(session, cmd));
             }
             clientLogger.write(stringBuffer);
             session.disconnect();
@@ -50,7 +54,7 @@ public class SshClient implements Client {
         }
     }
 
-    private synchronized StringBuffer runCommand(Session session, String command) throws JSchException, IOException {
+    protected synchronized StringBuffer execCommand(Session session, String command) throws JSchException, IOException {
         Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command);
         channel.setInputStream(null);
