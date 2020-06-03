@@ -1,8 +1,9 @@
 package com.glassboxdigital;
 
-import com.glassboxdigital.clients.Clingine;
+import com.glassboxdigital.clients.ssh.Clingine;
+import com.glassboxdigital.clients.ssh.TrafficGenerator;
 import com.glassboxdigital.conf.Configuration;
-import com.glassboxdigital.clients.SshClient;
+import com.glassboxdigital.clients.ssh.SshClient;
 import com.google.gson.Gson;
 import org.springframework.http.HttpHeaders;
 import com.glassboxdigital.clients.RestClient;
@@ -27,7 +28,10 @@ public class Producer implements Runnable {
         String tg2 = conf.get("tg2");
         String privateKeyLocation = conf.get("privateKeyLocation");
         SshCommands sshCommands = new SshCommands();
-
+        TrafficGenerator trafficGen1 = new TrafficGenerator( tg1, user, privateKeyLocation);
+        TrafficGenerator trafficGen2 = new TrafficGenerator( tg2, user, privateKeyLocation);
+        trafficGen1.isUp();
+        trafficGen2.isUp();
         try {
             queue.put(new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS,sshCommands.CPU_STATUS, sshCommands.MEM_STATUS, sshCommands.SERVER_ROOT_MSG_CONSUMER_STAT}));
             queue.put(new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.SESSION_PIPELINE_METRICS_CSV_FILE}));

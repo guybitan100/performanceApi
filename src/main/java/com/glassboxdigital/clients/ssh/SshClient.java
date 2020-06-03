@@ -1,4 +1,4 @@
-package com.glassboxdigital.clients;
+package com.glassboxdigital.clients.ssh;
 import com.glassboxdigital.ClientLogger;
 import org.apache.log4j.Logger;
 import java.util.Properties;
@@ -9,9 +9,9 @@ import java.io.*;
 public  class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
 
-    private JSch jsch;
-    private String user;
-    private String host;
+    protected JSch jsch;
+    protected String user;
+    protected String host;
     private ClientLogger clientLogger;
     public String[] commands;
 

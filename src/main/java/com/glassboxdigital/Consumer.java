@@ -1,6 +1,6 @@
 package com.glassboxdigital;
 
-import com.glassboxdigital.clients.SshClient;
+import com.glassboxdigital.clients.ssh.SshClient;
 
 import java.util.concurrent.BlockingQueue;
 
