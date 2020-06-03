@@ -13,7 +13,8 @@ public class Clingine extends SshClient {
         super(host, user, privateKeyLocation, commands);
     }
 
-    public void run() {
+    public void getOpenFiles() {
         StringBuffer str = super.runCommands();
+        System.out.println(str);
     }
 }

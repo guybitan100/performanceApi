@@ -5,9 +5,9 @@ public class SshCommands {
     public final String SESSION_PIPELINE_METRICS_CSV_FILE = "cat /opt/glassbox/clingine/log/session_pipeline_metrics.csv";
     public final String CLICK_HOUSE_CLIENT = "clickhouse-client -q";
     public final String CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS = String.format("%s \"select count(*), toYYYYMMDD(toDateTime(session_ts)) day, toHour(toDateTime(session_ts)) hour from beacon_event where day=%s group by day,hour order by day,hour desc\"",
-            CLICK_HOUSE_CLIENT, ClientLogger.getCurrentTime());
+            CLICK_HOUSE_CLIENT, DateTimeUtil.getCurrentTime());
     public final String CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR = String.format("%s \"select count(*), uniq(session_uuid), toYYYYMMDD(toDateTime(session_ts)) day, toHour(toDateTime(session_ts)) hour from beacon_event where day=%s group by day,hour order by day,hour desc\"",
-            CLICK_HOUSE_CLIENT, ClientLogger.getCurrentTime());
+            CLICK_HOUSE_CLIENT, DateTimeUtil.getCurrentTime());
     public final String KAFKA_CONSUMER_GROUP = "export JAVA_HOME=/opt/glassbox/_jvm8_linux; /opt/glassbox/clifka/bin/kafka-consumer-groups.sh -bootstrap-server localhost:8093 -describe -group beacon_offline_group";
     public final String LSOF_FTS = "sudo  lsof | grep \"fts\" | wc -l";
     public final String LSOF_RECENT = "sudo  lsof | grep \"recent\" | wc -l";

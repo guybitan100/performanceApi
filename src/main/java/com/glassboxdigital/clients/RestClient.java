@@ -1,6 +1,5 @@
 package com.glassboxdigital.clients;
 
-import com.glassboxdigital.ClientLogger;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,11 +18,9 @@ public class RestClient{
     private RestTemplate rest;
     private HttpHeaders headers;
     private HttpStatus status;
-    private ClientLogger apiLogger;
 
 
     public RestClient() {
-        this.apiLogger = new ClientLogger("SiteApi");
         this.rest = new RestTemplate();
         this.headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -50,7 +47,7 @@ public class RestClient{
 
     public String post(String uri, String json) {
         String retValue = postEntity(uri, json).getBody() + "";
-        apiLogger.write(retValue);
+       // apiLogger.write(retValue);
         return retValue;
     }
 
