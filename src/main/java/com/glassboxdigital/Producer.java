@@ -30,21 +30,14 @@ public class Producer implements Runnable {
         String tg2 = conf.get("tg2");
         String privateKeyLocation = conf.get("privateKeyLocation");
         SshCommands sshCommands = new SshCommands();
-        TrafficGenerator trafficGen1 = new TrafficGenerator(tg1, user, privateKeyLocation);
-        TrafficGenerator trafficGen2 = new TrafficGenerator(tg2, user, privateKeyLocation);
-        trafficGen1.isUp();
-        trafficGen2.isUp();
-        try {
-            queue.put(new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CPU_STATUS, sshCommands.MEM_STATUS, sshCommands.SERVER_ROOT_MSG_CONSUMER_STAT}));
-            queue.put(new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.SESSION_PIPELINE_METRICS_CSV_FILE}));
-            queue.put(new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.LSOF_ALL, sshCommands.LSOF_FTS, sshCommands.LSOF_RECENT, sshCommands.LSOF_LOG, sshCommands.LSOF_JAR, sshCommands.LSOF_PIPE, sshCommands.LSOF_EVENT_POLL, sshCommands.LSOF_EVENT_JOURNEY}));
-            queue.put(new SshClient(cloff, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, sshCommands.CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR}));
-            queue.put(new SshClient(clifka, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.KAFKA_CONSUMER_GROUP}));
-            queue.put(new SshClient(tg1, user, privateKeyLocation, new String[]{sshCommands.TG_STATUS}));
-            queue.put(new SshClient(tg2, user, privateKeyLocation, new String[]{sshCommands.TG_STATUS}));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CPU_STATUS, sshCommands.MEM_STATUS, sshCommands.SERVER_ROOT_MSG_CONSUMER_STAT}).run();
+        new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.SESSION_PIPELINE_METRICS_CSV_FILE}).run();
+        new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.LSOF_ALL, sshCommands.LSOF_FTS, sshCommands.LSOF_RECENT, sshCommands.LSOF_LOG, sshCommands.LSOF_JAR, sshCommands.LSOF_PIPE, sshCommands.LSOF_EVENT_POLL, sshCommands.LSOF_EVENT_JOURNEY}).run();
+
+//            new SshClient(cloff, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, sshCommands.CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
+//            new SshClient(clifka, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.KAFKA_CONSUMER_GROUP});
+//            new SshClient(tg1, user, privateKeyLocation, new String[]{sshCommands.TG_STATUS});
+//            new SshClient(tg2, user, privateKeyLocation, new String[]{sshCommands.TG_STATUS});
 
         RestClient.disableSslVerification();
         RestClient apiRestClient = new RestClient(conf.get("base_url"));

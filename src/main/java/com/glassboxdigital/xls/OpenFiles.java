@@ -21,7 +21,7 @@ public class OpenFiles {
         this.date = date;
         this.recent = recent;
         this.fts = fts;
-        Journey = journey;
+        this.Journey = journey;
         this.total = total;
     }
 

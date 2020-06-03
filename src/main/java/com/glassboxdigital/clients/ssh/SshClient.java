@@ -1,18 +1,21 @@
 package com.glassboxdigital.clients.ssh;
-import com.glassboxdigital.ClientLogger;
+
+import com.glassboxdigital.DateTimeUtil;
 import org.apache.log4j.Logger;
+
 import java.util.Properties;
+
 import com.jcraft.jsch.*;
+
 import java.io.*;
 
 
-public  class SshClient {
+public abstract class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
 
     protected JSch jsch;
     protected String user;
     protected String host;
-    private ClientLogger clientLogger;
     public String[] commands;
 
     public SshClient(String host, String user, String privateKeyLocation) {
@@ -23,7 +26,6 @@ public  class SshClient {
         this.host = host;
         this.user = user;
         this.commands = commands;
-        this.clientLogger = new ClientLogger(host);
         this.jsch = new JSch();
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
@@ -36,25 +38,25 @@ public  class SshClient {
         }
     }
 
-    public synchronized void run() {
+    protected StringBuffer runCommands() {
         StringBuffer stringBuffer = new StringBuffer();
         try {
             log4j.debug("Open Session: " + host);
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands) {
-                stringBuffer.append("\n\n" + clientLogger.getCurrentTimeStamp() + " " + cmd + "\n\n");
+                stringBuffer.append("\n\n" + DateTimeUtil.getCurrentTimeStamp() + " " + cmd + "\n\n");
                 stringBuffer.append(execCommand(session, cmd));
             }
-            clientLogger.write(stringBuffer);
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
         } catch (Exception e) {
             log4j.debug(e);
         }
+        return stringBuffer;
     }
 
-    protected synchronized StringBuffer execCommand(Session session, String command) throws JSchException, IOException {
+    protected StringBuffer execCommand(Session session, String command) throws JSchException, IOException {
         Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command);
         channel.setInputStream(null);
