@@ -16,16 +16,11 @@ public abstract class SshClient {
     protected JSch jsch;
     protected String user;
     protected String host;
-    public String[] commands;
+    public String[] commands2Exe;
 
     public SshClient(String host, String user, String privateKeyLocation) {
-        this(host, user, privateKeyLocation, null);
-    }
-
-    public SshClient(String host, String user, String privateKeyLocation, String[] commands) {
         this.host = host;
         this.user = user;
-        this.commands = commands;
         this.jsch = new JSch();
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
@@ -44,7 +39,7 @@ public abstract class SshClient {
             log4j.debug("Open Session: " + host);
             Session session = jsch.getSession(user, host);
             session.connect();
-            for (String cmd : commands) {
+            for (String cmd : commands2Exe) {
                 stringBuffer.append("\n\n" + DateTimeUtil.getCurrentTimeStamp() + " " + cmd + "\n\n");
                 stringBuffer.append(execCommand(session, cmd));
             }

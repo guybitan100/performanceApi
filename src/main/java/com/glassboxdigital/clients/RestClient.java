@@ -1,5 +1,13 @@
 package com.glassboxdigital.clients;
 
+import com.glassboxdigital.SshCommands;
+import com.glassboxdigital.clients.ssh.Clingine;
+import com.glassboxdigital.clients.ssh.TrafficGenerator;
+import com.glassboxdigital.conf.Configuration;
+import com.glassboxdigital.models.Results;
+import com.glassboxdigital.models.Sessions;
+import com.glassboxdigital.models.TimeFrame;
+import com.google.gson.Gson;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,7 +20,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
-public class RestClient{
+public class RestClient {
 
     private String base_url;
     private RestTemplate rest;
@@ -47,7 +55,7 @@ public class RestClient{
 
     public String post(String uri, String json) {
         String retValue = postEntity(uri, json).getBody() + "";
-       // apiLogger.write(retValue);
+        // apiLogger.write(retValue);
         return retValue;
     }
 
@@ -61,6 +69,7 @@ public class RestClient{
         this.setStatus(responseEntity.getStatusCode());
         return responseEntity;
     }
+
     public void put(String uri, String json) {
         HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
         ResponseEntity<String> responseEntity = rest.exchange(base_url + uri, HttpMethod.PUT, requestEntity, (Class<String>) null);
@@ -112,4 +121,17 @@ public class RestClient{
         }
     }
 
+    public static void main(String args[]) throws Exception {
+        Configuration conf = new Configuration("ssh.properties");
+        RestClient.disableSslVerification();
+        RestClient apiRestClient = new RestClient(conf.get("base_url"));
+        HttpHeaders headers = apiRestClient.postEntity(conf.get("login_endpoint")).getHeaders();
+        String set_cookie = (headers.getFirst(headers.SET_COOKIE)).split(";")[0];
+        apiRestClient.addHeader("Cookie", set_cookie);
+        Gson gson = new Gson();
+        Sessions sessions = gson.fromJson("{\"timeFrame\": {\"from\":0 ,\"till\": 0},\"limit\": 100000,\"uniqueCount\": {\"field\": \"SESSIONGUID\"},\"steps\": [{\"name\": \"\",\"operator\": \"AND\",\"query\": [{\"field\": \"APPID\",\"value\": [\"3\"],\"operator\": \"AND\"}]}],\"filters\": {\"query\": []}}", Sessions.class);
+        sessions.setTimeFrame(new TimeFrame(System.currentTimeMillis() - (86400000), System.currentTimeMillis()));
+        String re = apiRestClient.post(conf.get("session_endpoint"), gson.toJson(sessions));
+        Results res = gson.fromJson(re, Results.class);
+    }
 }
