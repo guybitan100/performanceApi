@@ -28,6 +28,5 @@ crawler/.nyc_output
 /src/main/java/META-INF/MANIFEST.MF
 *.csv
 /ssh.log
-/Countries.xls
-/Performance.xls
-/Performance.xls
+*.xls
+
