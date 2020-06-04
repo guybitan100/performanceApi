@@ -19,8 +19,8 @@ public class Clingine extends SshClient implements SshCommands {
         super(host, user, privateKeyLocation);
     }
 
-    public void createTopRow(Sheet sheet, int rowNumber) {
-        StringBuffer commands = runCommands(new String[]{PS_EF_STATUS});
+    public void createPSRow(Sheet sheet, int rowNumber) {
+        StringBuffer commands = runCommands(new String[]{String.format(PS_CLI_STATUS,"clingine")});
     }
 
     public void createOpenFilesRow(Sheet sheet, int rowNumber) {
@@ -50,22 +50,5 @@ public class Clingine extends SshClient implements SshCommands {
                 cellInd++;
             }
         }
-    }
-
-    public boolean isUp() {
-        String res = "";
-        try {
-            log4j.debug("Open Session: " + host);
-            Session session = jsch.getSession(user, host);
-            session.connect();
-            res = execCommand(session, "ps aux |  grep -v grep |grep \"clingine\"").toString();
-            log4j.debug(res);
-            session.disconnect();
-            log4j.debug("Session: " + host + " disconnected");
-
-        } catch (Exception e) {
-            log4j.debug(e);
-        }
-        return !res.isEmpty();
     }
 }

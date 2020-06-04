@@ -2,9 +2,11 @@ package com.glassboxdigital;
 
 public interface SshCommands {
     public final String SERVER_ROOT_MSG_CONSUMER_STAT = "grep -r \"MessageConsumerStats\" /opt/glassbox/clingine/log/servers.root.log";
-    public final String PS_EF_STATUS = "ps -C %s -o %cpu,%mem,cmd";
+    public final String PS_CLI_STATUS = "ps -C %s -o %cpu,%mem,cmd";
+    public final String PS_TG_STATUS = "ps aux | grep -v grep |grep \"raffi\"";
     public final String SESSION_PIPELINE_METRICS_CSV_FILE = "cat /opt/glassbox/clingine/log/session_pipeline_metrics.csv";
     public final String CLICK_HOUSE_CLIENT = "clickhouse-client -q";
+
     public final String CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS = String.format("%s \"select count(*), toYYYYMMDD(toDateTime(session_ts)) day, toHour(toDateTime(session_ts)) hour from beacon_event where day=%s group by day,hour order by day,hour desc\"",
             CLICK_HOUSE_CLIENT, DateTimeUtil.getCurrentTime());
     public final String CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR = String.format("%s \"select count(*), uniq(session_uuid), toYYYYMMDD(toDateTime(session_ts)) day, toHour(toDateTime(session_ts)) hour from beacon_event where day=%s group by day,hour order by day,hour desc\"",
