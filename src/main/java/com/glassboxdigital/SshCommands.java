@@ -2,6 +2,7 @@ package com.glassboxdigital;
 
 public interface SshCommands {
     public final String SERVER_ROOT_MSG_CONSUMER_STAT = "grep -r \"MessageConsumerStats\" /opt/glassbox/clingine/log/servers.root.log";
+    public final String PS_EF_STATUS = "ps -C %s -o %cpu,%mem,cmd";
     public final String SESSION_PIPELINE_METRICS_CSV_FILE = "cat /opt/glassbox/clingine/log/session_pipeline_metrics.csv";
     public final String CLICK_HOUSE_CLIENT = "clickhouse-client -q";
     public final String CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS = String.format("%s \"select count(*), toYYYYMMDD(toDateTime(session_ts)) day, toHour(toDateTime(session_ts)) hour from beacon_event where day=%s group by day,hour order by day,hour desc\"",
@@ -14,8 +15,8 @@ public interface SshCommands {
     public final String LSOF_LOG = "sudo  lsof | grep \".log\" | wc -l";
     public final String LSOF_JAR = "sudo  lsof | grep \"jar\"  | wc -l";
     public final String LSOF_PIPE = "sudo  lsof | grep \"pipe\"  | wc -l";
-    public final String LSOF_EVENT_POLL = "sudo  lsof | grep \"eventpoll\"  | wc -l";
-    public final String LSOF_EVENT_JOURNEY = "sudo  lsof | grep \"journey\"  | wc -l";
+    public final String LSOF_POLL = "sudo  lsof | grep \"eventpoll\"  | wc -l";
+    public final String LSOF_JOURNEY = "sudo  lsof | grep \"journey\"  | wc -l";
     public final String LSOF_ALL = "sudo  lsof |  wc -l";
     public final String TG_STATUS = "ps aux | grep -v grep |grep \"raffi\"";
     public final String CLI_STATUS = "ps aux | grep -v grep |grep \"cli\"";

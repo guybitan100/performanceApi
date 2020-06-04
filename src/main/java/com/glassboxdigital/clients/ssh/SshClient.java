@@ -12,11 +12,9 @@ import java.io.*;
 
 public abstract class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
-
     protected JSch jsch;
     protected String user;
     protected String host;
-    public String[] commands2Exe;
 
     public SshClient(String host, String user, String privateKeyLocation) {
         this.host = host;
@@ -33,7 +31,7 @@ public abstract class SshClient {
         }
     }
 
-    protected StringBuffer runCommands() {
+    protected StringBuffer runCommands(String[] commands2Exe) {
         StringBuffer stringBuffer = new StringBuffer();
         try {
             log4j.debug("Open Session: " + host);
