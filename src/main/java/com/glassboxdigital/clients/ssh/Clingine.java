@@ -1,5 +1,6 @@
 package com.glassboxdigital.clients.ssh;
 
+import com.glassboxdigital.DateTimeUtil;
 import com.glassboxdigital.SshCommands;
 import com.jcraft.jsch.Session;
 import org.apache.poi.ss.usermodel.Cell;
@@ -26,25 +27,28 @@ public class Clingine extends SshClient implements SshCommands {
         StringBuffer commands = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
         Pattern pattern = Pattern.compile(openFileCommandsRegEx, Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(commands);
-        int cellIndex = 0;
+        int cellInd = 0;
         Cell cell = null;
         Row row = sheet.createRow(rowNumber);
         if (rowNumber == 0) {
-            cell = row.createCell(0);
+            cell = row.createCell(cellInd);
             cell.setCellValue("Time");
-            cell = row.createCell(1);
+            cell = row.createCell(cellInd++);
             cell.setCellValue("All");
-            cell = row.createCell(2);
+            cell = row.createCell(cellInd++);
             cell.setCellValue("Fts");
-            cell = row.createCell(3);
+            cell = row.createCell(cellInd++);
             cell.setCellValue("Recent");
-            cell = row.createCell(4);
+            cell = row.createCell(cellInd++);
             cell.setCellValue("Journey");
-        }
-        while (matcher.find()) {
-            cell = row.createCell(cellIndex++);
-            cell.setCellValue(matcher.group());
-            cellIndex++;
+        } else {
+            cell = row.createCell(cellInd++);
+            cell.setCellValue(DateTimeUtil.getCurrentTime());
+            while (matcher.find()) {
+                cell = row.createCell(cellInd++);
+                cell.setCellValue(matcher.group());
+                cellInd++;
+            }
         }
     }
 
