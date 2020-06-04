@@ -67,7 +67,6 @@ public class Clingine extends SshClient implements SshCommands {
             while (matcher.find()) {
                 cell = row.createCell(cellInd++);
                 cell.setCellValue(matcher.group());
-                cellInd++;
             }
         }
     }

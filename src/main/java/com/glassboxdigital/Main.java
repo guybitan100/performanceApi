@@ -27,7 +27,7 @@ public class Main {
 //        new Clingine(clingine, user, privateKeyLocation, new String[]{sshCommands.SESSION_PIPELINE_METRICS_CSV_FILE}).run();
         Sheet sheet = workbookPerformance.createSheet("Open Files On Clingine");
         Clingine clingine = new Clingine(clingineConf, user, privateKeyLocation);
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             clingine.createOpenFilesRow(sheet, i);
             workbookPerformance.write();
         }
