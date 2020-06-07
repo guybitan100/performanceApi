@@ -44,7 +44,7 @@ public abstract class SshClient implements SshCommands {
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands2Exe) {
-                stringBuffer.append(execCommand(session, cmd));
+                stringBuffer.append(execCommand(session, cmd.trim()));
             }
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
@@ -106,6 +106,13 @@ public abstract class SshClient implements SshCommands {
         }
     }
 
+    protected void runAndCreatePSRow(Sheet sheet, int rowNumber, String[] commands2Exe) {
+        StringBuffer cmdStr = runCommands(commands2Exe);
+        Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
+        Row row = sheet.createRow(rowNumber);
+        createDoubleCells(row, matcher);
+    }
+
     private void createDoubleCells(Row row, Matcher matcher) {
         int cellInd = 0;
         Cell cell = row.createCell(cellInd++);
@@ -118,16 +125,9 @@ public abstract class SshClient implements SshCommands {
         }
     }
 
-    protected void runAndCreatePSRow(Sheet sheet, int rowNumber, String[] commands2Exe) {
-        StringBuffer cmdStr = runCommands(commands2Exe);
-        Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
-        Row row = sheet.createRow(rowNumber);
-        createDoubleCells(row, matcher);
-    }
-
     public void runAndCreateOpenfileRow(Sheet sheet, int rowNumber) {
         StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
-        Matcher matcher = createMatcher(cmdStr, regExOpenFile);
+        Matcher matcher = createMatcher(cmdStr, REG_EX_OPEN_FILE);
         Row row = sheet.createRow(rowNumber);
         createIntegerCells(row, matcher);
     }
