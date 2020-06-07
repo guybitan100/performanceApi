@@ -41,9 +41,9 @@ public class Main {
         cloff.createHeaderRow(cloffTopSheet, headerRowTop);
         clifka.createHeaderRow(clifkaSheet,headerRowBeaconOfflineGroup);
         for (int i = 1; i <= 6; i++) {
-//            clingine.runAndCreateOpenfileRow(openFileSheet, i);
-//            clingine.runAndCreatePSRow(clingineTopSheet, i);
-//            cloff.runAndCreatePSRow(cloffTopSheet, i);
+            clingine.runAndCreateOpenfileRow(openFileSheet, i);
+            clingine.runAndCreatePSRow(clingineTopSheet, i);
+            cloff.runAndCreatePSRow(cloffTopSheet, i);
             clifka.runAndCreateKafkaConsumerGroup(clifkaSheet);
         }
         workbookPerformance.writeAndClose();
