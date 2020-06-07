@@ -8,6 +8,8 @@ import java.util.Properties;
 import com.jcraft.jsch.*;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public abstract class SshClient {
@@ -38,7 +40,6 @@ public abstract class SshClient {
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands2Exe) {
-                stringBuffer.append("\n\n" + DateTimeUtil.getCurrentTimeStamp() + " " + cmd + "\n\n");
                 stringBuffer.append(execCommand(session, cmd));
             }
             session.disconnect();
@@ -77,5 +78,11 @@ public abstract class SshClient {
         channel.disconnect();
         log4j.debug(strBuffer);
         return strBuffer;
+    }
+    public  Matcher createMatcher (StringBuffer commands, String regEx)
+    {
+        Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE);
+        Matcher matcher = pattern.matcher(commands);
+        return  matcher;
     }
 }

@@ -2,7 +2,7 @@ package com.glassboxdigital;
 
 public interface SshCommands {
     public final String SERVER_ROOT_MSG_CONSUMER_STAT = "grep -r \"MessageConsumerStats\" /opt/glassbox/clingine/log/servers.root.log";
-    public final String PS_CLI_STATUS = "ps -C %s -o %cpu,%mem,cmd";
+    public final String PS_Clingine_STATUS = "ps -C clingine -o %cpu,%mem,cmd";
     public final String PS_TG_STATUS = "ps aux | grep -v grep |grep \"raffi\"";
     public final String SESSION_PIPELINE_METRICS_CSV_FILE = "cat /opt/glassbox/clingine/log/session_pipeline_metrics.csv";
     public final String CLICK_HOUSE_CLIENT = "clickhouse-client -q";
@@ -23,6 +23,6 @@ public interface SshCommands {
     public final String TG_STATUS = "ps aux | grep -v grep |grep \"raffi\"";
     public final String CLI_STATUS = "ps aux | grep -v grep |grep \"cli\"";
     public final String MEM_STATUS = "cat /proc/meminfo";
-    public  final String CPU_STATUS = "mpstat";
+    public final String CPU_STATUS = "mpstat";
 
 }

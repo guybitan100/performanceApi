@@ -22,7 +22,7 @@ public class WorkbookXls {
         this.fos = new FileOutputStream(fileName);
     }
 
-    public void WriteAndclose() throws IOException {
+    public void writeAndclose() throws IOException {
         workbook.write(fos);
         fos.close();
     }
