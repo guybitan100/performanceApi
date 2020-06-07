@@ -17,13 +17,13 @@ public class Clingine extends SshClient implements SshCommands {
         StringBuffer commands = runCommands(new String[]{PS_Clingine_STATUS});
         Matcher matcher = createMatcher(commands, regExPS);
         Row row = sheet.createRow(rowNumber);
-        createCells(row, matcher);
+        createDoubleCells(row, matcher);
     }
 
     public void createOpenFilesRow(Sheet sheet, int rowNumber) {
         StringBuffer commands = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
         Matcher matcher = createMatcher(commands, regExOpenFile);
         Row row = sheet.createRow(rowNumber);
-        createCells(row, matcher);
+        createIntegerCells(row, matcher);
     }
 }

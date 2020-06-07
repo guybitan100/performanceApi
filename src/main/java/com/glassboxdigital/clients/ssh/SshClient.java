@@ -92,8 +92,7 @@ public abstract class SshClient {
             cell.setCellValue(str);
         }
     }
-
-    public void createCells(Row row, Matcher matcher) {
+    public void createIntegerCells(Row row, Matcher matcher) {
         int cellInd = 0;
         Cell cell = row.createCell(cellInd++);
         cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
@@ -101,6 +100,17 @@ public abstract class SshClient {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 cell = row.createCell(cellInd++);
                 cell.setCellValue(Integer.parseInt(matcher.group(i)));
+            }
+        }
+    }
+    public void createDoubleCells(Row row, Matcher matcher) {
+        int cellInd = 0;
+        Cell cell = row.createCell(cellInd++);
+        cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+        if (matcher.find()) {
+            for (int i = 1; i <= matcher.groupCount(); i++) {
+                cell = row.createCell(cellInd++);
+                cell.setCellValue(Double.parseDouble(matcher.group(i)));
             }
         }
     }
