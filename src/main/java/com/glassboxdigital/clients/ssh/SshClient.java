@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import java.util.Properties;
 
 import com.jcraft.jsch.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.*;
 import java.util.regex.Matcher;
@@ -79,10 +82,32 @@ public abstract class SshClient {
         log4j.debug(strBuffer);
         return strBuffer;
     }
-    public  Matcher createMatcher (StringBuffer commands, String regEx)
-    {
+
+    public void createHeaderRow(Sheet sheet, String... arg) {
+        int cellInd = 0;
+        Cell cell;
+        Row row = sheet.createRow(0);
+        for (String str : arg) {
+            cell = row.createCell(cellInd++);
+            cell.setCellValue(str);
+        }
+    }
+
+    public void createCells(Row row, Matcher matcher) {
+        int cellInd = 0;
+        Cell cell = row.createCell(cellInd++);
+        cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+        if (matcher.find()) {
+            for (int i = 1; i <= matcher.groupCount(); i++) {
+                cell = row.createCell(cellInd++);
+                cell.setCellValue(Integer.parseInt(matcher.group(i)));
+            }
+        }
+    }
+
+    public Matcher createMatcher(StringBuffer commands, String regEx) {
         Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(commands);
-        return  matcher;
+        return matcher;
     }
 }
