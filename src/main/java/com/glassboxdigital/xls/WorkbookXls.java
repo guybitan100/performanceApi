@@ -2,6 +2,7 @@ package com.glassboxdigital.xls;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,17 +23,9 @@ public class WorkbookXls {
         this.fos = new FileOutputStream(fileName);
     }
 
-    public void writeAndclose() throws IOException {
+    public void writeAndClose() throws IOException {
         workbook.write(fos);
         fos.close();
-    }
-
-    public void write() throws IOException {
-        workbook.write(fos);
-    }
-
-    public void close() throws IOException {
-        workbook.close();
     }
 
     public Sheet createSheet(String name) {

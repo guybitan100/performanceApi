@@ -1,6 +1,7 @@
 package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.DateTimeUtil;
+import com.glassboxdigital.SshCommands;
 import org.apache.log4j.Logger;
 
 import java.util.Properties;
@@ -15,7 +16,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public abstract class SshClient {
+public abstract class SshClient implements SshCommands {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     protected JSch jsch;
     protected String user;
@@ -53,7 +54,7 @@ public abstract class SshClient {
         return stringBuffer;
     }
 
-    protected StringBuffer execCommand(Session session, String command) throws JSchException, IOException {
+    private StringBuffer execCommand(Session session, String command) throws JSchException, IOException {
         Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command);
         channel.setInputStream(null);
@@ -92,7 +93,8 @@ public abstract class SshClient {
             cell.setCellValue(str);
         }
     }
-    public void createIntegerCells(Row row, Matcher matcher) {
+
+    private void createIntegerCells(Row row, Matcher matcher) {
         int cellInd = 0;
         Cell cell = row.createCell(cellInd++);
         cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
@@ -103,7 +105,8 @@ public abstract class SshClient {
             }
         }
     }
-    public void createDoubleCells(Row row, Matcher matcher) {
+
+    private void createDoubleCells(Row row, Matcher matcher) {
         int cellInd = 0;
         Cell cell = row.createCell(cellInd++);
         cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
@@ -115,7 +118,21 @@ public abstract class SshClient {
         }
     }
 
-    public Matcher createMatcher(StringBuffer commands, String regEx) {
+    protected void runAndCreatePSRow(Sheet sheet, int rowNumber, String[] commands2Exe) {
+        StringBuffer cmdStr = runCommands(commands2Exe);
+        Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
+        Row row = sheet.createRow(rowNumber);
+        createDoubleCells(row, matcher);
+    }
+
+    public void runAndCreateOpenfileRow(Sheet sheet, int rowNumber) {
+        StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
+        Matcher matcher = createMatcher(cmdStr, regExOpenFile);
+        Row row = sheet.createRow(rowNumber);
+        createIntegerCells(row, matcher);
+    }
+
+    protected Matcher createMatcher(StringBuffer commands, String regEx) {
         Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(commands);
         return matcher;
