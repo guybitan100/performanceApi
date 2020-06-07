@@ -8,7 +8,7 @@ public class Clifka extends SshClient {
     }
 
 
-    public void runAndCreateKafkaConsumerGroup(Sheet sheet) {
-        runAndCreateKafkaConsumerGroup(sheet,new String[]{KAFKA_CONSUMER_GROUP});
+    public void runAndCreateKafkaConsumerGroup(Sheet sheet, int publicRowNumber) {
+        runAndCreateKafkaConsumerGroup(sheet, new String[]{KAFKA_CONSUMER_GROUP});
     }
 }

@@ -71,6 +71,7 @@ public abstract class SshClient implements SshCommands {
             }
             if (channel.isClosed()) {
                 if (in.available() > 0) continue;
+                //log4j.debug("exit-status: " + channel.getExitStatus());
                 break;
             }
             try {
@@ -104,29 +105,29 @@ public abstract class SshClient implements SshCommands {
             }
         }
     }
-
     protected void runAndCreateKafkaConsumerGroup(Sheet sheet, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
-        String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
-        int rowNumber = sheet.getLastRowNum() + 1;
+        String [] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
+        int rowNumber = sheet.getLastRowNum()+1;
         Cell cell;
-        for (String str : cmdsStrSplit) {
-            String[] cmdStrSplit = str.split("\\s+");
+        for (String str: cmdsStrSplit)
+        {
+            String [] cmdStrSplit = str.split("\\s+");
             if (str.contains("beacon_offline_group")) {
                 Row row = sheet.createRow(rowNumber++);
                 int cellInd = 0;
-                for (String cellStr : cmdStrSplit) {
+                for (String cellStr: cmdStrSplit)
+                {
                     cell = row.createCell(cellInd++);
                     cell.setCellValue(cellStr);
                 }
             }
         }
     }
-
-    protected void runAndCreatePSRow(Sheet sheet, String[] commands2Exe) {
+    protected void runAndCreatePSRow(Sheet sheet, int rowNumber, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
         Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
-        Row row = sheet.createRow(sheet.getLastRowNum());
+        Row row = sheet.createRow(rowNumber);
         createDoubleCells(row, matcher);
     }
 
@@ -142,10 +143,10 @@ public abstract class SshClient implements SshCommands {
         }
     }
 
-    public void runAndCreateOpenfileRow(Sheet sheet) {
+    public void runAndCreateOpenfileRow(Sheet sheet, int rowNumber) {
         StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
         Matcher matcher = createMatcher(cmdStr, REG_EX_OPEN_FILE);
-        Row row = sheet.createRow(sheet.getLastRowNum());
+        Row row = sheet.createRow(rowNumber);
         createIntegerCells(row, matcher);
     }
 
