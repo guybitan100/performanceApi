@@ -31,7 +31,6 @@ public class Clingine extends SshClient implements SshCommands {
             cell.setCellValue("Cpu");
             cell = row.createCell(cellInd++);
             cell.setCellValue("Memory");
-            cell = row.createCell(cellInd++);
         } else {
             cell = row.createCell(cellInd++);
             cell.setCellValue(DateTimeUtil.getCurrentTime());
