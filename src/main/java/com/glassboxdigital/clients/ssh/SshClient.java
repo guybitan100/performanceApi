@@ -44,7 +44,7 @@ public abstract class SshClient implements SshCommands {
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands2Exe) {
-                stringBuffer.append(execCommand(session, cmd.trim()));
+                stringBuffer.append(execCommand(session, cmd));
             }
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
@@ -105,7 +105,24 @@ public abstract class SshClient implements SshCommands {
             }
         }
     }
-
+    protected void runAndCreateKafkaConsumerGroup(Sheet sheet, int rowNumber, String[] commands2Exe) {
+        StringBuffer cmdStr = runCommands(commands2Exe);
+        String [] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
+        int cellInd = 0;
+        Cell cell;
+        for (String str: cmdsStrSplit)
+        {
+            String [] cmdStrSplit = str.split("\\s+");
+            if (str.contains("beacon_offline_group")) {
+                Row row = sheet.createRow(rowNumber);
+                for (String cellStr: cmdStrSplit)
+                {
+                    cell = row.createCell(cellInd++);
+                    cell.setCellValue(cellStr);
+                }
+            }
+        }
+    }
     protected void runAndCreatePSRow(Sheet sheet, int rowNumber, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
         Matcher matcher = createMatcher(cmdStr, REG_EX_PS);

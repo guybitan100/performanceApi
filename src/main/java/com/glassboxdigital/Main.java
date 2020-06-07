@@ -11,6 +11,7 @@ public class Main {
 
     private static String[] headerRowOpenFile = new String[]{"Time", "All", "Fts", "Recent", "Journey"};
     private static String[] headerRowTop = new String[]{"Time", "Cpu", "Memory"};
+    private static String[] headerRowBeaconOfflineGroup = new String[]{"GROUP", "TOPIC", "PARTITION", "CURRENT-OFFSET", "LOG-END-OFFSET", "LAG", "CONSUMER-ID", "HOST", "CLIENT-ID"};
 
     public static void main(String args[]) throws Exception {
         WorkbookXls workbookPerformance = new WorkbookXls("Performance.xls");
@@ -34,14 +35,16 @@ public class Main {
         Sheet openFileSheet = workbookPerformance.createSheet("OpenFiles");
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
+        Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
         clingine.createHeaderRow(openFileSheet, headerRowOpenFile);
         clingine.createHeaderRow(clingineTopSheet, headerRowTop);
         cloff.createHeaderRow(cloffTopSheet, headerRowTop);
-
-        for (int i = 1; i <= 3; i++) {
-            //clingine.runAndCreateOpenfileRow(openFileSheet, i);
-           // clingine.runAndCreatePSRow(clingineTopSheet, i);
-            cloff.runAndCreatePSRow(cloffTopSheet, i);
+        clifka.createHeaderRow(clifkaSheet,headerRowBeaconOfflineGroup);
+        for (int i = 1; i <= 30; i++) {
+//            clingine.runAndCreateOpenfileRow(openFileSheet, i);
+//            clingine.runAndCreatePSRow(clingineTopSheet, i);
+//            cloff.runAndCreatePSRow(cloffTopSheet, i);
+            clifka.runAndCreateKafkaConsumerGroup(clifkaSheet,i);
         }
         workbookPerformance.writeAndClose();
 //            new SshClient(cloff, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, sshCommands.CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});

@@ -5,7 +5,7 @@ public interface SshCommands {
     public final String PS_CLINGINE = "ps -C clingine -o %cpu,%mem,cmd";
     public final String PS_CLOFF = "ps -C cloff -o %cpu,%mem,cmd";
     public final String PS_TG_STATUS = "ps aux | grep -v grep |grep \"raffi\"";
-    public final String REG_EX_PS = "^(\\d{1,9}\\.\\d{1,9})\\s+(\\d{1,9}\\.\\d{1,9})";
+    public final String REG_EX_PS = "^\\s*(\\d{1,9}\\.\\d{1,9})\\s+(\\d{1,9}\\.\\d{1,9})";
     public final String REG_EX_OPEN_FILE = "^(\\d{1,9})+\\n(\\d{1,9})+\\n(\\d{1,9})+\\n(\\d{1,9})$";
     public final String SESSION_PIPELINE_METRICS_CSV_FILE = "cat /opt/glassbox/clingine/log/session_pipeline_metrics.csv";
     public final String CLICK_HOUSE_CLIENT = "clickhouse-client -q";
