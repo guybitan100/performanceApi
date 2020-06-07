@@ -43,8 +43,8 @@ public class Main {
         for (int i = 1; i <= 3; i++) {
             clingine.runAndCreateOpenfileRow(openFileSheet, i);
             clingine.runAndCreatePSRow(clingineTopSheet, i);
-            cloff.runAndCreatePSRow(clingineTopSheet, i);
-            clifka.runAndCreatePSRow(clingineTopSheet, i);
+            cloff.runAndCreatePSRow(cloffTopSheet, i);
+            clifka.runAndCreatePSRow(clifkaTopSheet, i);
         }
         workbookPerformance.writeAndClose();
 //            new SshClient(cloff, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, sshCommands.CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
