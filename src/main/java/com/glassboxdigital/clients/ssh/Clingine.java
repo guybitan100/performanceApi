@@ -6,7 +6,7 @@ public class Clingine extends SshClient {
         super(host, user, privateKeyLocation);
     }
 
-    public void runAndCreatePSRow(Sheet sheet, int rowNumber) {
-        runAndCreatePSRow(sheet, rowNumber, new String[]{PS_CLINGINE});
+    public void runAndCreatePSRow(Sheet sheet) {
+        runAndCreatePSRow(sheet,new String[]{PS_CLINGINE});
     }
 }

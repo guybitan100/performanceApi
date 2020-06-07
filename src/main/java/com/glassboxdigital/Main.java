@@ -40,11 +40,11 @@ public class Main {
         clingine.createHeaderRow(clingineTopSheet, headerRowTop);
         cloff.createHeaderRow(cloffTopSheet, headerRowTop);
         clifka.createHeaderRow(clifkaSheet,headerRowBeaconOfflineGroup);
-        for (int i = 1; i <= 30; i++) {
-//            clingine.runAndCreateOpenfileRow(openFileSheet, i);
-//            clingine.runAndCreatePSRow(clingineTopSheet, i);
-//            cloff.runAndCreatePSRow(cloffTopSheet, i);
-            clifka.runAndCreateKafkaConsumerGroup(clifkaSheet,i);
+        for (int i = 1; i <= 6; i++) {
+            clingine.runAndCreateOpenfileRow(openFileSheet);
+            clingine.runAndCreatePSRow(clingineTopSheet);
+            cloff.runAndCreatePSRow(cloffTopSheet);
+            clifka.runAndCreateKafkaConsumerGroup(clifkaSheet);
         }
         workbookPerformance.writeAndClose();
 //            new SshClient(cloff, user, privateKeyLocation, new String[]{sshCommands.CLI_STATUS, sshCommands.CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS, sshCommands.CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
