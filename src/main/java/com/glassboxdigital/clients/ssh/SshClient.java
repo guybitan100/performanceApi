@@ -1,7 +1,7 @@
 package com.glassboxdigital.clients.ssh;
 
-import com.glassboxdigital.command.ClingineCommands;
-import com.glassboxdigital.command.Regex;
+import com.glassboxdigital.command.ClingineCommandsInt;
+import com.glassboxdigital.command.RegexInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 
@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public abstract class SshClient implements Regex, ClingineCommands {
+public abstract class SshClient implements RegexInt, ClingineCommandsInt {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     protected JSch jsch;
     protected String user;

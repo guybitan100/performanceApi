@@ -1,9 +1,9 @@
 package com.glassboxdigital.clients.ssh;
 
-import com.glassboxdigital.command.KafkaCommands;
+import com.glassboxdigital.command.KafkaCommandsInt;
 import org.apache.poi.ss.usermodel.Sheet;
 
-public class Clifka extends SshClient implements KafkaCommands {
+public class Clifka extends SshClient implements KafkaCommandsInt {
     public Clifka(String host, String user, String privateKeyLocation) {
         super(host, user, privateKeyLocation);
     }

@@ -1,6 +1,6 @@
 package com.glassboxdigital.command;
 
-public interface ClingineCommands {
+public interface ClingineCommandsInt {
     String CLI_STATUS = "ps aux | grep -v grep |grep \"cli\"";
     String PS_CLINGINE = "ps -C clingine -o %cpu,%mem,cmd";
     String SERVER_ROOT_MSG_CONSUMER_STAT = "grep -r \"MessageConsumerStats\" /opt/glassbox/clingine/log/servers.root.log";
