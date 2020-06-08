@@ -107,26 +107,6 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
-    protected void publishKafkaConsumerGroup(Sheet sheet, String[] commands2Exe) {
-        StringBuffer cmdStr = runCommands(commands2Exe);
-        String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
-        int rowNumber = sheet.getLastRowNum() + 1;
-        Cell cell;
-
-        for (String str : cmdsStrSplit) {
-            String[] cmdStrSplit = str.split("\\s+");
-            if (str.contains("beacon_offline_group")) {
-                Row row = sheet.createRow(rowNumber++);
-                int cellInd = 0;
-                cell = row.createCell(cellInd++);
-                cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-                for (String cellStr : cmdStrSplit) {
-                    cell = row.createCell(cellInd++);
-                    cell.setCellValue(cellStr);
-                }
-            }
-        }
-    }
 
     protected void publishPSRow(Sheet sheet, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
