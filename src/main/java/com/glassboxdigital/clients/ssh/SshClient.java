@@ -107,7 +107,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
-    protected void runAndCreateKafkaConsumerGroup(Sheet sheet, String[] commands2Exe) {
+    protected void publishKafkaConsumerGroup(Sheet sheet, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
         String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
@@ -128,7 +128,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
-    protected void runAndCreatePSRow(Sheet sheet,String[] commands2Exe) {
+    protected void publishPSRow(Sheet sheet, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
         Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
         int rowNumber = sheet.getLastRowNum();
@@ -148,7 +148,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
-    public void runAndCreateOpenfileRow(Sheet sheet) {
+    public void publishOpenfileRow(Sheet sheet) {
         StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
         Matcher matcher = createMatcher(cmdStr, REGEX_OPEN_FILE);
         int rowNumber = sheet.getLastRowNum();

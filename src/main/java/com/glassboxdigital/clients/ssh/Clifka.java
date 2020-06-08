@@ -9,7 +9,7 @@ public class Clifka extends SshClient implements KafkaCommandsInt {
     }
 
 
-    public void runAndCreateKafkaConsumerGroup(Sheet sheet) {
-        runAndCreateKafkaConsumerGroup(sheet, new String[]{KAFKA_CONSUMER_GROUP});
+    public void publishKafkaConsumerGroup(Sheet sheet) {
+        publishKafkaConsumerGroup(sheet, new String[]{KAFKA_CONSUMER_GROUP});
     }
 }
