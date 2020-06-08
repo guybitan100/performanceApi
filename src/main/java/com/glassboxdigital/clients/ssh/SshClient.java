@@ -131,7 +131,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
     protected void publishPSRow(Sheet sheet, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
         Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
-        int rowNumber = sheet.getLastRowNum();
+        int rowNumber = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(rowNumber);
         createDoubleCells(row, matcher);
     }
@@ -151,7 +151,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
     public void publishOpenfileRow(Sheet sheet) {
         StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
         Matcher matcher = createMatcher(cmdStr, REGEX_OPEN_FILE);
-        int rowNumber = sheet.getLastRowNum();
+        int rowNumber = sheet.getLastRowNum() + 1;
         Row row = sheet.createRow(rowNumber);
         createIntegerCells(row, matcher);
     }

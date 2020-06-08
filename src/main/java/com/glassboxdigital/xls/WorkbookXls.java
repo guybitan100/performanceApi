@@ -28,6 +28,10 @@ public class WorkbookXls {
         fos.close();
     }
 
+    public void write() throws IOException {
+        workbook.write(fos);
+    }
+
     public Sheet createSheet(String name) {
         Sheet sheet = workbook.createSheet(name);
         return sheet;
