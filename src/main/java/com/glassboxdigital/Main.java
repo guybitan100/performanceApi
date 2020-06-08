@@ -11,7 +11,7 @@ public class Main {
 
     private static String[] headerRowOpenFile = new String[]{"Time", "All", "Fts", "Recent", "Journey"};
     private static String[] headerRowTop = new String[]{"Time", "Cpu", "Memory"};
-    private static String[] headerRowBeaconOfflineGroup = new String[]{"GROUP", "TOPIC", "PARTITION", "CURRENT-OFFSET", "LOG-END-OFFSET", "LAG", "CONSUMER-ID", "HOST", "CLIENT-ID"};
+    private static String[] headerRowBeaconOfflineGroup = new String[]{"DATE","GROUP", "TOPIC", "PARTITION", "CURRENT-OFFSET", "LOG-END-OFFSET", "LAG", "CONSUMER-ID", "HOST", "CLIENT-ID"};
 
     public static void main(String args[]) throws Exception {
         WorkbookXls workbookPerformance = new WorkbookXls("Performance.xls");
@@ -39,7 +39,7 @@ public class Main {
         clingine.createHeaderRow(openFileSheet, headerRowOpenFile);
         clingine.createHeaderRow(clingineTopSheet, headerRowTop);
         cloff.createHeaderRow(cloffTopSheet, headerRowTop);
-        clifka.createHeaderRow(clifkaSheet,headerRowBeaconOfflineGroup);
+        clifka.createHeaderRow(clifkaSheet, headerRowBeaconOfflineGroup);
         for (int i = 1; i <= 6; i++) {
             clingine.runAndCreateOpenfileRow(openFileSheet, i);
             clingine.runAndCreatePSRow(clingineTopSheet, i);
