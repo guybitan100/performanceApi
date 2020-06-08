@@ -28,7 +28,7 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
             cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
             for (String cellStr : cmdStrSplit) {
                 cell = row.createCell(cellInd++);
-                cell.setCellValue(cellStr);
+                cell.setCellValue(Integer.parseInt(cellStr));
             }
         }
     }
