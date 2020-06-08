@@ -4,15 +4,11 @@ import com.glassboxdigital.clients.ssh.Clifka;
 import com.glassboxdigital.clients.ssh.Clingine;
 import com.glassboxdigital.clients.ssh.Cloff;
 import com.glassboxdigital.conf.Configuration;
-import com.glassboxdigital.xls.Headers;
+import com.glassboxdigital.xls.XslHeaders;
 import com.glassboxdigital.xls.WorkbookXls;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class Main {
-
-//    private static String[] headerRowOpenFile = new String[]{"Time", "All", "Fts", "Recent", "Journey"};
-//    private static String[] headerRowTop = new String[]{"Time", "Cpu", "Memory"};
-//    private static String[] headerRowBeaconOfflineGroup = new String[]{"DATE", "GROUP", "TOPIC", "PARTITION", "CURRENT-OFFSET", "LOG-END-OFFSET", "LAG", "CONSUMER-ID", "HOST", "CLIENT-ID"};
 
     public static void main(String args[]) throws Exception {
         WorkbookXls workbookPerformance = new WorkbookXls("Performance.xls");
@@ -36,10 +32,10 @@ public class Main {
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
         Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
-        clingine.createHeaderRow(openFileSheet, Headers.headerRowOpenFile);
-        clingine.createHeaderRow(clingineTopSheet, Headers.headerRowTop);
-        cloff.createHeaderRow(cloffTopSheet, Headers.headerRowTop);
-        clifka.createHeaderRow(clifkaSheet, Headers.headerRowBeaconOfflineGroup);
+        clingine.createHeaderRow(openFileSheet, XslHeaders.headerRowOpenFile);
+        clingine.createHeaderRow(clingineTopSheet, XslHeaders.headerRowTop);
+        cloff.createHeaderRow(cloffTopSheet, XslHeaders.headerRowTop);
+        clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         for (int i = 1; i <= 6; i++) {
             clingine.runAndCreateOpenfileRow(openFileSheet, i);
             clingine.runAndCreatePSRow(clingineTopSheet, i);
