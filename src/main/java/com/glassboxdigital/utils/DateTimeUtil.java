@@ -1,4 +1,4 @@
-package com.glassboxdigital;
+package com.glassboxdigital.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,4 +18,6 @@ public class DateTimeUtil {
         String strDate = sdfDate.format(now);
         return strDate;
     }
+
+
 }

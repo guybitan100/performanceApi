@@ -1,8 +1,5 @@
 package com.glassboxdigital.clients;
 
-import com.glassboxdigital.SshCommands;
-import com.glassboxdigital.clients.ssh.Clingine;
-import com.glassboxdigital.clients.ssh.TrafficGenerator;
 import com.glassboxdigital.conf.Configuration;
 import com.glassboxdigital.models.Results;
 import com.glassboxdigital.models.Sessions;

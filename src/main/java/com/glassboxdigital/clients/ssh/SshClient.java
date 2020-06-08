@@ -1,7 +1,8 @@
 package com.glassboxdigital.clients.ssh;
 
-import com.glassboxdigital.DateTimeUtil;
-import com.glassboxdigital.SshCommands;
+import com.glassboxdigital.command.ClingineCommands;
+import com.glassboxdigital.command.Regex;
+import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 
 import java.util.Properties;
@@ -16,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public abstract class SshClient implements SshCommands {
+public abstract class SshClient implements Regex, ClingineCommands {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     protected JSch jsch;
     protected String user;
@@ -148,7 +149,7 @@ public abstract class SshClient implements SshCommands {
 
     public void runAndCreateOpenfileRow(Sheet sheet, int rowNumber) {
         StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
-        Matcher matcher = createMatcher(cmdStr, REG_EX_OPEN_FILE);
+        Matcher matcher = createMatcher(cmdStr, REGEX_OPEN_FILE);
         Row row = sheet.createRow(rowNumber);
         createIntegerCells(row, matcher);
     }
