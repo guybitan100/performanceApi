@@ -8,7 +8,7 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
         super(host, user, privateKeyLocation);
     }
 
-    public void runAndCreatePSRow(Sheet sheet, int rowNumber) {
-        runAndCreatePSRow(sheet, rowNumber, new String[]{PS_CLOFF});
+    public void runAndCreatePSRow(Sheet sheet) {
+        runAndCreatePSRow(sheet, new String[]{PS_CLOFF});
     }
 }
