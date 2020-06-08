@@ -32,7 +32,7 @@ public class Main {
         cloff.createHeaderRow(cloffTopSheet, XslHeaders.headerRowTop);
         clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         cloff.createHeaderRow(clickhouseSheet,XslHeaders.headerRowClickhouseSessions);
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 6; i++) {
             clingine.publishOpenfileRow(openFileSheet);
             clingine.publishPSRow(clingineTopSheet);
             cloff.publishPSRow(cloffTopSheet);
