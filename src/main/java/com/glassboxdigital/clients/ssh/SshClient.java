@@ -73,7 +73,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
             }
             if (channel.isClosed()) {
                 if (in.available() > 0) continue;
-                //log4j.debug("exit-status: " + channel.getExitStatus());
+                log4j.debug("exit-status: " + channel.getExitStatus());
                 break;
             }
             try {
