@@ -103,7 +103,11 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         if (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 cell = row.createCell(cellInd++);
-                cell.setCellValue(Integer.parseInt(matcher.group(i)));
+                try {
+                    cell.setCellValue(Integer.parseInt(matcher.group(i)));
+                } catch (NumberFormatException e) {
+                    cell.setCellValue(matcher.group(i));
+                }
             }
         }
     }
@@ -124,7 +128,12 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         if (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 cell = row.createCell(cellInd++);
-                cell.setCellValue(Double.parseDouble(matcher.group(i)));
+                try {
+                    cell.setCellValue(Double.parseDouble(matcher.group(i)));
+                } catch (NumberFormatException e) {
+                    cell.setCellValue(matcher.group(i));
+                }
+
             }
         }
     }
