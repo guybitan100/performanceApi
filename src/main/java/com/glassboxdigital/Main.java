@@ -21,26 +21,31 @@ public class Main {
         Clingine clingine = new Clingine(clingineHost, user, privateKeyLocation);
         Cloff cloff = new Cloff(cloffHost, user, privateKeyLocation);
         Clifka clifka = new Clifka(clifkaHost, user, privateKeyLocation);
-        Sheet openFileSheet = workbookPerformance.createSheet("OpenFiles");
+        Sheet openFileSheet = workbookPerformance.createSheet("ClingineOpenFiles");
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
+        Sheet clinginePipelineMetricsSheet = workbookPerformance.createSheet("ClinginePipelineMetrics");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
         Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
         Sheet clickhouseSessionsSheet = workbookPerformance.createSheet("ClickhouseSessions");
         Sheet clickhouseEventsSheet = workbookPerformance.createSheet("ClickhouseEvents");
 
         clingine.createHeaderRow(openFileSheet, XslHeaders.headerRowOpenFile);
+        clingine.createHeaderRow(clinginePipelineMetricsSheet, XslHeaders.headerRowClinginePipelineMetrics);
         clingine.createHeaderRow(clingineTopSheet, XslHeaders.headerRowTop);
         cloff.createHeaderRow(cloffTopSheet, XslHeaders.headerRowTop);
         clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
-        for (int i = 1; i <= 30; i++) {
-            clingine.publishOpenfileRow(openFileSheet);
-            clingine.publishPSRow(clingineTopSheet);
-            cloff.publishPSRow(cloffTopSheet);
-            cloff.publishSessionsCount(clickhouseSessionsSheet);
-            cloff.publishEventsCount(clickhouseEventsSheet);
-            clifka.publishKafkaConsumerGroup(clifkaSheet);
+        for (int i = 1; i <= 5; i++) {
+          //  clingine.publishOpenfileRow(openFileSheet);
+         //   clingine.publishPSRow(clingineTopSheet);
+            clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
+           // cloff.publishPSRow(cloffTopSheet);
+          //  cloff.publishSessionsCount(clickhouseSessionsSheet);
+          //  cloff.publishEventsCount(clickhouseEventsSheet);
+          //  clifka.publishKafkaConsumerGroup(clifkaSheet);
+            //Sleep 10 min
+            //Thread.sleep((1000 * 60) * 10);
         }
 
         workbookPerformance.writeAndClose();

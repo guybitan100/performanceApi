@@ -143,6 +143,10 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         return matcher;
     }
 
+    public void parseRowByNewlineAndCommaDelimiter(Sheet sheet, String[] commands) {
+        parseRowByNewlineAndGenericDelimiter(sheet, commands, ",");
+    }
+
     public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
     }
@@ -160,10 +164,15 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
             cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
             for (String cellStr : cmdDelimiterSplit) {
                 cell = row.createCell(cellInd++);
+                cellStr = cellStr.trim();
                 try {
                     cell.setCellValue(Integer.parseInt(cellStr));
-                } catch (NumberFormatException e) {
-                    cell.setCellValue(cellStr);
+                } catch (NumberFormatException ne) {
+                    try {
+                        cell.setCellValue(Double.parseDouble(cellStr));
+                    } catch (NumberFormatException e) {
+                        cell.setCellValue(cellStr);
+                    }
                 }
             }
         }
