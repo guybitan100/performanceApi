@@ -25,21 +25,24 @@ public class Main {
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
         Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
-        Sheet clickhouseSheet = workbookPerformance.createSheet("Clickhouse");
+        Sheet clickhouseSessionsSheet = workbookPerformance.createSheet("ClickhouseSessions");
+        Sheet clickhouseEventsSheet = workbookPerformance.createSheet("ClickhouseEvents");
 
         clingine.createHeaderRow(openFileSheet, XslHeaders.headerRowOpenFile);
         clingine.createHeaderRow(clingineTopSheet, XslHeaders.headerRowTop);
         cloff.createHeaderRow(cloffTopSheet, XslHeaders.headerRowTop);
         clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
-        cloff.createHeaderRow(clickhouseSheet,XslHeaders.headerRowClickhouseSessions);
-        for (int i = 1; i <= 6; i++) {
+        cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
+        cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
+        for (int i = 1; i <= 3; i++) {
             clingine.publishOpenfileRow(openFileSheet);
             clingine.publishPSRow(clingineTopSheet);
             cloff.publishPSRow(cloffTopSheet);
-            cloff.publishSessionsCount(clickhouseSheet);
+            cloff.publishSessionsCount(clickhouseSessionsSheet);
+            cloff.publishEventsCount(clickhouseEventsSheet);
             clifka.publishKafkaConsumerGroup(clifkaSheet);
-            workbookPerformance.write();
         }
+
         workbookPerformance.writeAndClose();
     }
 }

@@ -141,4 +141,21 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         Matcher matcher = pattern.matcher(commands);
         return matcher;
     }
+    public void parseByNewlineAndCreateRow(Sheet sheet, String[] commands) {
+        StringBuffer cmdStr = runCommands(commands);
+        String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
+        int rowNumber = sheet.getLastRowNum() + 1;
+        Cell cell;
+        for (String str : cmdsStrSplit) {
+            String[] cmdStrSplit = str.split("\\s+");
+            Row row = sheet.createRow(rowNumber++);
+            int cellInd = 0;
+            cell = row.createCell(cellInd++);
+            cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+            for (String cellStr : cmdStrSplit) {
+                cell = row.createCell(cellInd++);
+                cell.setCellValue(Integer.parseInt(cellStr));
+            }
+        }
+    }
 }

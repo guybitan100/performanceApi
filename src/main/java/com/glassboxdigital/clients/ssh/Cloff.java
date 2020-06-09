@@ -16,20 +16,13 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
     }
 
     public void publishSessionsCount(Sheet sheet) {
-        StringBuffer cmdStr = runCommands(new String[]{CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
-        String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
-        int rowNumber = sheet.getLastRowNum() + 1;
-        Cell cell;
-        for (String str : cmdsStrSplit) {
-            String[] cmdStrSplit = str.split("\\s+");
-            Row row = sheet.createRow(rowNumber++);
-            int cellInd = 0;
-            cell = row.createCell(cellInd++);
-            cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-            for (String cellStr : cmdStrSplit) {
-                cell = row.createCell(cellInd++);
-                cell.setCellValue(Integer.parseInt(cellStr));
-            }
-        }
+        parseByNewlineAndCreateRow(sheet, new String[]{CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
     }
+
+    public void publishEventsCount(Sheet sheet) {
+        parseByNewlineAndCreateRow(sheet, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
+
+    }
+
+
 }
