@@ -1,4 +1,4 @@
-package com.glassboxdigital.clients;
+package com.glassboxdigital.clients.rest;
 
 import com.glassboxdigital.conf.Configuration;
 import com.glassboxdigital.models.Results;
