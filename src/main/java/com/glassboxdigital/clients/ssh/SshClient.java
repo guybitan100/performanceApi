@@ -5,7 +5,6 @@ import com.glassboxdigital.command.RegexInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 
-import java.text.ParseException;
 import java.util.Properties;
 
 import com.jcraft.jsch.*;
@@ -112,6 +111,9 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
+    protected void publishTopRow(Sheet sheet, String[] commands2Exe) {
+        parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
+    }
 
     protected void publishPSRow(Sheet sheet, String[] commands2Exe) {
         StringBuffer cmdStr = runCommands(commands2Exe);
@@ -156,17 +158,19 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, ",");
     }
 
-    public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) {
+    public void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
     }
-
+    public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) {
+        parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
+    }
     public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
         Cell cell;
         for (String str : cmdNewLineSplit) {
-            String[] cmdDelimiterSplit = str.split(delimiter);
+            String[] cmdDelimiterSplit = str.trim().split(delimiter);
             Row row = sheet.createRow(rowNumber++);
             int cellInd = 0;
             cell = row.createCell(cellInd++);

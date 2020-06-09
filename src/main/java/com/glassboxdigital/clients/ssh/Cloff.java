@@ -11,13 +11,15 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
     public void publishPSRow(Sheet sheet) {
         publishPSRow(sheet, new String[]{PS_CLOFF});
     }
-
+    public void publishTopRow(Sheet sheet) {
+        publishTopRow(sheet, new String[]{TOP_CLOFF});
+    }
     public void publishSessionsCount(Sheet sheet) {
-        parseRowByNewlineAndSpaceDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
+        parseRowByNewlineAndTabDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
     }
 
     public void publishEventsCount(Sheet sheet) {
-        parseRowByNewlineAndSpaceDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
+        parseRowByNewlineAndTabDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
 
     }
 

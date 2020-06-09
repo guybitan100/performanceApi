@@ -36,14 +36,14 @@ public class Main {
         clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
-        for (int i = 1; i <= 100; i++) {
-            clingine.publishOpenfileRow(openFileSheet);
-            clingine.publishPSRow(clingineTopSheet);
-            clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
-            cloff.publishPSRow(cloffTopSheet);
-            cloff.publishSessionsCount(clickhouseSessionsSheet);
-            cloff.publishEventsCount(clickhouseEventsSheet);
-            clifka.publishKafkaConsumerGroup(clifkaSheet);
+        for (int i = 1; i <= 5; i++) {
+          // clingine.publishOpenfileRow(openFileSheet);
+           clingine.publishTopRow(clingineTopSheet);
+         //  clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
+           cloff.publishTopRow(cloffTopSheet);
+         //  cloff.publishSessionsCount(clickhouseSessionsSheet);
+         //  cloff.publishEventsCount(clickhouseEventsSheet);
+        //   clifka.publishKafkaConsumerGroup(clifkaSheet);
         }
 
         workbookPerformance.writeAndClose();

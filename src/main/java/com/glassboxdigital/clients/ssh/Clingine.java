@@ -7,7 +7,10 @@ public class Clingine extends SshClient {
     }
 
     public void publishPSRow(Sheet sheet) {
-        publishPSRow(sheet,new String[]{PS_CLINGINE});
+        publishPSRow(sheet,new String[]{TOP_CLINGINE});
+    }
+    public void publishTopRow(Sheet sheet) {
+        publishTopRow(sheet,new String[]{TOP_CLINGINE});
     }
     public void publishPipelineMetricsRow(Sheet sheet) {
         parseRowByNewlineAndCommaDelimiter(sheet,new String[]{SESSION_PIPELINE_METRICS_CSV_FILE});
