@@ -5,6 +5,7 @@ import com.glassboxdigital.command.RegexInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 
+import java.text.ParseException;
 import java.util.Properties;
 
 import com.jcraft.jsch.*;
@@ -141,20 +142,29 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         Matcher matcher = pattern.matcher(commands);
         return matcher;
     }
-    public void parseByNewlineAndCreateRow(Sheet sheet, String[] commands) {
+
+    public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) {
+        parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
+    }
+
+    public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) {
         StringBuffer cmdStr = runCommands(commands);
-        String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
+        String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
         Cell cell;
-        for (String str : cmdsStrSplit) {
-            String[] cmdStrSplit = str.split("\\s+");
+        for (String str : cmdNewLineSplit) {
+            String[] cmdDelimiterSplit = str.split(delimiter);
             Row row = sheet.createRow(rowNumber++);
             int cellInd = 0;
             cell = row.createCell(cellInd++);
             cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-            for (String cellStr : cmdStrSplit) {
+            for (String cellStr : cmdDelimiterSplit) {
                 cell = row.createCell(cellInd++);
-                cell.setCellValue(Integer.parseInt(cellStr));
+                try {
+                    cell.setCellValue(Integer.parseInt(cellStr));
+                } catch (NumberFormatException e) {
+                    cell.setCellValue(cellStr);
+                }
             }
         }
     }

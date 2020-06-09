@@ -1,9 +1,6 @@
 package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.ClickhouseCommandsInt;
-import com.glassboxdigital.utils.DateTimeUtil;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class Cloff extends SshClient implements ClickhouseCommandsInt {
@@ -16,11 +13,11 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
     }
 
     public void publishSessionsCount(Sheet sheet) {
-        parseByNewlineAndCreateRow(sheet, new String[]{CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
+        parseRowByNewlineAndSpaceDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_SESSION_COUNT_PER_HOUR});
     }
 
     public void publishEventsCount(Sheet sheet) {
-        parseByNewlineAndCreateRow(sheet, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
+        parseRowByNewlineAndSpaceDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
 
     }
 

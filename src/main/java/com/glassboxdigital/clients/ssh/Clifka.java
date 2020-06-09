@@ -27,7 +27,11 @@ public class Clifka extends SshClient implements KafkaCommandsInt {
                 cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
                 for (String cellStr : cmdStrSplit) {
                     cell = row.createCell(cellInd++);
-                    cell.setCellValue(cellStr);
+                    try {
+                        cell.setCellValue(Integer.parseInt(cellStr));
+                    } catch (NumberFormatException e) {
+                        cell.setCellValue(cellStr);
+                    }
                 }
             }
         }

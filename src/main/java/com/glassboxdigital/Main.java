@@ -34,7 +34,7 @@ public class Main {
         clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 30; i++) {
             clingine.publishOpenfileRow(openFileSheet);
             clingine.publishPSRow(clingineTopSheet);
             cloff.publishPSRow(cloffTopSheet);
