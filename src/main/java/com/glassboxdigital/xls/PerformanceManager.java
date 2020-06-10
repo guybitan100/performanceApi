@@ -10,24 +10,28 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 public class PerformanceManager {
     Configuration conf;
+    Clingine clingine;
+    Cloff cloff;
+    Clifka clifka;
+    TrafficGenerator tg1;
+    TrafficGenerator tg2;
+    int interval = 10;
 
-    public PerformanceManager(Configuration conf) {
+
+    public PerformanceManager(Configuration conf, int interval) {
         this.conf = conf;
+        this.interval = interval;
+        String user = conf.get("user");
+        String privateKeyLocation = conf.get("privateKeyLocation");
+        this.clingine = new Clingine(conf.get("clingine"), user, privateKeyLocation);
+        this.cloff = new Cloff(conf.get("cloff"), user, privateKeyLocation);
+        this.clifka = new Clifka(conf.get("clifka"), user, privateKeyLocation);
+        this.tg1 = new TrafficGenerator(conf.get("tg1"), user, privateKeyLocation);
+        this.tg2 = new TrafficGenerator(conf.get("tg2"), user, privateKeyLocation);
     }
 
     public void runPerformanceTest(WorkbookXls workbookPerformance) throws Exception {
-        String clingineHost = conf.get("clingine");
-        String cloffHost = conf.get("cloff");
-        String clifkaHost = conf.get("clifka");
-        String tg1Host = conf.get("tg1");
-        String tg2Host = conf.get("tg2");
-        String user = conf.get("user");
-        String privateKeyLocation = conf.get("privateKeyLocation");
-        Clingine clingine = new Clingine(clingineHost, user, privateKeyLocation);
-        Cloff cloff = new Cloff(cloffHost, user, privateKeyLocation);
-        Clifka clifka = new Clifka(clifkaHost, user, privateKeyLocation);
-        TrafficGenerator tg1 = new TrafficGenerator(tg1Host, user, privateKeyLocation);
-        TrafficGenerator tg2 = new TrafficGenerator(tg2Host, user, privateKeyLocation);
+
         Sheet openFileSheet = workbookPerformance.createSheet("ClingineOpenFiles");
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
@@ -37,7 +41,6 @@ public class PerformanceManager {
         Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
         Sheet clickhouseSessionsSheet = workbookPerformance.createSheet("ClickhouseSessions");
         Sheet clickhouseEventsSheet = workbookPerformance.createSheet("ClickhouseEvents");
-
 
         clingine.createHeaderRow(openFileSheet, XslHeaders.headerRowOpenFile);
         clingine.createHeaderRow(clinginePipelineMetricsSheet, XslHeaders.headerRowClinginePipelineMetrics);
@@ -49,25 +52,17 @@ public class PerformanceManager {
         cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
-        int file_ind = 0;
 
-        for (int i = 1; i <= 10; i++) {
-            try {
-                //clingine.publishOpenfileRow(openFileSheet);
-                clingine.publishTopRow(clingineTopSheet);
-//                clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
-//                cloff.publishTopRow(cloffTopSheet);
-//                tg1.publishTopRow(tgGen1TopSheet);
-//                tg2.publishTopRow(tgGen2TopSheet);
-//                cloff.publishSessionsCount(clickhouseSessionsSheet);
-//                cloff.publishEventsCount(clickhouseEventsSheet);
-//                clifka.publishKafkaConsumerGroup(clifkaSheet);
-
-            } catch (Exception e) {
-                workbookPerformance.writeAndClose();
-                return;
-            }
+        for (int i = 1; i <= 1; interval++) {
+            clingine.publishOpenfileRow(openFileSheet);
+            clingine.publishTopRow(clingineTopSheet);
+            clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
+            cloff.publishTopRow(cloffTopSheet);
+            tg1.publishTopRow(tgGen1TopSheet);
+            tg2.publishTopRow(tgGen2TopSheet);
+            cloff.publishSessionsCount(clickhouseSessionsSheet);
+            cloff.publishEventsCount(clickhouseEventsSheet);
+            clifka.publishKafkaConsumerGroup(clifkaSheet);
         }
-        workbookPerformance.writeAndClose();
     }
 }

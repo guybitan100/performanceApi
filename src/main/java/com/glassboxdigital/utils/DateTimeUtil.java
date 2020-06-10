@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class DateTimeUtil {
 
-    public static String getCurrentTime() {
+    public static String getCurrentTimeDate() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
         Date now = new Date();
         String strDate = sdfDate.format(now);
@@ -19,5 +19,11 @@ public class DateTimeUtil {
         return strDate;
     }
 
+    public static String getCurrentTime() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("ddMMyyyyHHmmss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
+    }
 
 }
