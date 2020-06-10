@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class Configuration {
     Properties properties;
-    String fileName ="";
+    String fileName = "";
 
     public Configuration(String fileName) {
         this.properties = new Properties();

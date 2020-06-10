@@ -97,6 +97,10 @@ public abstract class SshClient implements ClingineCommandsInt {
         }
     }
 
+    protected void publishTailRow(Sheet sheet, String[] commands2Exe) throws Exception {
+        parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
+    }
+
     protected void publishTopRow(Sheet sheet, String[] commands2Exe) throws Exception {
         parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
     }
@@ -111,6 +115,21 @@ public abstract class SshClient implements ClingineCommandsInt {
 
     public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) throws Exception {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
+    }
+
+    public void parseSessionsFromTgLog(Sheet sheet, String[] commands) throws Exception {
+        StringBuffer cmdStr = runCommands(commands);
+        String publishedStr = "Published";
+        String sessionswStr = " sessions w";
+        int indSessionStart = cmdStr.toString().indexOf(publishedStr);
+        int indSessionEnd = cmdStr.toString().indexOf(sessionswStr);
+        String strSession = cmdStr.substring(indSessionStart + publishedStr.length(), indSessionEnd);
+        int rowNumber = sheet.getPhysicalNumberOfRows();
+        Row row = sheet.createRow(rowNumber);
+        Cell cell = row.createCell(0);
+        cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+        cell = row.createCell(1);
+        cell.setCellValue(strSession);
     }
 
     public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {

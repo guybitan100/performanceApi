@@ -15,12 +15,12 @@ public class PerformanceManager {
     Clifka clifka;
     TrafficGenerator tg1;
     TrafficGenerator tg2;
-    int interval = 10;
+    int interval = 100;
 
 
-    public PerformanceManager(Configuration conf, int interval) {
+    public PerformanceManager(Configuration conf) {
         this.conf = conf;
-        this.interval = interval;
+        this.interval = Integer.parseInt(conf.get("interval"));
         String user = conf.get("user");
         String privateKeyLocation = conf.get("privateKeyLocation");
         this.clingine = new Clingine(conf.get("clingine"), user, privateKeyLocation);
@@ -41,6 +41,8 @@ public class PerformanceManager {
         Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
         Sheet clickhouseSessionsSheet = workbookPerformance.createSheet("ClickhouseSessions");
         Sheet clickhouseEventsSheet = workbookPerformance.createSheet("ClickhouseEvents");
+        Sheet tg1SessionsSheet = workbookPerformance.createSheet("TG1-Sessions");
+        Sheet tg2SessionsSheet = workbookPerformance.createSheet("TG2-Sessions");
 
         clingine.createHeaderRow(openFileSheet, XslHeaders.headerRowOpenFile);
         clingine.createHeaderRow(clinginePipelineMetricsSheet, XslHeaders.headerRowClinginePipelineMetrics);
@@ -52,8 +54,12 @@ public class PerformanceManager {
         cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
+        tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
+        tg2.createHeaderRow(tg2SessionsSheet, XslHeaders.headerRowTgSessions);
 
         for (int i = 1; i <= interval; i++) {
+            tg1.publishTGSessionsRow(tg1SessionsSheet);
+            tg2.publishTGSessionsRow(tg2SessionsSheet);
             clingine.publishOpenfileRow(openFileSheet);
             clingine.publishTopRow(clingineTopSheet);
             clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
