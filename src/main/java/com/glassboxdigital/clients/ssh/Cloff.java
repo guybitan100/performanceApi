@@ -8,10 +8,6 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
         super(host, user, privateKeyLocation);
     }
 
-    public void publishPSRow(Sheet sheet) throws Exception {
-        publishPSRow(sheet, new String[]{PS_CLOFF});
-    }
-
     public void publishTopRow(Sheet sheet) throws Exception {
         publishTopRow(sheet, new String[]{TOP_CLOFF});
     }
@@ -24,6 +20,5 @@ public class Cloff extends SshClient implements ClickhouseCommandsInt {
         parseRowByNewlineAndTabDelimiter(sheet, new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
 
     }
-
 
 }

@@ -48,17 +48,18 @@ public class Main {
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
 
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 2; i++) {
             try {
                 clingine.publishOpenfileRow(openFileSheet);
-                clingine.publishTopRow(clingineTopSheet);
-                clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
-                cloff.publishTopRow(cloffTopSheet);
-                tg1.publishTopRow(tgGen1TopSheet);
-                tg2.publishTopRow(tgGen2TopSheet);
-                cloff.publishSessionsCount(clickhouseSessionsSheet);
-                cloff.publishEventsCount(clickhouseEventsSheet);
-                clifka.publishKafkaConsumerGroup(clifkaSheet);
+//                clingine.publishTopRow(clingineTopSheet);
+//                clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
+//                cloff.publishTopRow(cloffTopSheet);
+//                tg1.publishTopRow(tgGen1TopSheet);
+//                tg2.publishTopRow(tgGen2TopSheet);
+//                cloff.publishSessionsCount(clickhouseSessionsSheet);
+//                cloff.publishEventsCount(clickhouseEventsSheet);
+//                clifka.publishKafkaConsumerGroup(clifkaSheet);
+
             } catch (Exception e) {
                 workbookPerformance.writeAndClose();
                 return;

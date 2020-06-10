@@ -11,6 +11,7 @@ public interface ClingineCommandsInt {
     String LSOF_LOG = "sudo  lsof | grep \".log\" | wc -l";
     String LSOF_JAR = "sudo  lsof | grep \"jar\"  | wc -l";
     String LSOF_PIPE = "sudo  lsof | grep \"pipe\"  | wc -l";
+    String LSOF_EC =  "sudo  lsof | grep \"/ec/\" | wc -l";
     String LSOF_POLL = "sudo  lsof | grep \"eventpoll\"  | wc -l";
     String LSOF_JOURNEY = "sudo  lsof | grep \"journey\"  | wc -l";
     String LSOF_ALL = "sudo  lsof |  wc -l";

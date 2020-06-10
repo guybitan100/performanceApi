@@ -1,7 +1,6 @@
 package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.ClingineCommandsInt;
-import com.glassboxdigital.command.RegexInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 
@@ -13,11 +12,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
-public abstract class SshClient implements RegexInt, ClingineCommandsInt {
+public abstract class SshClient implements ClingineCommandsInt {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     protected JSch jsch;
     protected String user;
@@ -38,7 +35,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
-    protected StringBuffer runCommands(String[] commands2Exe) throws Exception{
+    protected StringBuffer runCommands(String[] commands2Exe) throws Exception {
         StringBuffer stringBuffer = new StringBuffer();
         try {
             log4j.debug("Open Session: " + host);
@@ -51,7 +48,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
             log4j.debug("Session: " + host + " disconnected");
         } catch (Exception e) {
             log4j.debug(e);
-            throw  e;
+            throw e;
         }
         return stringBuffer;
     }
@@ -80,7 +77,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 Thread.sleep(1000);
             } catch (Exception e) {
                 log4j.debug(e);
-                throw  e;
+                throw e;
             }
         }
         channel.disconnect();
@@ -98,89 +95,42 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         }
     }
 
-    private void createIntegerCells(Row row, Matcher matcher) {
-        int cellInd = 0;
-        Cell cell = row.createCell(cellInd++);
-        cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-        if (matcher.find()) {
-            for (int i = 1; i <= matcher.groupCount(); i++) {
-                cell = row.createCell(cellInd++);
-                try {
-                    cell.setCellValue(Integer.parseInt(matcher.group(i)));
-                } catch (NumberFormatException e) {
-                    try {
-                        cell.setCellValue(matcher.group(i));
-                    } catch (Exception exp) {
-                        log4j.debug(exp);
-                        throw  exp;
-                    }
-                }
-            }
-        }
-    }
-
-    protected void publishTopRow(Sheet sheet, String[] commands2Exe) throws Exception{
+    protected void publishTopRow(Sheet sheet, String[] commands2Exe) throws Exception {
         parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
     }
 
-    protected void publishPSRow(Sheet sheet, String[] commands2Exe) throws Exception{
-        StringBuffer cmdStr = runCommands(commands2Exe);
-        Matcher matcher = createMatcher(cmdStr, REG_EX_PS);
-        int rowNumber = sheet.getLastRowNum() + 1;
-        Row row = sheet.createRow(rowNumber);
-        createDoubleCells(row, matcher);
+    public void parseRowByNewlineAndCommaDelimiter(Sheet sheet, String[] commands) throws Exception {
+        parseRowByNewlineAndGenericDelimiter(sheet, commands, ",");
     }
 
-    private void createDoubleCells(Row row, Matcher matcher) {
+    public void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) throws Exception {
+        parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
+    }
+
+    public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) throws Exception {
+        parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
+    }
+
+    public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
+        StringBuffer cmdStr = runCommands(commands);
+        String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
+        int rowNumber = sheet.getLastRowNum() + 1;
+        Row row = sheet.createRow(rowNumber);
         int cellInd = 0;
         Cell cell = row.createCell(cellInd++);
         cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-        if (matcher.find()) {
-            for (int i = 1; i <= matcher.groupCount(); i++) {
-                cell = row.createCell(cellInd++);
-                try {
-                    cell.setCellValue(Double.parseDouble(matcher.group(i)));
-                } catch (NumberFormatException e) {
-
-                    try {
-                        cell.setCellValue(matcher.group(i));
-                    } catch (Exception exp) {
-                        log4j.debug(exp);
-                        throw  exp;
-                    }
-                }
-
+        for (String cellStr : cmdNewLineSplit) {
+            cell = row.createCell(cellInd++);
+            cellStr = cellStr.trim();
+            try {
+                cell.setCellValue(Integer.parseInt(cellStr));
+            } catch (NumberFormatException ne) {
+                cell.setCellValue(cellStr);
             }
         }
     }
 
-    public void publishOpenfileRow(Sheet sheet) throws Exception{
-        StringBuffer cmdStr = runCommands(new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY});
-        Matcher matcher = createMatcher(cmdStr, REGEX_OPEN_FILE);
-        int rowNumber = sheet.getLastRowNum() + 1;
-        Row row = sheet.createRow(rowNumber);
-        createIntegerCells(row, matcher);
-    }
-
-    protected Matcher createMatcher(StringBuffer commands, String regEx) {
-        Pattern pattern = Pattern.compile(regEx, Pattern.MULTILINE);
-        Matcher matcher = pattern.matcher(commands);
-        return matcher;
-    }
-
-    public void parseRowByNewlineAndCommaDelimiter(Sheet sheet, String[] commands) throws Exception{
-        parseRowByNewlineAndGenericDelimiter(sheet, commands, ",");
-    }
-
-    public void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) throws Exception{
-        parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
-    }
-
-    public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) throws Exception{
-        parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
-    }
-
-    public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception{
+    public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
