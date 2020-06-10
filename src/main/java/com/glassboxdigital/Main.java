@@ -10,7 +10,7 @@ public class Main {
     public static void main(String args[]) throws Exception {
         Configuration conf = new Configuration("ssh.properties");
         int totalIterations = Integer.parseInt(conf.get("total-iterations"));
-        for (int i = 0; i < totalIterations; i++) {
+        for (int i = 1; i <= totalIterations; i++) {
             WorkbookXls workbookPerformance = new WorkbookXls("Performance" + DateTimeUtil.getCurrentTime() + ".xls");
             PerformanceManager pm = new PerformanceManager(conf);
             try {
@@ -20,7 +20,7 @@ public class Main {
                 break;
             }
             workbookPerformance.writeAndClose();
-            System.out.println("--------------Iteration Number " + i + "--------------");
+            System.out.println("--------------Iteration Number " + i + " Completed --------------");
         }
     }
 }
