@@ -8,8 +8,8 @@ public class TrafficGenerator extends SshClient implements TGCommandsInt {
         super(host, user, privateKeyLocation);
     }
 
-    public void createPsRow(Sheet sheet, int rowNumber) throws Exception {
-        StringBuffer commands = runCommands(new String[]{PS_TG_STATUS});
+    public void publishTopRow(Sheet sheet) throws Exception {
+        publishTopRow(sheet, new String[]{TOP_TG});
     }
 
 }
