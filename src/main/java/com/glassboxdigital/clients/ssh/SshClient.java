@@ -152,26 +152,24 @@ public abstract class SshClient implements ClingineCommandsInt {
         int rowNumber = sheet.getPhysicalNumberOfRows();
         Cell cell;
         for (String strLine : cmdNewLineSplit) {
-            if (strLine.contains("beacon") || strLine.contains("pageload")) {
-                String[] cmdDelimiterSplit = strLine.trim().split(delimiter);
-                Row row = sheet.createRow(rowNumber++);
-                int cellInd = 0;
+            String[] cmdDelimiterSplit = strLine.trim().split(delimiter);
+            Row row = sheet.createRow(rowNumber++);
+            int cellInd = 0;
+            cell = row.createCell(cellInd++);
+            cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+            for (String cellStr : cmdDelimiterSplit) {
                 cell = row.createCell(cellInd++);
-                cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-                for (String cellStr : cmdDelimiterSplit) {
-                    cell = row.createCell(cellInd++);
-                    cellStr = cellStr.trim();
+                cellStr = cellStr.trim();
+                try {
+                    cell.setCellValue(Integer.parseInt(cellStr));
+                } catch (NumberFormatException ne) {
                     try {
-                        cell.setCellValue(Integer.parseInt(cellStr));
-                    } catch (NumberFormatException ne) {
+                        cell.setCellValue(Double.parseDouble(cellStr));
+                    } catch (NumberFormatException e) {
                         try {
-                            cell.setCellValue(Double.parseDouble(cellStr));
-                        } catch (NumberFormatException e) {
-                            try {
-                                cell.setCellValue(cellStr);
-                            } catch (Exception exp) {
-                                log4j.debug(exp);
-                            }
+                            cell.setCellValue(cellStr);
+                        } catch (Exception exp) {
+                            log4j.debug(exp);
                         }
                     }
                 }

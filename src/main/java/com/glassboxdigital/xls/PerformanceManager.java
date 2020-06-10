@@ -58,17 +58,17 @@ public class PerformanceManager {
         tg2.createHeaderRow(tg2SessionsSheet, XslHeaders.headerRowTgSessions);
 
         for (int i = 1; i <= interval; i++) {
-            tg1.publishTGSessionsRow(tg1SessionsSheet);
-            tg2.publishTGSessionsRow(tg2SessionsSheet);
-            clingine.publishOpenfileRow(openFileSheet);
-            clingine.publishTopRow(clingineTopSheet);
-            clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);
-            cloff.publishTopRow(cloffTopSheet);
-            tg1.publishTopRow(tgGen1TopSheet);
-            tg2.publishTopRow(tgGen2TopSheet);
-            cloff.publishSessionsCount(clickhouseSessionsSheet);
-            cloff.publishEventsCount(clickhouseEventsSheet);
-            clifka.publishKafkaConsumerGroup(clifkaSheet);
+//            tg1.publishTGSessionsRow(tg1SessionsSheet);
+//            tg2.publishTGSessionsRow(tg2SessionsSheet);
+//            clingine.publishOpenfileRow(openFileSheet);
+//            clingine.publishTopRow(clingineTopSheet);
+            clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+//            cloff.publishTopRow(cloffTopSheet);
+//            tg1.publishTopRow(tgGen1TopSheet);
+//            tg2.publishTopRow(tgGen2TopSheet);
+//            cloff.publishSessionsCount(clickhouseSessionsSheet);
+//            cloff.publishEventsCount(clickhouseEventsSheet);
+//            clifka.publishKafkaConsumerGroup(clifkaSheet);
             System.out.println("--------------Interval Number " + i + "--------------");
         }
     }

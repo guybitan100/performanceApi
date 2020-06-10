@@ -12,7 +12,7 @@ public class Clingine extends SshClient {
         publishTopRow(sheet, new String[]{TOP_CLINGINE});
     }
 
-    public void publishPipelineMetricsRow(Sheet sheet) throws Exception {
+    public void publishPipelineMetricsCsvRow(Sheet sheet) throws Exception {
         parseRowByNewlineAndCommaDelimiter(sheet, new String[]{SESSION_PIPELINE_METRICS_CSV_FILE});
     }
 
