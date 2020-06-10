@@ -11,7 +11,6 @@ import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,7 +33,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
         try {
             jsch.addIdentity(privateKeyLocation);
         } catch (JSchException e) {
-            e.printStackTrace();
+            log4j.debug(e);
         }
     }
 
@@ -77,7 +76,8 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
             }
             try {
                 Thread.sleep(1000);
-            } catch (Exception ee) {
+            } catch (Exception e) {
+                log4j.debug(e);
             }
         }
         channel.disconnect();
@@ -105,6 +105,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 try {
                     cell.setCellValue(Integer.parseInt(matcher.group(i)));
                 } catch (NumberFormatException e) {
+                    log4j.debug(e);
                     cell.setCellValue(matcher.group(i));
                 }
             }
@@ -133,6 +134,7 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 try {
                     cell.setCellValue(Double.parseDouble(matcher.group(i)));
                 } catch (NumberFormatException e) {
+                    log4j.debug(e);
                     cell.setCellValue(matcher.group(i));
                 }
 
@@ -181,9 +183,11 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 try {
                     cell.setCellValue(Integer.parseInt(cellStr));
                 } catch (NumberFormatException ne) {
+                    log4j.debug(ne);
                     try {
                         cell.setCellValue(Double.parseDouble(cellStr));
                     } catch (NumberFormatException e) {
+                        log4j.debug(e);
                         cell.setCellValue(cellStr);
                     }
                 }

@@ -15,18 +15,10 @@ ant_output
 .shelf
 *.orig
 /target/
-integration.tests.logfile.log
-crawler/node_modules
-crawler/logs
-crawler/output
-crawler/work
-crawler/.nyc_output
 *.tests.logfile.log
 *.tests-common.logfile.log
-*.log
-/ssh.log
+*.log*
 /src/main/java/META-INF/MANIFEST.MF
 *.csv
-/ssh.log
 *.xls
 
