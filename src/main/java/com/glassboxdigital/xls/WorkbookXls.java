@@ -28,13 +28,13 @@ public class WorkbookXls {
         this.fos = new FileOutputStream(fileName);
     }
 
-    public void write() throws IOException {
-        workbook.write(fos);
+    public void flush() throws IOException {
+        fos.flush();
     }
 
     public void writeAndClose() throws IOException {
         workbook.write(fos);
-        fos.close();
+        workbook.close();
     }
 
     public Sheet createSheet(String name) {

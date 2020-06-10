@@ -17,7 +17,8 @@ ant_output
 /target/
 *.tests.logfile.log
 *.tests-common.logfile.log
-*.log*
+*.log
+*.log.*
 /src/main/java/META-INF/MANIFEST.MF
 *.csv
 *.xls

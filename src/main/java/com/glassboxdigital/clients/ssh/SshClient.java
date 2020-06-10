@@ -11,6 +11,7 @@ import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
 import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -105,8 +106,11 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 try {
                     cell.setCellValue(Integer.parseInt(matcher.group(i)));
                 } catch (NumberFormatException e) {
-                    log4j.debug(e);
-                    cell.setCellValue(matcher.group(i));
+                    try {
+                        cell.setCellValue(matcher.group(i));
+                    } catch (Exception exp) {
+                        log4j.debug(exp);
+                    }
                 }
             }
         }
@@ -134,8 +138,12 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 try {
                     cell.setCellValue(Double.parseDouble(matcher.group(i)));
                 } catch (NumberFormatException e) {
-                    log4j.debug(e);
-                    cell.setCellValue(matcher.group(i));
+
+                    try {
+                        cell.setCellValue(matcher.group(i));
+                    } catch (Exception exp) {
+                        log4j.debug(exp);
+                    }
                 }
 
             }
@@ -163,9 +171,11 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
     public void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
     }
+
     public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
     }
+
     public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
@@ -183,12 +193,14 @@ public abstract class SshClient implements RegexInt, ClingineCommandsInt {
                 try {
                     cell.setCellValue(Integer.parseInt(cellStr));
                 } catch (NumberFormatException ne) {
-                    log4j.debug(ne);
                     try {
                         cell.setCellValue(Double.parseDouble(cellStr));
                     } catch (NumberFormatException e) {
-                        log4j.debug(e);
-                        cell.setCellValue(cellStr);
+                        try {
+                            cell.setCellValue(cellStr);
+                        } catch (Exception exp) {
+                            log4j.debug(exp);
+                        }
                     }
                 }
             }

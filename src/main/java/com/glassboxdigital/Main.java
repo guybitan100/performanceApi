@@ -44,7 +44,7 @@ public class Main {
             cloff.publishSessionsCount(clickhouseSessionsSheet);
             cloff.publishEventsCount(clickhouseEventsSheet);
             clifka.publishKafkaConsumerGroup(clifkaSheet);
-            workbookPerformance.write();
+            workbookPerformance.flush();
         }
 
         workbookPerformance.writeAndClose();
