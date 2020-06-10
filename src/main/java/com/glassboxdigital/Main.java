@@ -9,8 +9,8 @@ public class Main {
 
     public static void main(String args[]) throws Exception {
         Configuration conf = new Configuration("ssh.properties");
-
-        for (int i = 0; i < 1000000000; i++) {
+        int totalIterations = Integer.parseInt(conf.get("total-iterations"));
+        for (int i = 0; i < totalIterations; i++) {
             WorkbookXls workbookPerformance = new WorkbookXls("Performance" + DateTimeUtil.getCurrentTime() + ".xls");
             PerformanceManager pm = new PerformanceManager(conf);
             try {
