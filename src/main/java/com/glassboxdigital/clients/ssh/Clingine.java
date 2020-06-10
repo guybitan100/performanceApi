@@ -6,13 +6,13 @@ public class Clingine extends SshClient {
         super(host, user, privateKeyLocation);
     }
 
-    public void publishPSRow(Sheet sheet) {
+    public void publishPSRow(Sheet sheet) throws Exception {
         publishPSRow(sheet,new String[]{TOP_CLINGINE});
     }
-    public void publishTopRow(Sheet sheet) {
+    public void publishTopRow(Sheet sheet) throws Exception {
         publishTopRow(sheet,new String[]{TOP_CLINGINE});
     }
-    public void publishPipelineMetricsRow(Sheet sheet) {
+    public void publishPipelineMetricsRow(Sheet sheet) throws Exception {
         parseRowByNewlineAndCommaDelimiter(sheet,new String[]{SESSION_PIPELINE_METRICS_CSV_FILE});
     }
 }

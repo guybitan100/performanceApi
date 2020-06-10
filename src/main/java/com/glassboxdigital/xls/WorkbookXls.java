@@ -27,11 +27,6 @@ public class WorkbookXls {
         }
         this.fos = new FileOutputStream(fileName);
     }
-
-    public void flush() throws IOException {
-        fos.flush();
-    }
-
     public void writeAndClose() throws IOException {
         workbook.write(fos);
         workbook.close();

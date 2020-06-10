@@ -2,9 +2,12 @@ package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.KafkaCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
+import com.jcraft.jsch.JSchException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
+import java.io.IOException;
 
 public class Clifka extends SshClient implements KafkaCommandsInt {
     public Clifka(String host, String user, String privateKeyLocation) {
@@ -12,7 +15,7 @@ public class Clifka extends SshClient implements KafkaCommandsInt {
     }
 
 
-    public void publishKafkaConsumerGroup(Sheet sheet) {
+    public void publishKafkaConsumerGroup(Sheet sheet) throws Exception{
         StringBuffer cmdStr = runCommands(new String[]{KAFKA_CONSUMER_GROUP});
         String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
