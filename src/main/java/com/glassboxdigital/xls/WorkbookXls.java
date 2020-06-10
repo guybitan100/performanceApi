@@ -2,16 +2,10 @@ package com.glassboxdigital.xls;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import com.glassboxdigital.clients.ssh.*;
-import com.glassboxdigital.command.XslHeaders;
-import com.glassboxdigital.conf.Configuration;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class WorkbookXls {

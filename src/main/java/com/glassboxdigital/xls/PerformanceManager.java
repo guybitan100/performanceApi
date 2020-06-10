@@ -53,7 +53,7 @@ public class PerformanceManager {
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
 
-        for (int i = 1; i <= 1; interval++) {
+        for (int i = 1; i <= interval; i++) {
             clingine.publishOpenfileRow(openFileSheet);
             clingine.publishTopRow(clingineTopSheet);
             clingine.publishPipelineMetricsRow(clinginePipelineMetricsSheet);

@@ -12,7 +12,7 @@ public class Main {
 
         for (int i = 0; i < 100; i++) {
             WorkbookXls workbookPerformance = new WorkbookXls("Performance" + DateTimeUtil.getCurrentTime() + ".xls");
-            PerformanceManager pm = new PerformanceManager(conf, 1);
+            PerformanceManager pm = new PerformanceManager(conf, 100);
             try {
                 pm.runPerformanceTest(workbookPerformance);
             } catch (Exception e) {
