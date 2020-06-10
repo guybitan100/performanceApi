@@ -36,7 +36,7 @@ public class Main {
         clifka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         cloff.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= 40; i++) {
             try {
                 clingine.publishOpenfileRow(openFileSheet);
                 clingine.publishTopRow(clingineTopSheet);
@@ -47,6 +47,7 @@ public class Main {
                 clifka.publishKafkaConsumerGroup(clifkaSheet);
             } catch (Exception e) {
                 workbookPerformance.writeAndClose();
+                return;
             }
         }
 
