@@ -69,6 +69,7 @@ public class PerformanceManager {
             cloff.publishSessionsCount(clickhouseSessionsSheet);
             cloff.publishEventsCount(clickhouseEventsSheet);
             clifka.publishKafkaConsumerGroup(clifkaSheet);
+            System.out.println("--------------Interval Number " + i + "--------------");
         }
     }
 }

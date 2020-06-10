@@ -8,10 +8,8 @@ import java.util.Properties;
 
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import java.io.*;
 
@@ -44,6 +42,7 @@ public abstract class SshClient implements ClingineCommandsInt {
             Session session = jsch.getSession(user, host);
             session.connect();
             for (String cmd : commands2Exe) {
+                log4j.debug(cmd);
                 stringBuffer.append(execCommand(session, cmd));
             }
             session.disconnect();
@@ -95,10 +94,6 @@ public abstract class SshClient implements ClingineCommandsInt {
             cell = row.createCell(cellInd++);
             cell.setCellValue(str);
         }
-    }
-
-    protected void publishTailRow(Sheet sheet, String[] commands2Exe) throws Exception {
-        parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
     }
 
     protected void publishTopRow(Sheet sheet, String[] commands2Exe) throws Exception {
@@ -156,25 +151,27 @@ public abstract class SshClient implements ClingineCommandsInt {
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
         Cell cell;
-        for (String str : cmdNewLineSplit) {
-            String[] cmdDelimiterSplit = str.trim().split(delimiter);
-            Row row = sheet.createRow(rowNumber++);
-            int cellInd = 0;
-            cell = row.createCell(cellInd++);
-            cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-            for (String cellStr : cmdDelimiterSplit) {
+        for (String strLine : cmdNewLineSplit) {
+            if (strLine.contains("beacon") || strLine.contains("pageload")) {
+                String[] cmdDelimiterSplit = strLine.trim().split(delimiter);
+                Row row = sheet.createRow(rowNumber++);
+                int cellInd = 0;
                 cell = row.createCell(cellInd++);
-                cellStr = cellStr.trim();
-                try {
-                    cell.setCellValue(Integer.parseInt(cellStr));
-                } catch (NumberFormatException ne) {
+                cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+                for (String cellStr : cmdDelimiterSplit) {
+                    cell = row.createCell(cellInd++);
+                    cellStr = cellStr.trim();
                     try {
-                        cell.setCellValue(Double.parseDouble(cellStr));
-                    } catch (NumberFormatException e) {
+                        cell.setCellValue(Integer.parseInt(cellStr));
+                    } catch (NumberFormatException ne) {
                         try {
-                            cell.setCellValue(cellStr);
-                        } catch (Exception exp) {
-                            log4j.debug(exp);
+                            cell.setCellValue(Double.parseDouble(cellStr));
+                        } catch (NumberFormatException e) {
+                            try {
+                                cell.setCellValue(cellStr);
+                            } catch (Exception exp) {
+                                log4j.debug(exp);
+                            }
                         }
                     }
                 }
