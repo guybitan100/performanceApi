@@ -8,8 +8,10 @@ import java.util.Properties;
 
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import java.io.*;
 
@@ -114,7 +116,7 @@ public abstract class SshClient implements ClingineCommandsInt {
     public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
-        int rowNumber = sheet.getLastRowNum() + 1;
+        int rowNumber = sheet.getPhysicalNumberOfRows();
         Row row = sheet.createRow(rowNumber);
         int cellInd = 0;
         Cell cell = row.createCell(cellInd++);
@@ -133,7 +135,7 @@ public abstract class SshClient implements ClingineCommandsInt {
     public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
-        int rowNumber = sheet.getLastRowNum() + 1;
+        int rowNumber = sheet.getPhysicalNumberOfRows();
         Cell cell;
         for (String str : cmdNewLineSplit) {
             String[] cmdDelimiterSplit = str.trim().split(delimiter);

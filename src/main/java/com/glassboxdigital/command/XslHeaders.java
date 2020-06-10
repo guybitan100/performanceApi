@@ -7,5 +7,5 @@ public interface XslHeaders {
     static String[] headerRowBeaconOfflineGroup = new String[]{"RUN-TIME", "GROUP", "TOPIC", "PARTITION", "CURRENT-OFFSET", "LOG-END-OFFSET", "LAG", "CONSUMER-ID", "HOST", "CLIENT-ID"};
     static String[] headerRowClickhouseSessions = new String[]{"RUN-TIME", "COUNT", "UNIQ(SESSIONS-UUID)", "DAY", "HOUR"};
     static String[] headerRowClickhouseEvents = new String[]{"RUN-TIME", "COUNT", "DAY", "HOUR"};
-    static String[] headerRowClinginePipelineMetrics = new String[]{"RUN-TIME", "DATE"," " ,"KEY", "COUNT", "EXCEPTION-COUNT", "TOTAL-TIME-NANOS", "SQUARES-OF-TIME", "AVERAGE-MS", "STD", "MAX-MS", "TIME-LENGTH"};
+    static String[] headerRowClinginePipelineMetrics = new String[]{"RUN-TIME", "DATE","###" ,"KEY", "COUNT", "EXCEPTION-COUNT", "TOTAL-TIME-NANOS", "SQUARES-OF-TIME", "AVERAGE-MS", "STD", "MAX-MS", "TIME-LENGTH"};
 }
