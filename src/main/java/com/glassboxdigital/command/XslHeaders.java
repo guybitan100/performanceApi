@@ -1,7 +1,7 @@
 package com.glassboxdigital.command;
 
 public interface XslHeaders {
-    static String[] headerRowOpenFile = new String[]{"RUN-TIME", "ALL", "FTS", "RECENT", "JOURNEY","EC"};
+    static String[] headerRowOpenFile = new String[]{"RUN-TIME", "ALL", "FTS", "RECENT", "JOURNEY","EC","PERSISTENCY_SIZE"};
     static String[] headerRowTgSessions = new String[]{"RUN-TIME","TOTAL-SESSIONS"};
     static String[] headerRowTop = new String[]{"RUN-TIME","PID", "USER", "PR", "NI", "VIRT", "RES", "SHR", "S", "%CPU", "%MEM", "TIME+", "COMMAND"};
     static String[] headerRowBeaconOfflineGroup = new String[]{"RUN-TIME", "GROUP", "TOPIC", "PARTITION", "CURRENT-OFFSET", "LOG-END-OFFSET", "LAG", "CONSUMER-ID", "HOST", "CLIENT-ID"};
