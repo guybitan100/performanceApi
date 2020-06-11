@@ -42,7 +42,8 @@ public class PerformanceManager {
         Sheet clickhouseSessionsSheet = workbookPerformance.createSheet("ClickhouseSessions");
         Sheet clickhouseEventsSheet = workbookPerformance.createSheet("ClickhouseEvents");
         Sheet tg1SessionsSheet = workbookPerformance.createSheet("TG1-Sessions");
-        Sheet tg2SessionsSheet = workbookPerformance.createSheet("TG2-Sessions");
+        Sheet tg2Sessions1Sheet = workbookPerformance.createSheet("TG2-Sessions1");
+        Sheet tg2Sessions2Sheet = workbookPerformance.createSheet("TG2-Sessions2");
 
         clingine.createHeaderRow(openFileSheet, XslHeaders.headerRowOpenFile);
         clingine.createHeaderRow(clinginePipelineMetricsSheet, XslHeaders.headerRowClinginePipelineMetrics);
@@ -55,11 +56,12 @@ public class PerformanceManager {
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
-        tg2.createHeaderRow(tg2SessionsSheet, XslHeaders.headerRowTgSessions);
+        tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
 
         for (int i = 1; i <= interval; i++) {
-            tg1.publishTGSessionsRow(tg1SessionsSheet);
-            tg2.publishTGSessionsRow(tg2SessionsSheet);
+            tg1.publishTGSession1sRow(tg1SessionsSheet);
+            tg2.publishTGSession1sRow(tg2Sessions1Sheet);
+            tg2.publishTGSession2sRow(tg2Sessions2Sheet);
             clingine.publishOpenfileRow(openFileSheet);
             clingine.publishTopRow(clingineTopSheet);
             clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);

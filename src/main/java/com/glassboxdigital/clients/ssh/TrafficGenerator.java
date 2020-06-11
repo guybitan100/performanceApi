@@ -11,7 +11,12 @@ public class TrafficGenerator extends SshClient implements TGCommandsInt {
     public void publishTopRow(Sheet sheet) throws Exception {
         publishTopRow(sheet, new String[]{TOP_TG});
     }
-    public void publishTGSessionsRow(Sheet sheet) throws Exception {
-        parseSessionsFromTgLog(sheet, new String[]{READ_3_LINES_FROM_TG_LOG});
+
+    public void publishTGSession1sRow(Sheet sheet) throws Exception {
+        parseSessionsFromTgLog(sheet, new String[]{READ_3_LINES_FROM_TG_LOG1}, READ_15_LINES_FROM_TG_LOG1);
+    }
+
+    public void publishTGSession2sRow(Sheet sheet) throws Exception {
+        parseSessionsFromTgLog(sheet, new String[]{READ_3_LINES_FROM_TG_LOG2}, READ_15_LINES_FROM_TG_LOG2);
     }
 }

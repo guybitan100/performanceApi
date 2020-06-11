@@ -112,7 +112,7 @@ public abstract class SshClient implements ClingineCommandsInt {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
     }
 
-    public void parseSessionsFromTgLog(Sheet sheet, String[] commands) throws Exception {
+    public void parseSessionsFromTgLog(Sheet sheet, String[] commands, String onError) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String publishedStr = "Published";
         String sessionswStr = " sessions w";
@@ -128,6 +128,9 @@ public abstract class SshClient implements ClingineCommandsInt {
                 cell = row.createCell(1);
                 cell.setCellValue(strSession);
             }
+        } else {
+            log4j.debug(onError);
+            log4j.debug(runCommands(new String[]{onError}));
         }
     }
 
