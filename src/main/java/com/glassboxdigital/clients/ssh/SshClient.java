@@ -144,7 +144,7 @@ public abstract class SshClient implements ClingineCommandsInt {
         cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
         for (String cellStr : cmdNewLineSplit) {
             cell = row.createCell(cellInd++);
-            cellStr = cellStr.trim();
+            cellStr = cellStr.trim().replaceAll("([a-z])", "");
             try {
                 cell.setCellValue(Integer.parseInt(cellStr));
             } catch (NumberFormatException ne) {
