@@ -117,14 +117,18 @@ public abstract class SshClient implements ClingineCommandsInt {
         String publishedStr = "Published";
         String sessionswStr = " sessions w";
         int indSessionStart = cmdStr.toString().indexOf(publishedStr);
-        int indSessionEnd = cmdStr.toString().indexOf(sessionswStr);
-        String strSession = cmdStr.substring(indSessionStart + publishedStr.length(), indSessionEnd);
-        int rowNumber = sheet.getPhysicalNumberOfRows();
-        Row row = sheet.createRow(rowNumber);
-        Cell cell = row.createCell(0);
-        cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
-        cell = row.createCell(1);
-        cell.setCellValue(strSession);
+        if (indSessionStart >= 0) {
+            int indSessionEnd = cmdStr.toString().indexOf(sessionswStr);
+            String strSession = cmdStr.substring(indSessionStart + publishedStr.length(), indSessionEnd);
+            if (!sessionswStr.isEmpty()) {
+                int rowNumber = sheet.getPhysicalNumberOfRows();
+                Row row = sheet.createRow(rowNumber);
+                Cell cell = row.createCell(0);
+                cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
+                cell = row.createCell(1);
+                cell.setCellValue(strSession);
+            }
+        }
     }
 
     public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
