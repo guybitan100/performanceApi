@@ -143,12 +143,14 @@ public abstract class SshClient implements ClingineCommandsInt {
         Cell cell = row.createCell(cellInd++);
         cell.setCellValue(DateTimeUtil.getCurrentTimeStamp());
         for (String cellStr : cmdNewLineSplit) {
-            cell = row.createCell(cellInd++);
-            cellStr = cellStr.trim().replaceAll("(\\D+)", "");
-            try {
-                cell.setCellValue(Integer.parseInt(cellStr));
-            } catch (NumberFormatException ne) {
-                cell.setCellValue(cellStr);
+            if (!cellStr.isEmpty()) {
+                cell = row.createCell(cellInd++);
+                cellStr = cellStr.trim().replaceAll("(\\D+)", "");
+                try {
+                    cell.setCellValue(Integer.parseInt(cellStr));
+                } catch (NumberFormatException ne) {
+                    cell.setCellValue(cellStr);
+                }
             }
         }
     }

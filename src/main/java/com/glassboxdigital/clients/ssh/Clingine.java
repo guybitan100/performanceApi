@@ -1,6 +1,4 @@
 package com.glassboxdigital.clients.ssh;
-
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class Clingine extends SshClient {

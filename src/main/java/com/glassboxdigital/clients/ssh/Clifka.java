@@ -1,13 +1,9 @@
 package com.glassboxdigital.clients.ssh;
-
 import com.glassboxdigital.command.KafkaCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
-import com.jcraft.jsch.JSchException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-
-import java.io.IOException;
 
 public class Clifka extends SshClient implements KafkaCommandsInt {
     public Clifka(String host, String user, String privateKeyLocation) {

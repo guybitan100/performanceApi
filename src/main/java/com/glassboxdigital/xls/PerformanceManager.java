@@ -1,14 +1,13 @@
 package com.glassboxdigital.xls;
 
-import com.glassboxdigital.clients.ssh.Clifka;
-import com.glassboxdigital.clients.ssh.Clingine;
-import com.glassboxdigital.clients.ssh.Cloff;
-import com.glassboxdigital.clients.ssh.TrafficGenerator;
+import com.glassboxdigital.clients.ssh.*;
 import com.glassboxdigital.command.XslHeaders;
 import com.glassboxdigital.conf.Configuration;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class PerformanceManager {
+    final static Logger log4j = Logger.getLogger(PerformanceManager.class);
     Configuration conf;
     Clingine clingine;
     Cloff cloff;
@@ -59,19 +58,24 @@ public class PerformanceManager {
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
 
         for (int i = 1; i <= interval; i++) {
-            tg1.publishTGSession1sRow(tg1SessionsSheet);
-            tg2.publishTGSession1sRow(tg2Sessions1Sheet);
-            tg2.publishTGSession2sRow(tg2Sessions2Sheet);
-            clingine.publishOpenfileRow(openFileSheet);
-            clingine.publishTopRow(clingineTopSheet);
-            clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
-            cloff.publishTopRow(cloffTopSheet);
-            tg1.publishTopRow(tgGen1TopSheet);
-            tg2.publishTopRow(tgGen2TopSheet);
-            cloff.publishSessionsCount(clickhouseSessionsSheet);
-            cloff.publishEventsCount(clickhouseEventsSheet);
-            clifka.publishKafkaConsumerGroup(clifkaSheet);
-            System.out.println("--------------Interval " + i + " Completed--------------");
+            try {
+                tg1.publishTGSession1sRow(tg1SessionsSheet);
+                tg2.publishTGSession1sRow(tg2Sessions1Sheet);
+                tg2.publishTGSession2sRow(tg2Sessions2Sheet);
+                clingine.publishOpenfileRow(openFileSheet);
+                clingine.publishTopRow(clingineTopSheet);
+                clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+                cloff.publishTopRow(cloffTopSheet);
+                tg1.publishTopRow(tgGen1TopSheet);
+                tg2.publishTopRow(tgGen2TopSheet);
+                cloff.publishSessionsCount(clickhouseSessionsSheet);
+                cloff.publishEventsCount(clickhouseEventsSheet);
+                clifka.publishKafkaConsumerGroup(clifkaSheet);
+                log4j.info("--------------Interval " + i + " Completed--------------");
+            } catch (Exception e) {
+                log4j.info(e);
+            }
+
         }
     }
 }
