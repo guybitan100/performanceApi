@@ -59,23 +59,23 @@ public class PerformanceManager {
 
         for (int i = 1; i <= interval; i++) {
             try {
+                log4j.info("|---------Interval " + i + " From " + interval + " Started-----------|");
                 tg1.publishTGSession1sRow(tg1SessionsSheet);
                 tg2.publishTGSession1sRow(tg2Sessions1Sheet);
                 tg2.publishTGSession2sRow(tg2Sessions2Sheet);
                 clingine.publishOpenfileRow(openFileSheet);
                 clingine.publishTopRow(clingineTopSheet);
-                clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
                 cloff.publishTopRow(cloffTopSheet);
                 tg1.publishTopRow(tgGen1TopSheet);
                 tg2.publishTopRow(tgGen2TopSheet);
                 cloff.publishSessionsCount(clickhouseSessionsSheet);
                 cloff.publishEventsCount(clickhouseEventsSheet);
                 clifka.publishKafkaConsumerGroup(clifkaSheet);
-                log4j.info("--------------Interval " + i + " Completed--------------");
+                log4j.info("|---------Interval " + i + " From " + interval + " Completed---------|");
             } catch (Exception e) {
                 log4j.info(e);
             }
-
         }
+        clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
     }
 }

@@ -3,9 +3,7 @@ package com.glassboxdigital.clients.ssh;
 import com.glassboxdigital.command.ClingineCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
-
 import java.util.Properties;
-
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
