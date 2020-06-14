@@ -1,8 +1,10 @@
 package com.glassboxdigital.clients.ssh;
-
+import com.glassboxdigital.command.ClingineCommandsInt;
 import org.apache.poi.ss.usermodel.Sheet;
 
-public class Clingine extends SshClient {
+public class Clingine extends SshClient implements ClingineCommandsInt {
+
+
     public Clingine(String host, String user, String privateKeyLocation) {
         super(host, user, privateKeyLocation);
     }

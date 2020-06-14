@@ -1,6 +1,7 @@
 package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.ClingineCommandsInt;
+import com.glassboxdigital.models.Command;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 import java.util.Properties;
@@ -12,7 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import java.io.*;
 
 
-public abstract class SshClient implements ClingineCommandsInt {
+public abstract class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
     protected long timeout = 10 * 60 * 1000; // 10 minutes
     protected JSch jsch;
