@@ -3,7 +3,9 @@ package com.glassboxdigital.clients.ssh;
 import com.glassboxdigital.command.ClingineCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
+
 import java.util.Properties;
+
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,6 +16,7 @@ import java.io.*;
 
 public abstract class SshClient implements ClingineCommandsInt {
     final static Logger log4j = Logger.getLogger(SshClient.class);
+    protected long timeout = 10 * 60 * 1000; // 10 minutes
     protected JSch jsch;
     protected String user;
     protected String host;
@@ -53,6 +56,7 @@ public abstract class SshClient implements ClingineCommandsInt {
     }
 
     private StringBuffer execCommand(Session session, String command) throws JSchException, IOException, InterruptedException {
+
         Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command);
         channel.setInputStream(null);
@@ -61,7 +65,7 @@ public abstract class SshClient implements ClingineCommandsInt {
         channel.connect();
         byte[] tmp = new byte[1024];
         StringBuffer strBuffer = new StringBuffer();
-        while (true) {
+        while (timeOut()) {
             while (in.available() > 0) {
                 int i = in.read(tmp, 0, 1024);
                 if (i < 0) break;
@@ -82,6 +86,10 @@ public abstract class SshClient implements ClingineCommandsInt {
         channel.disconnect();
         log4j.debug(strBuffer);
         return strBuffer;
+    }
+
+    private boolean timeOut() {
+        return (System.currentTimeMillis() >= timeout);
     }
 
     public void createHeaderRow(Sheet sheet, String... arg) {
