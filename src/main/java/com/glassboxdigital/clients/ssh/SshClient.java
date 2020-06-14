@@ -3,9 +3,7 @@ package com.glassboxdigital.clients.ssh;
 import com.glassboxdigital.command.ClingineCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
-
 import java.util.Properties;
-
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -140,7 +138,7 @@ public abstract class SshClient implements ClingineCommandsInt {
     }
 
     protected void printErrors(String[] commands) throws Exception {
-        StringBuffer cmdStr = runCommands(commands);
+        runCommands(commands);
     }
 
     protected void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {

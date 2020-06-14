@@ -13,5 +13,5 @@ public interface ClingineCommandsInt {
     String LSOF_POLL = "sudo  lsof | grep \"eventpoll\"  | wc -l";
     String LSOF_JOURNEY = "sudo  lsof | grep \"journey\"  | wc -l";
     String LSOF_ALL = "sudo  lsof |  wc -l";
-    String GET_EXCEPTION = "grep -C 10 \"Exception\" clinigne.all.log";
+    String GET_EXCEPTION = "grep -C 10 \"Exception\" /opt/glassbox/clingine/log/clinigne.all.log";
 }
