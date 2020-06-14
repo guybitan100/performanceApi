@@ -1,7 +1,4 @@
 package com.glassboxdigital.clients.ssh;
-
-import com.glassboxdigital.command.ClingineCommandsInt;
-import com.glassboxdigital.models.Command;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 import java.util.Properties;
