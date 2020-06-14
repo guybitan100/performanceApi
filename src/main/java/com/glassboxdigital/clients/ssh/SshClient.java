@@ -3,6 +3,7 @@ package com.glassboxdigital.clients.ssh;
 import com.glassboxdigital.models.Command;
 import com.glassboxdigital.models.Commands;
 import com.glassboxdigital.utils.DateTimeUtil;
+import com.glassboxdigital.utils.TimeOut;
 import org.apache.log4j.Logger;
 
 import java.util.Properties;
@@ -66,7 +67,8 @@ public abstract class SshClient {
         byte[] tmp = new byte[1024];
         Command cmd = new Command(command2Exe);
 
-        while (DateTimeUtil.isTimeOutArrived(SSH_TIMEOUT_MIN)) {
+        TimeOut timeOut = new TimeOut(SSH_TIMEOUT_MIN);
+        while (timeOut.isTimeOutArrived()) {
             while (in.available() > 0) {
                 int i = in.read(tmp, 0, 1024);
                 if (i < 0) break;

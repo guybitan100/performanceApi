@@ -4,6 +4,7 @@ import com.glassboxdigital.clients.ssh.*;
 import com.glassboxdigital.command.XslHeaders;
 import com.glassboxdigital.conf.Configuration;
 import com.glassboxdigital.utils.DateTimeUtil;
+import com.glassboxdigital.utils.TimeOut;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -31,7 +32,7 @@ public class PerformanceManager {
     }
 
     public void runPerformanceTest(WorkbookXls workbookPerformance) throws Exception {
-
+        int i = 0;
         Sheet openFileSheet = workbookPerformance.createSheet("ClingineOpenFiles");
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
@@ -57,8 +58,8 @@ public class PerformanceManager {
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
-        int i = 1;
-        while (DateTimeUtil.isTimeOutArrived(duration)) {
+        TimeOut timeOut = new TimeOut(duration);
+        while (timeOut.isTimeOutArrived()) {
             try {
                 log4j.info("|---------Interval " + i + " Started-----------|");
                 tg1.publishTGSession1sRow(tg1SessionsSheet);

@@ -26,12 +26,4 @@ public class DateTimeUtil {
         return strDate;
     }
 
-    public static boolean isTimeOutArrived(int timeoutMin) {
-        return isTimeOutArrivedMs(timeoutMin * 60 * 1000);
-    }
-
-    private static boolean isTimeOutArrivedMs(int timeoutMs) {
-        return (System.currentTimeMillis() >= timeoutMs);
-    }
-
 }
