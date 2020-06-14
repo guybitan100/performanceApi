@@ -13,7 +13,7 @@ public class Clifka extends SshClient implements KafkaCommandsInt {
 
 
     public void publishKafkaConsumerGroup(Sheet sheet) throws Exception {
-        StringBuffer cmdStr = runCommands(new String[]{KAFKA_CONSUMER_GROUP});
+        String cmdStr = runCommands(new String[]{KAFKA_CONSUMER_GROUP}).toString();
         String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
         Cell cell;

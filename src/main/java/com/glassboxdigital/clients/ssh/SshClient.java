@@ -1,7 +1,12 @@
 package com.glassboxdigital.clients.ssh;
+
+import com.glassboxdigital.models.Command;
+import com.glassboxdigital.models.Commands;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
+
 import java.util.Properties;
+
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -32,15 +37,15 @@ public abstract class SshClient {
         }
     }
 
-    protected StringBuffer runCommands(String[] commands2Exe) throws Exception {
-        StringBuffer stringBuffer = new StringBuffer();
+    protected Commands runCommands(String[] commands2Exe) throws Exception {
+        Commands commands = new Commands();
         try {
             log4j.debug("Open Session: " + host);
             Session session = jsch.getSession(user, host);
             session.connect();
-            for (String cmd : commands2Exe) {
-                log4j.debug(cmd);
-                stringBuffer.append(execCommand(session, cmd));
+            for (String command : commands2Exe) {
+                log4j.debug(command);
+                commands.add(execCommand(session, command));
             }
             session.disconnect();
             log4j.debug("Session: " + host + " disconnected");
@@ -48,23 +53,23 @@ public abstract class SshClient {
             log4j.debug(e);
             throw e;
         }
-        return stringBuffer;
+        return commands;
     }
 
-    private StringBuffer execCommand(Session session, String command) throws JSchException, IOException, InterruptedException {
+    private Command execCommand(Session session, String command2Exe) throws JSchException, IOException, InterruptedException {
         Channel channel = session.openChannel("exec");
-        ((ChannelExec) channel).setCommand(command);
+        ((ChannelExec) channel).setCommand(command2Exe);
         channel.setInputStream(null);
         ((ChannelExec) channel).setErrStream(System.err);
         InputStream in = channel.getInputStream();
         channel.connect();
         byte[] tmp = new byte[1024];
-        StringBuffer strBuffer = new StringBuffer();
+        Command cmd = new Command(command2Exe);
         while (timeOut()) {
             while (in.available() > 0) {
                 int i = in.read(tmp, 0, 1024);
                 if (i < 0) break;
-                strBuffer.append(new String(tmp, 0, i));
+                cmd.append(new String(tmp, 0, i));
             }
             if (channel.isClosed()) {
                 if (in.available() > 0) continue;
@@ -79,8 +84,8 @@ public abstract class SshClient {
             }
         }
         channel.disconnect();
-        log4j.debug(strBuffer);
-        return strBuffer;
+        log4j.debug(cmd);
+        return cmd;
     }
 
     private boolean timeOut() {
@@ -114,12 +119,12 @@ public abstract class SshClient {
     }
 
     protected void parseSessionsFromTgLog(Sheet sheet, String[] commands, String onError) throws Exception {
-        StringBuffer cmdStr = runCommands(commands);
+        String cmdStr = runCommands(commands).toString();
         String publishedStr = "Published";
         String sessionswStr = " sessions w";
-        int indSessionStart = cmdStr.toString().indexOf(publishedStr);
+        int indSessionStart = cmdStr.indexOf(publishedStr);
         if (indSessionStart >= 0) {
-            int indSessionEnd = cmdStr.toString().indexOf(sessionswStr);
+            int indSessionEnd = cmdStr.indexOf(sessionswStr);
             String strSession = cmdStr.substring(indSessionStart + publishedStr.length(), indSessionEnd);
             if (!sessionswStr.isEmpty()) {
                 int rowNumber = sheet.getPhysicalNumberOfRows();
@@ -140,7 +145,7 @@ public abstract class SshClient {
     }
 
     protected void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
-        StringBuffer cmdStr = runCommands(commands);
+        String cmdStr = runCommands(commands).toString();
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
         Row row = sheet.createRow(rowNumber);
@@ -161,7 +166,7 @@ public abstract class SshClient {
     }
 
     protected void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
-        StringBuffer cmdStr = runCommands(commands);
+        String cmdStr = runCommands(commands).toString();
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
         Cell cell;
