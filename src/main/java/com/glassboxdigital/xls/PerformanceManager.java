@@ -3,6 +3,7 @@ package com.glassboxdigital.xls;
 import com.glassboxdigital.clients.ssh.*;
 import com.glassboxdigital.command.XslHeaders;
 import com.glassboxdigital.conf.Configuration;
+import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
@@ -14,12 +15,12 @@ public class PerformanceManager {
     Clifka clifka;
     TrafficGenerator tg1;
     TrafficGenerator tg2;
-    int interval = 100;
+    int duration;
 
 
     public PerformanceManager(Configuration conf) {
         this.conf = conf;
-        this.interval = Integer.parseInt(conf.get("interval"));
+        this.duration = Integer.parseInt(conf.get("durationMin"));
         String user = conf.get("user");
         String privateKeyLocation = conf.get("privateKeyLocation");
         this.clingine = new Clingine(conf.get("clingine"), user, privateKeyLocation);
@@ -57,9 +58,8 @@ public class PerformanceManager {
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
 
-        for (int i = 1; i <= interval; i++) {
+        while (DateTimeUtil.isTimeOutArrived(duration)) {
             try {
-                log4j.info("|---------Interval " + i + " From " + interval + " Started-----------|");
                 tg1.publishTGSession1sRow(tg1SessionsSheet);
                 tg2.publishTGSession1sRow(tg2Sessions1Sheet);
                 tg2.publishTGSession2sRow(tg2Sessions2Sheet);

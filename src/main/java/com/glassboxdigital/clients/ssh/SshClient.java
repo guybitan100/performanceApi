@@ -17,7 +17,7 @@ import java.io.*;
 
 public abstract class SshClient {
     final static Logger log4j = Logger.getLogger(SshClient.class);
-    protected long timeout = 10 * 60 * 1000; // 10 minutes
+    private final int SSH_TIMEOUT_MIN = 10; // 10 minutes
     protected JSch jsch;
     protected String user;
     protected String host;
@@ -65,12 +65,14 @@ public abstract class SshClient {
         channel.connect();
         byte[] tmp = new byte[1024];
         Command cmd = new Command(command2Exe);
-        while (timeOut()) {
+
+        while (DateTimeUtil.isTimeOutArrived(SSH_TIMEOUT_MIN)) {
             while (in.available() > 0) {
                 int i = in.read(tmp, 0, 1024);
                 if (i < 0) break;
                 cmd.append(new String(tmp, 0, i));
             }
+
             if (channel.isClosed()) {
                 if (in.available() > 0) continue;
                 log4j.debug("exit-status: " + channel.getExitStatus());
@@ -88,9 +90,6 @@ public abstract class SshClient {
         return cmd;
     }
 
-    private boolean timeOut() {
-        return (System.currentTimeMillis() >= timeout);
-    }
 
     public void createHeaderRow(Sheet sheet, String... arg) {
         int cellInd = 0;
