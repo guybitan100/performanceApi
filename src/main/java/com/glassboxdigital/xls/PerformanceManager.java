@@ -71,7 +71,6 @@ public class PerformanceManager {
                 cloff.publishSessionsCount(clickhouseSessionsSheet);
                 cloff.publishEventsCount(clickhouseEventsSheet);
                 clifka.publishKafkaConsumerGroup(clifkaSheet);
-                log4j.info("|---------Interval " + i + " From " + interval + " Completed---------|");
             } catch (Exception e) {
                 log4j.info(e);
             }
