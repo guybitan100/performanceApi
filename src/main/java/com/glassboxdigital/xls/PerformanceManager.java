@@ -57,9 +57,10 @@ public class PerformanceManager {
         cloff.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
-
+        int i = 1;
         while (DateTimeUtil.isTimeOutArrived(duration)) {
             try {
+                log4j.info("|---------Interval " + i + " Started-----------|");
                 tg1.publishTGSession1sRow(tg1SessionsSheet);
                 tg2.publishTGSession1sRow(tg2Sessions1Sheet);
                 tg2.publishTGSession2sRow(tg2Sessions2Sheet);
@@ -72,6 +73,7 @@ public class PerformanceManager {
                 cloff.publishSessionsCount(clickhouseSessionsSheet);
                 cloff.publishEventsCount(clickhouseEventsSheet);
                 clifka.publishKafkaConsumerGroup(clifkaSheet);
+                i++;
             } catch (Exception e) {
                 log4j.info(e);
             }
