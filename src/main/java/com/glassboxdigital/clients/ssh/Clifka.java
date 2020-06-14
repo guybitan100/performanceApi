@@ -1,4 +1,5 @@
 package com.glassboxdigital.clients.ssh;
+
 import com.glassboxdigital.command.KafkaCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -11,7 +12,7 @@ public class Clifka extends SshClient implements KafkaCommandsInt {
     }
 
 
-    public void publishKafkaConsumerGroup(Sheet sheet) throws Exception{
+    public void publishKafkaConsumerGroup(Sheet sheet) throws Exception {
         StringBuffer cmdStr = runCommands(new String[]{KAFKA_CONSUMER_GROUP});
         String[] cmdsStrSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getLastRowNum() + 1;
