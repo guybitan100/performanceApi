@@ -65,6 +65,7 @@ public class PerformanceManager {
                 tg2.publishTGSession2sRow(tg2Sessions2Sheet);
                 clingine.publishOpenfileRow(openFileSheet);
                 clingine.publishTopRow(clingineTopSheet);
+                clingine.printAllErrors();
                 cloff.publishTopRow(cloffTopSheet);
                 tg1.publishTopRow(tgGen1TopSheet);
                 tg2.publishTopRow(tgGen2TopSheet);

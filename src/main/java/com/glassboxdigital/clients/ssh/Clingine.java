@@ -17,4 +17,7 @@ public class Clingine extends SshClient {
     public void publishOpenfileRow(Sheet sheet) throws Exception {
         parseRowByNewline(sheet, new String[]{LSOF_ALL, LSOF_FTS, LSOF_RECENT, LSOF_JOURNEY, LSOF_EC,PERSISTENCY_SIZE});
     }
+    public void printAllErrors() throws Exception {
+        printErrors(new String[]{GET_EXCEPTION});
+    }
 }

@@ -3,14 +3,11 @@ package com.glassboxdigital.clients.ssh;
 import com.glassboxdigital.command.ClingineCommandsInt;
 import com.glassboxdigital.utils.DateTimeUtil;
 import org.apache.log4j.Logger;
-
 import java.util.Properties;
-
 import com.jcraft.jsch.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-
 import java.io.*;
 
 
@@ -56,7 +53,6 @@ public abstract class SshClient implements ClingineCommandsInt {
     }
 
     private StringBuffer execCommand(Session session, String command) throws JSchException, IOException, InterruptedException {
-
         Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command);
         channel.setInputStream(null);
@@ -106,19 +102,19 @@ public abstract class SshClient implements ClingineCommandsInt {
         parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
     }
 
-    public void parseRowByNewlineAndCommaDelimiter(Sheet sheet, String[] commands) throws Exception {
+    protected void parseRowByNewlineAndCommaDelimiter(Sheet sheet, String[] commands) throws Exception {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, ",");
     }
 
-    public void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) throws Exception {
+    protected void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) throws Exception {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
     }
 
-    public void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) throws Exception {
+    protected void parseRowByNewlineAndSpaceDelimiter(Sheet sheet, String[] commands) throws Exception {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
     }
 
-    public void parseSessionsFromTgLog(Sheet sheet, String[] commands, String onError) throws Exception {
+    protected void parseSessionsFromTgLog(Sheet sheet, String[] commands, String onError) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String publishedStr = "Published";
         String sessionswStr = " sessions w";
@@ -139,8 +135,11 @@ public abstract class SshClient implements ClingineCommandsInt {
             log4j.debug(runCommands(new String[]{onError}));
         }
     }
+    protected void printErrors(String[] commands) throws Exception {
+        StringBuffer cmdStr = runCommands(commands);
 
-    public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
+    }
+    protected void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
@@ -161,7 +160,7 @@ public abstract class SshClient implements ClingineCommandsInt {
         }
     }
 
-    public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
+    protected void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
         StringBuffer cmdStr = runCommands(commands);
         String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
