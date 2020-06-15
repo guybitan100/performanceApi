@@ -32,7 +32,7 @@ public class PerformanceManager {
     }
 
     public void runPerformanceTest(WorkbookXls workbookPerformance) throws Exception {
-        int i = 0;
+        int i = 1;
         Sheet openFileSheet = workbookPerformance.createSheet("ClingineOpenFiles");
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
@@ -59,26 +59,37 @@ public class PerformanceManager {
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
         TimeOut timeOut = new TimeOut(duration);
-        while (timeOut.isTimeOutArrived()) {
+        while (timeOut.isContinueRun()) {
             try {
-                log4j.info("|---------Interval " + i + " Started-----------|");
+                log4j.info("|---------Interval " + i++ + " Started-----------|");
                 tg1.publishTGSession1sRow(tg1SessionsSheet);
                 tg2.publishTGSession1sRow(tg2Sessions1Sheet);
                 tg2.publishTGSession2sRow(tg2Sessions2Sheet);
-                clingine.publishOpenfileRow(openFileSheet);
                 clingine.publishTopRow(clingineTopSheet);
-                clingine.printAllErrors();
                 cloff.publishTopRow(cloffTopSheet);
                 tg1.publishTopRow(tgGen1TopSheet);
                 tg2.publishTopRow(tgGen2TopSheet);
                 cloff.publishSessionsCount(clickhouseSessionsSheet);
                 cloff.publishEventsCount(clickhouseEventsSheet);
                 clifka.publishKafkaConsumerGroup(clifkaSheet);
-                i++;
+                clingine.publishOpenfileRow(openFileSheet);
             } catch (Exception e) {
                 log4j.info(e);
             }
         }
+        clingine.printAllErrors();
         clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+    }
+
+    public static void main(String args[]) throws Exception {
+        Configuration conf = new Configuration("ssh.properties");
+        WorkbookXls workbookPerformance = new WorkbookXls("Performance" + DateTimeUtil.getCurrentTime() + ".xls");
+        PerformanceManager pm = new PerformanceManager(conf);
+        try {
+            pm.runPerformanceTest(workbookPerformance);
+        } catch (Exception e) {
+            workbookPerformance.writeAndClose();
+        }
+        workbookPerformance.writeAndClose();
     }
 }

@@ -20,7 +20,7 @@ public class Command {
         this.command = command;
     }
 
-    public void append(String res) {
+    public void add(String res) {
         this.results.add(res);
     }
 

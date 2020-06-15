@@ -6,6 +6,7 @@ import com.glassboxdigital.utils.DateTimeUtil;
 import com.glassboxdigital.utils.TimeOut;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.jcraft.jsch.*;
@@ -22,6 +23,7 @@ public abstract class SshClient {
     protected JSch jsch;
     protected String user;
     protected String host;
+    public ArrayList<Commands> allCommands = new ArrayList<Commands>();
 
     public SshClient(String host, String user, String privateKeyLocation) {
         this.host = host;
@@ -38,7 +40,7 @@ public abstract class SshClient {
         }
     }
 
-    protected Commands runCommands(String[] commands2Exe) throws Exception {
+    Commands runCommands(String[] commands2Exe) throws Exception {
         Commands commands = new Commands();
         try {
             log4j.debug("Open Session: " + host);
@@ -54,6 +56,7 @@ public abstract class SshClient {
             log4j.debug(e);
             throw e;
         }
+        this.allCommands.add(commands);
         return commands;
     }
 
@@ -66,13 +69,12 @@ public abstract class SshClient {
         channel.connect();
         byte[] tmp = new byte[1024];
         Command cmd = new Command(command2Exe);
-
         TimeOut timeOut = new TimeOut(SSH_TIMEOUT_MIN);
-        while (timeOut.isTimeOutArrived()) {
+        while (timeOut.isContinueRun()) {
             while (in.available() > 0) {
                 int i = in.read(tmp, 0, 1024);
                 if (i < 0) break;
-                cmd.append(new String(tmp, 0, i));
+                cmd.add(new String(tmp, 0, i));
             }
 
             if (channel.isClosed()) {
@@ -147,7 +149,7 @@ public abstract class SshClient {
 
     protected void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
         String cmdStr = runCommands(commands).toString();
-        String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
+        String[] cmdNewLineSplit = cmdStr.split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
         Row row = sheet.createRow(rowNumber);
         int cellInd = 0;
@@ -168,7 +170,7 @@ public abstract class SshClient {
 
     protected void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
         String cmdStr = runCommands(commands).toString();
-        String[] cmdNewLineSplit = cmdStr.toString().split("\\r?\\n");
+        String[] cmdNewLineSplit = cmdStr.split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
         Cell cell;
         for (String strLine : cmdNewLineSplit) {
@@ -195,5 +197,9 @@ public abstract class SshClient {
                 }
             }
         }
+    }
+
+    public ArrayList<Commands> getAllCommands() {
+        return allCommands;
     }
 }
