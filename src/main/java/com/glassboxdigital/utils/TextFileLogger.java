@@ -33,7 +33,7 @@ public class TextFileLogger {
                        ext = "log";
                    }
                String filePath = System.getProperty("user.dir");
-               Path path = Paths.get(filePath + "/Error-logs");
+               Path path = Paths.get(filePath + "/Errors-logs");
         
                        try {
                        Files.createDirectory(path);
