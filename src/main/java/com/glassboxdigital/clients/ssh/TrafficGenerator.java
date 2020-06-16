@@ -19,4 +19,9 @@ public class TrafficGenerator extends SshClient implements TGCommandsInt {
     public void publishTGSession2sRow(Sheet sheet) throws Exception {
         parseSessionsFromTgLog(sheet, new String[]{READ_3_LINES_FROM_TG_LOG2}, READ_15_LINES_FROM_TG_LOG2);
     }
+
+    public void printAllErrors() throws Exception {
+        log4j.debug("### - Find TG Errors - ###");
+        printErrors(new String[]{GET_EXCEPTION, OUT_OF_MEMORY_ERROR});
+    }
 }

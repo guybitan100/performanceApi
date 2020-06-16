@@ -77,8 +77,13 @@ public class PerformanceManager {
                 log4j.info(e);
             }
         }
-        clingine.printAllErrors();
         clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+        clingine.printAllErrors();
+        tg1.printAllErrors();
+        tg2.printAllErrors();
+
+
+
     }
 
     public static void main(String args[]) throws Exception {

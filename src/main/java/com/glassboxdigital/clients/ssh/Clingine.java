@@ -22,6 +22,7 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
     }
 
     public void printAllErrors() throws Exception {
-        printErrors(new String[]{GET_EXCEPTION});
+        log4j.debug("### - Find Clingine Errors - ###");
+        printErrors(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY,GET_SERVERS_EXCEPTION, GET_SERVERS_OUT_OF_MEMORY,GET_CLINGINE_EXCEPTION});
     }
 }
