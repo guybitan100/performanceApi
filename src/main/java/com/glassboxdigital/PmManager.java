@@ -83,9 +83,9 @@ public class PmManager {
     }
 
     public void printAllErrors() throws Exception {
-        clingine.printAllErrors("ClingineErr");
-        tg1.printAllErrors("Tg1Err");
-        tg2.printAllErrors("Tg2Err");
+        clingine.printAllErrors("ClingineError");
+        tg1.printAllErrors("TG1Error");
+        tg2.printAllErrors("TG2Error");
     }
 
     public static void main(String args[]) throws Exception {
