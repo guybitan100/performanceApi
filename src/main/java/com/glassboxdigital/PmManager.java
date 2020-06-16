@@ -19,7 +19,6 @@ public class PmManager {
     TrafficGenerator tg2;
     int duration;
 
-
     public PmManager(Configuration conf) {
         this.conf = conf;
         this.duration = Integer.parseInt(conf.get("durationMin"));
@@ -60,6 +59,7 @@ public class PmManager {
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
         TimeOut timeOut = new TimeOut(duration);
+        printAllErrors();
         while (timeOut.isContinueRun()) {
             try {
                 log4j.info("|---------Interval " + i++ + " Started-----------|");
@@ -79,6 +79,10 @@ public class PmManager {
             }
         }
         clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+        printAllErrors();
+    }
+
+    public void printAllErrors() throws Exception {
         clingine.printAllErrors("Clingine-Errors");
         tg1.printAllErrors("Tg1-Errors");
         tg2.printAllErrors("Tg2-Errors");
