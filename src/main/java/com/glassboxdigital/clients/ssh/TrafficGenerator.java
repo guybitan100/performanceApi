@@ -24,7 +24,7 @@ public class TrafficGenerator extends SshClient implements TGCommandsInt {
 
     public Commands printAllErrors(String fileName) throws Exception {
         Commands cmds =  printErrors(new String[]{GET_EXCEPTION, OUT_OF_MEMORY_ERROR});
-        if (cmds.toString().isEmpty()) {
+        if (!cmds.toString().isEmpty()) {
             TextFileLogger textFile = new TextFileLogger(fileName);
             textFile.write(cmds.toString());
         }
