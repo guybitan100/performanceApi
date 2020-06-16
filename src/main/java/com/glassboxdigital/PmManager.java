@@ -1,15 +1,16 @@
-package com.glassboxdigital.xls;
+package com.glassboxdigital;
 
 import com.glassboxdigital.clients.ssh.*;
 import com.glassboxdigital.command.XslHeaders;
 import com.glassboxdigital.conf.Configuration;
 import com.glassboxdigital.utils.DateTimeUtil;
 import com.glassboxdigital.utils.TimeOut;
+import com.glassboxdigital.xls.WorkbookXls;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
-public class PerformanceManager {
-    final static Logger log4j = Logger.getLogger(PerformanceManager.class);
+public class PmManager {
+    final static Logger log4j = Logger.getLogger(PmManager.class);
     Configuration conf;
     Clingine clingine;
     Cloff cloff;
@@ -19,7 +20,7 @@ public class PerformanceManager {
     int duration;
 
 
-    public PerformanceManager(Configuration conf) {
+    public PmManager(Configuration conf) {
         this.conf = conf;
         this.duration = Integer.parseInt(conf.get("durationMin"));
         String user = conf.get("user");
@@ -59,25 +60,25 @@ public class PerformanceManager {
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
         TimeOut timeOut = new TimeOut(duration);
-        while (timeOut.isContinueRun()) {
+   //     while (timeOut.isContinueRun()) {
             try {
-                log4j.info("|---------Interval " + i++ + " Started-----------|");
-                tg1.publishTGSession1sRow(tg1SessionsSheet);
-                tg2.publishTGSession1sRow(tg2Sessions1Sheet);
-                tg2.publishTGSession2sRow(tg2Sessions2Sheet);
-                clingine.publishTopRow(clingineTopSheet);
-                cloff.publishTopRow(cloffTopSheet);
-                tg1.publishTopRow(tgGen1TopSheet);
-                tg2.publishTopRow(tgGen2TopSheet);
-                cloff.publishSessionsCount(clickhouseSessionsSheet);
-                cloff.publishEventsCount(clickhouseEventsSheet);
-                clifka.publishKafkaConsumerGroup(clifkaSheet);
-                clingine.publishOpenfileRow(openFileSheet);
+//                log4j.info("|---------Interval " + i++ + " Started-----------|");
+//                tg1.publishTGSession1sRow(tg1SessionsSheet);
+//                tg2.publishTGSession1sRow(tg2Sessions1Sheet);
+//                tg2.publishTGSession2sRow(tg2Sessions2Sheet);
+//                clingine.publishTopRow(clingineTopSheet);
+//                cloff.publishTopRow(cloffTopSheet);
+//                tg1.publishTopRow(tgGen1TopSheet);
+//                tg2.publishTopRow(tgGen2TopSheet);
+//                cloff.publishSessionsCount(clickhouseSessionsSheet);
+//                cloff.publishEventsCount(clickhouseEventsSheet);
+//                clifka.publishKafkaConsumerGroup(clifkaSheet);
+//                clingine.publishOpenfileRow(openFileSheet);
             } catch (Exception e) {
                 log4j.info(e);
             }
-        }
-        clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+   //     }
+       // clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
         clingine.printAllErrors();
         tg1.printAllErrors();
         tg2.printAllErrors();
@@ -89,7 +90,7 @@ public class PerformanceManager {
     public static void main(String args[]) throws Exception {
         Configuration conf = new Configuration("ssh.properties");
         WorkbookXls workbookPerformance = new WorkbookXls("Performance" + DateTimeUtil.getCurrentTime() + ".xls");
-        PerformanceManager pm = new PerformanceManager(conf);
+        PmManager pm = new PmManager(conf);
         try {
             pm.runPerformanceTest(workbookPerformance);
         } catch (Exception e) {
