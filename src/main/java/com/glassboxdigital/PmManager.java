@@ -3,7 +3,9 @@ package com.glassboxdigital;
 import com.glassboxdigital.clients.ssh.*;
 import com.glassboxdigital.command.XslHeaders;
 import com.glassboxdigital.conf.Configuration;
+import com.glassboxdigital.models.Commands;
 import com.glassboxdigital.utils.DateTimeUtil;
+import com.glassboxdigital.utils.TextFileLogger;
 import com.glassboxdigital.utils.TimeOut;
 import com.glassboxdigital.xls.WorkbookXls;
 import org.apache.log4j.Logger;
@@ -60,31 +62,28 @@ public class PmManager {
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
         tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
         TimeOut timeOut = new TimeOut(duration);
-   //     while (timeOut.isContinueRun()) {
+        while (timeOut.isContinueRun()) {
             try {
-//                log4j.info("|---------Interval " + i++ + " Started-----------|");
-//                tg1.publishTGSession1sRow(tg1SessionsSheet);
-//                tg2.publishTGSession1sRow(tg2Sessions1Sheet);
-//                tg2.publishTGSession2sRow(tg2Sessions2Sheet);
-//                clingine.publishTopRow(clingineTopSheet);
-//                cloff.publishTopRow(cloffTopSheet);
-//                tg1.publishTopRow(tgGen1TopSheet);
-//                tg2.publishTopRow(tgGen2TopSheet);
-//                cloff.publishSessionsCount(clickhouseSessionsSheet);
-//                cloff.publishEventsCount(clickhouseEventsSheet);
-//                clifka.publishKafkaConsumerGroup(clifkaSheet);
-//                clingine.publishOpenfileRow(openFileSheet);
+                log4j.info("|---------Interval " + i++ + " Started-----------|");
+                tg1.publishTGSession1sRow(tg1SessionsSheet);
+                tg2.publishTGSession1sRow(tg2Sessions1Sheet);
+                tg2.publishTGSession2sRow(tg2Sessions2Sheet);
+                clingine.publishTopRow(clingineTopSheet);
+                cloff.publishTopRow(cloffTopSheet);
+                tg1.publishTopRow(tgGen1TopSheet);
+                tg2.publishTopRow(tgGen2TopSheet);
+                cloff.publishSessionsCount(clickhouseSessionsSheet);
+                cloff.publishEventsCount(clickhouseEventsSheet);
+                clifka.publishKafkaConsumerGroup(clifkaSheet);
+                clingine.publishOpenfileRow(openFileSheet);
             } catch (Exception e) {
                 log4j.info(e);
             }
-   //     }
-       // clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
-        clingine.printAllErrors();
-        tg1.printAllErrors();
-        tg2.printAllErrors();
-
-
-
+        }
+        clingine.publishPipelineMetricsCsvRow(clinginePipelineMetricsSheet);
+        clingine.printAllErrors("Clingine-Errors");
+        tg1.printAllErrors("Tg1-Errors");
+        tg2.printAllErrors("Tg2-Errors");
     }
 
     public static void main(String args[]) throws Exception {

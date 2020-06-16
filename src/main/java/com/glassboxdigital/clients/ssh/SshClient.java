@@ -143,8 +143,8 @@ public abstract class SshClient {
         }
     }
 
-    protected void printErrors(String[] commands) throws Exception {
-        runCommands(commands);
+    protected Commands printErrors(String[] commands) throws Exception {
+       return runCommands(commands);
     }
 
     protected void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
