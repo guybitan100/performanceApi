@@ -1,7 +1,5 @@
 package com.glassboxdigital.clients.ssh;
 
-import com.glassboxdigital.models.Command;
-import com.glassboxdigital.models.Commands;
 import com.glassboxdigital.utils.DateTimeUtil;
 import com.glassboxdigital.utils.TimeOut;
 import org.apache.log4j.Logger;

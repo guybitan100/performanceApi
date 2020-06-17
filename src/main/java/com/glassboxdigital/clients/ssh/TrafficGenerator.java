@@ -1,7 +1,6 @@
 package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.TGCommandsInt;
-import com.glassboxdigital.models.Commands;
 import com.glassboxdigital.utils.TextFileLogger;
 import org.apache.poi.ss.usermodel.Sheet;
 
