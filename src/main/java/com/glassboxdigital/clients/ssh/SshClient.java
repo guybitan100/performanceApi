@@ -2,6 +2,8 @@ package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.utils.DateTimeUtil;
 import com.glassboxdigital.utils.TimeOut;
+import com.glassboxdigital.models.Command;
+import com.glassboxdigital.models.Commands;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public abstract class SshClient {
         }
     }
 
-    Commands runCommands(String[] commands2Exe) throws Exception {
+    protected Commands runCommands(String[] commands2Exe) throws Exception {
         Commands commands = new Commands();
         try {
             log4j.debug("Open Session: " + host);
@@ -103,7 +105,7 @@ public abstract class SshClient {
         }
     }
 
-    protected void publishTopRow(Sheet sheet, String[] commands2Exe) throws Exception {
+    public void publishTopRow(Sheet sheet, String[] commands2Exe) throws Exception {
         parseRowByNewlineAndSpaceDelimiter(sheet, commands2Exe);
     }
 
@@ -111,7 +113,7 @@ public abstract class SshClient {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, ",");
     }
 
-    protected void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) throws Exception {
+    public void parseRowByNewlineAndTabDelimiter(Sheet sheet, String[] commands) throws Exception {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\t");
     }
 
@@ -119,7 +121,7 @@ public abstract class SshClient {
         parseRowByNewlineAndGenericDelimiter(sheet, commands, "\\s+");
     }
 
-    protected void parseSessionsFromTgLog(Sheet sheet, String[] commands, String onError) throws Exception {
+    public void parseSessionsFromTgLog(Sheet sheet, String[] commands, String onError) throws Exception {
         String cmdStr = runCommands(commands).toString();
         String publishedStr = "Published";
         String sessionswStr = " sessions w";
@@ -141,11 +143,11 @@ public abstract class SshClient {
         }
     }
 
-    protected Commands printErrors(String[] commands) throws Exception {
+    public Commands printErrors(String[] commands) throws Exception {
        return runCommands(commands);
     }
 
-    protected void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
+    public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
         String cmdStr = runCommands(commands).toString();
         String[] cmdNewLineSplit = cmdStr.split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();
@@ -166,7 +168,7 @@ public abstract class SshClient {
         }
     }
 
-    protected void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
+    public void parseRowByNewlineAndGenericDelimiter(Sheet sheet, String[] commands, String delimiter) throws Exception {
         String cmdStr = runCommands(commands).toString();
         String[] cmdNewLineSplit = cmdStr.split("\\r?\\n");
         int rowNumber = sheet.getPhysicalNumberOfRows();

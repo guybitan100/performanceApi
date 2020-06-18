@@ -2,6 +2,7 @@ package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.ClingineCommandsInt;
 import com.glassboxdigital.utils.TextFileLogger;
+import com.glassboxdigital.models.Commands;
 import org.apache.poi.ss.usermodel.Sheet;
 
 public class Clingine extends SshClient implements ClingineCommandsInt {
