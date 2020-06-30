@@ -74,7 +74,7 @@ public abstract class SshClient {
             while (in.available() > 0) {
                 int i = in.read(tmp, 0, 1024);
                 if (i < 0) break;
-                cmd.add(new String(tmp, 0, i));
+                cmd.getResults().append(new String(tmp, 0, i));
             }
 
             if (channel.isClosed()) {

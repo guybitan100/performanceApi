@@ -4,32 +4,28 @@ import java.util.ArrayList;
 
 public class Command {
     String command;
-    ArrayList<String> results;
+    StringBuffer results;
 
     public Command(String command) {
         this.command = command;
-        results = new ArrayList<String>();
+        results = new StringBuffer();
 
     }
 
     public Command() {
-        this.results = new ArrayList<String>();
+        this.results = new StringBuffer();
     }
 
     public void setCommand(String command) {
         this.command = command;
     }
 
-    public void add(String res) {
-        this.results.add(res);
+
+    public String[] getResultsLines() {
+        return results.toString().split("\\n");
     }
 
-    @Override
-    public String toString() {
-        return String.join("/n", results);
-    }
-    public ArrayList<String> getResults()
-    {
+    public StringBuffer getResults() {
         return results;
     }
 }

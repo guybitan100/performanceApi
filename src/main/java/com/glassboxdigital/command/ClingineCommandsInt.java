@@ -2,6 +2,7 @@ package com.glassboxdigital.command;
 
 public interface ClingineCommandsInt {
     String TOP = "top -bn 1 | grep clingine";
+    String DISK_SPACE = "df -h";
     String SESSION_PIPELINE_METRICS_CSV_FILE = "cat /opt/glassbox/clingine/log/session_pipeline_metrics.csv | grep \"beacon\\|pageload\"";
     String LSOF_FTS = "sudo  lsof | grep \"fts\" | wc -l";
     String LSOF_RECENT = "sudo  lsof | grep \"recent\" | wc -l";

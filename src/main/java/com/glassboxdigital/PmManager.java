@@ -85,6 +85,13 @@ public class PmManager {
 
     public void checkStatus() throws Exception {
         StringBuffer errorMessage = null;
+        if (clingine.isDiskFull()) {
+            errorMessage.append("Clingine disk is over 90%");
+        }
+
+        if (clickHouse.isThereIsNotTrafficInLastHour()) {
+            errorMessage.append("No TRAFFIC IN Last Hour");
+        }
         if (clingine.isNotRunning() || clickHouse.isNotRunning() || tg1.isNotRunning()) {
             printAllErrors();
             if (clickHouse.isNotRunning()) {
@@ -96,12 +103,8 @@ public class PmManager {
             if (tg1.isNotRunning()) {
                 errorMessage.append("TG1 Is Not Running");
             }
-            if (clickHouse.isThereIsNotTrafficInLastHour()) {
-                errorMessage.append("No TRAFFIC IN Last Hour");
-            }
             printAllErrors();
         }
-
     }
 
     public void printAllErrors() throws Exception {

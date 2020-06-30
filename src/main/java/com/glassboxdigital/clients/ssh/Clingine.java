@@ -1,6 +1,7 @@
 package com.glassboxdigital.clients.ssh;
 
 import com.glassboxdigital.command.ClingineCommandsInt;
+import com.glassboxdigital.models.Command;
 import com.glassboxdigital.utils.TextFileLogger;
 import com.glassboxdigital.models.Commands;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -14,6 +15,26 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
 
     public boolean isNotRunning() throws Exception {
         return runCommands(new String[]{TOP}).isEmpty();
+    }
+
+
+    public boolean isDiskFull() throws Exception {
+        Commands cmds = getDiskSpace();
+        for (Command cmd : cmds.getCommands()) {
+            for (String str : cmd.getResultsLines()) {
+                if (str.contains("recent")) {
+                    String line[] = str.split("\\s+");
+                    int diskPercentage = Integer.parseInt(line[4].substring(0, line[4].length() - 1));
+                    return (diskPercentage >= 90 && diskPercentage <= 100);
+                }
+
+            }
+        }
+        return false;
+    }
+
+    private Commands getDiskSpace() throws Exception {
+        return runCommands(new String[]{DISK_SPACE});
     }
 
     public void publishTopRow(Sheet sheet) throws Exception {
