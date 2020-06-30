@@ -40,7 +40,7 @@ public abstract class SshClient {
         }
     }
 
-    protected Commands runCommands(String[] commands2Exe) throws Exception {
+    public Commands runCommands(String[] commands2Exe) throws Exception {
         Commands commands = new Commands();
         try {
             log4j.debug("Open Session: " + host);
@@ -60,7 +60,7 @@ public abstract class SshClient {
         return commands;
     }
 
-    private Command execCommand(Session session, String command2Exe) throws JSchException, IOException, InterruptedException {
+    public Command execCommand(Session session, String command2Exe) throws JSchException, IOException, InterruptedException {
         Channel channel = session.openChannel("exec");
         ((ChannelExec) channel).setCommand(command2Exe);
         channel.setInputStream(null);
@@ -143,9 +143,6 @@ public abstract class SshClient {
         }
     }
 
-    public Commands printErrors(String[] commands) throws Exception {
-       return runCommands(commands);
-    }
 
     public void parseRowByNewline(Sheet sheet, String[] commands) throws Exception {
         String cmdStr = runCommands(commands).toString();

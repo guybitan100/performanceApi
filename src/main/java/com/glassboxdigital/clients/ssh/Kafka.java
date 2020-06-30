@@ -6,8 +6,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-public class Clifka extends SshClient implements KafkaCommandsInt {
-    public Clifka(String host, String user, String privateKeyLocation) {
+public class Kafka extends SshClient implements KafkaCommandsInt {
+    public Kafka(String host, String user, String privateKeyLocation) {
         super(host, user, privateKeyLocation);
     }
 

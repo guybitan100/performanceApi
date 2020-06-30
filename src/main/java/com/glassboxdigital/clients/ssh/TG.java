@@ -5,8 +5,8 @@ import com.glassboxdigital.utils.TextFileLogger;
 import com.glassboxdigital.models.Commands;
 import org.apache.poi.ss.usermodel.Sheet;
 
-public class TrafficGenerator extends SshClient implements TGCommandsInt {
-    public TrafficGenerator(String host, String user, String privateKeyLocation) {
+public class TG extends SshClient implements TGCommandsInt {
+    public TG(String host, String user, String privateKeyLocation) {
         super(host, user, privateKeyLocation);
     }
 
@@ -23,11 +23,11 @@ public class TrafficGenerator extends SshClient implements TGCommandsInt {
     }
 
     public Commands printAllErrors(String fileName) throws Exception {
-        Commands cmds =  printErrors(new String[]{GET_EXCEPTION, OUT_OF_MEMORY_ERROR});
+        Commands cmds = runCommands(new String[]{GET_EXCEPTION, OUT_OF_MEMORY_ERROR});
         if (!cmds.toString().isEmpty()) {
             TextFileLogger textFile = new TextFileLogger(fileName);
             textFile.write(cmds.toString());
         }
-        return  cmds;
+        return cmds;
     }
 }

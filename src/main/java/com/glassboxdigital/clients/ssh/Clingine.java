@@ -12,8 +12,12 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
         super(host, user, privateKeyLocation);
     }
 
+    public boolean isRunning() throws Exception {
+        return runCommands(new String[]{TOP}).isEmpty();
+    }
+
     public void publishTopRow(Sheet sheet) throws Exception {
-        publishTopRow(sheet, new String[]{TOP_CLINGINE});
+        publishTopRow(sheet, new String[]{TOP});
     }
 
     public void publishPipelineMetricsCsvRow(Sheet sheet) throws Exception {
@@ -26,7 +30,7 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
 
     public Commands printAllErrors(String fileName) throws Exception {
 
-        Commands cmds = printErrors(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY, GET_SERVERS_EXCEPTION, GET_CLINGINE_EXCEPTION});
+        Commands cmds = runCommands(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY, GET_SERVERS_EXCEPTION, GET_CLINGINE_EXCEPTION});
         if (!cmds.toString().isEmpty()) {
             TextFileLogger textFile = new TextFileLogger(fileName);
             textFile.write(cmds.toString());

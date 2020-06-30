@@ -28,4 +28,8 @@ public class Command {
     public String toString() {
         return String.join("/n", results);
     }
+    public ArrayList<String> getResults()
+    {
+        return results;
+    }
 }

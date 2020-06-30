@@ -18,5 +18,11 @@ public class Commands {
         return stringBuffer.toString();
     }
 
+    public boolean isEmpty() {
+        return commands.size() == 0;
+    }
 
+    public ArrayList<Command> getCommands() {
+    return commands;
+    }
 }

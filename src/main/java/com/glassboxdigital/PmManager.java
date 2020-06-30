@@ -13,10 +13,10 @@ public class PmManager {
     final static Logger log4j = Logger.getLogger(PmManager.class);
     Configuration conf;
     Clingine clingine;
-    Cloff cloff;
-    Clifka clifka;
-    TrafficGenerator tg1;
-    TrafficGenerator tg2;
+    ClickHouse cloff;
+    Kafka clifka;
+    TG tg1;
+    TG tg2;
     int duration;
 
     public PmManager(Configuration conf) {
@@ -25,13 +25,12 @@ public class PmManager {
         String user = conf.get("user");
         String privateKeyLocation = conf.get("privateKeyLocation");
         this.clingine = new Clingine(conf.get("clingine"), user, privateKeyLocation);
-        this.cloff = new Cloff(conf.get("cloff"), user, privateKeyLocation);
-        this.clifka = new Clifka(conf.get("clifka"), user, privateKeyLocation);
-        this.tg1 = new TrafficGenerator(conf.get("tg1"), user, privateKeyLocation);
-        this.tg2 = new TrafficGenerator(conf.get("tg2"), user, privateKeyLocation);
+        this.cloff = new ClickHouse(conf.get("cloff"), user, privateKeyLocation);
+        this.clifka = new Kafka(conf.get("clifka"), user, privateKeyLocation);
+        this.tg1 = new TG(conf.get("tg1"), user, privateKeyLocation);
+        this.tg2 = new TG(conf.get("tg2"), user, privateKeyLocation);
     }
-
-    public void runPerformanceTest(WorkbookXls workbookPerformance) throws Exception {
+    public void runPmOverTimeTest(WorkbookXls workbookPerformance) throws Exception {
         int i = 1;
         Sheet openFileSheet = workbookPerformance.createSheet("ClingineOpenFiles");
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
@@ -93,7 +92,7 @@ public class PmManager {
         WorkbookXls workbookPerformance = new WorkbookXls("Performance" + DateTimeUtil.getCurrentTime() + ".xls");
         PmManager pm = new PmManager(conf);
         try {
-            pm.runPerformanceTest(workbookPerformance);
+            pm.runPmOverTimeTest(workbookPerformance);
         } catch (Exception e) {
             workbookPerformance.writeAndClose();
         }

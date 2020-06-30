@@ -1,7 +1,9 @@
 package com.glassboxdigital.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DateTimeUtil {
 
@@ -26,4 +28,10 @@ public class DateTimeUtil {
         return strDate;
     }
 
+    public static int getHour() {
+        Date date = new Date();
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.HOUR_OF_DAY);
+    }
 }
