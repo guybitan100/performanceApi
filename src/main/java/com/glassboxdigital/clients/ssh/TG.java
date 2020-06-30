@@ -11,7 +11,7 @@ public class TG extends SshClient implements TGCommandsInt {
     }
 
     public void publishTopRow(Sheet sheet) throws Exception {
-        publishTopRow(sheet, new String[]{TOP_TG});
+        publishTopRow(sheet, new String[]{TOP});
     }
 
     public void publishTGSession1sRow(Sheet sheet) throws Exception {
@@ -29,5 +29,8 @@ public class TG extends SshClient implements TGCommandsInt {
             textFile.write(cmds.toString());
         }
         return cmds;
+    }
+    public boolean isNotRunning() throws Exception {
+        return runCommands(new String[]{TOP}).isEmpty();
     }
 }

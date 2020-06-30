@@ -24,7 +24,7 @@ public class ClickHouse extends SshClient implements ClickhouseCommandsInt {
 
     }
 
-    public boolean isRunning() throws Exception {
+    public boolean isNotRunning() throws Exception {
         return runCommands(new String[]{TOP}).isEmpty();
     }
 
@@ -32,11 +32,11 @@ public class ClickHouse extends SshClient implements ClickhouseCommandsInt {
         return runCommands(new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS}).isEmpty();
     }
 
-    public boolean isThereTrafficInLastHour() throws Exception {
+    public boolean isThereIsNotTrafficInLastHour() throws Exception {
         Commands commands = runCommands(new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
         boolean status = true;
         for (Command cmd : commands.getCommands()) {
-            status = (cmd.getResults().size() + 3 == DateTimeUtil.getHour());
+            status = (cmd.getResults().size() + 3 != DateTimeUtil.getHour());
         }
         return status;
     }

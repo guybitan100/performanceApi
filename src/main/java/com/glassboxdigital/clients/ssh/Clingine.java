@@ -12,7 +12,7 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
         super(host, user, privateKeyLocation);
     }
 
-    public boolean isRunning() throws Exception {
+    public boolean isNotRunning() throws Exception {
         return runCommands(new String[]{TOP}).isEmpty();
     }
 
