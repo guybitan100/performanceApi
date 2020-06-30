@@ -99,8 +99,9 @@ public class PmManager {
             if (clickHouse.isThereIsNotTrafficInLastHour()) {
                 errorMessage.append("No TRAFFIC IN Last Hour");
             }
+            printAllErrors();
         }
-        printAllErrors();
+
     }
 
     public void printAllErrors() throws Exception {
