@@ -16,7 +16,6 @@ public class PmManager {
     ClickHouse clickHouse;
     Kafka kafka;
     TG tg1;
-    TG tg2;
     int duration;
 
     public PmManager(Configuration conf) {
@@ -28,7 +27,6 @@ public class PmManager {
         this.clickHouse = new ClickHouse(conf.get("cloff"), user, privateKeyLocation);
         this.kafka = new Kafka(conf.get("clifka"), user, privateKeyLocation);
         this.tg1 = new TG(conf.get("tg1"), user, privateKeyLocation);
-        this.tg2 = new TG(conf.get("tg2"), user, privateKeyLocation);
     }
 
 
@@ -59,8 +57,6 @@ public class PmManager {
             try {
                 log4j.info("|---------Interval " + i++ + " Started-----------|");
                 tg1.publishTGSession1sRow(tg1SessionsSheet);
-                tg2.publishTGSession1sRow(tg2Sessions1Sheet);
-                tg2.publishTGSession2sRow(tg2Sessions2Sheet);
                 clingine.publishTopRow(clingineTopSheet);
                 clickHouse.publishTopRow(cloffTopSheet);
                 tg1.publishTopRow(tgGen1TopSheet);
@@ -103,7 +99,6 @@ public class PmManager {
     public void printAllErrors() throws Exception {
         clingine.printAllErrors("ClingineError");
         tg1.printAllErrors("TG1Error");
-        tg2.printAllErrors("TG2Error");
     }
 
     public static void main(String args[]) throws Exception {
