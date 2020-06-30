@@ -9,17 +9,17 @@ import com.slack.api.Slack;
 import java.io.IOException;
 
 public class SlackMessage {
-    private static String myToken = "xoxb-41937843010-1223376955201-0JU9b879II949BUWR8VyWS3t";
-    private static String channel = "@guy.bitan";
+    private static String myToken = "xoxb-41937843010-1223376955201-HUSwuQk9zneZqrhdVqDHzizr";
 
 
     public static void sendMessage(String msg) throws IOException, SlackApiException {
         Slack slack = Slack.getInstance();
         MethodsClient methods = slack.methods(myToken);
         ChatPostMessageRequest request = ChatPostMessageRequest.builder()
-                .channel(channel).
+                .channel("@guy.bitan").
                         text(msg).
                         build();
         ChatPostMessageResponse response = methods.chatPostMessage(request);
+        System.out.println(response.getError());
     }
 }
