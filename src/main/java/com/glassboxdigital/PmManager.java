@@ -84,24 +84,24 @@ public class PmManager {
     }
 
     public void checkStatus() throws Exception {
-        StringBuffer errorMessage = new StringBuffer();
+        StringBuffer errorMessage = new StringBuffer("Performance status: ");
         if (clingine.isDiskFull()) {
             errorMessage.append("Clingine disk is over 90%");
         }
 
         if (clickHouse.isThereIsNotTrafficInLastHour()) {
-            errorMessage.append("No TRAFFIC IN Last Hour");
+            errorMessage.append("clickHouse No TRAFFIC in last hour !!!");
         }
         if (clingine.isNotRunning() || clickHouse.isNotRunning() || tg1.isNotRunning()) {
             printAllErrors();
             if (clickHouse.isNotRunning()) {
-                errorMessage.append("ClickHouse Is Not Running");
+                errorMessage.append("ClickHouse Not Running !!!");
             }
             if (clingine.isNotRunning()) {
-                errorMessage.append("Clingine Is Not Running");
+                errorMessage.append("Clingine Not Running !!!");
             }
             if (tg1.isNotRunning()) {
-                errorMessage.append("TG1 Is Not Running");
+                errorMessage.append("TG1 Is Not Running !!!");
             }
             printAllErrors();
         }

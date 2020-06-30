@@ -22,12 +22,11 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
         Commands cmds = getDiskSpace();
         for (Command cmd : cmds.getCommands()) {
             for (String str : cmd.getResultsLines()) {
-                if (str.contains("recent")) {
+                if (str.contains("recent") || str.contains("fts")) {
                     String line[] = str.split("\\s+");
                     int diskPercentage = Integer.parseInt(line[4].substring(0, line[4].length() - 1));
                     return (diskPercentage >= 90 && diskPercentage <= 100);
                 }
-
             }
         }
         return false;
@@ -51,7 +50,7 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
 
     public Commands printAllErrors(String fileName) throws Exception {
 
-        Commands cmds = runCommands(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY, GET_SERVERS_EXCEPTION, GET_CLINGINE_EXCEPTION});
+        Commands cmds = runCommands(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY, GET_SERVERS_DISK_SPACE_EXCEPTION});
         if (!cmds.toString().isEmpty()) {
             TextFileLogger textFile = new TextFileLogger(fileName);
             textFile.write(cmds.toString());

@@ -14,8 +14,7 @@ public interface ClingineCommandsInt {
     String LSOF_POLL = "sudo  lsof | grep \"eventpoll\"  | wc -l";
     String LSOF_JOURNEY = "sudo  lsof | grep \"journey\"  | wc -l";
     String LSOF_ALL = "sudo  lsof |  wc -l";
-    String GET_CLINGINE_EXCEPTION = "grep -C 10 \"Exception\" /opt/glassbox/clingine/log/clinigne.all.log";
     String GET_CLINGINE_OUT_OF_MEMORY = "grep -C 10 \"java.lang.OutOfMemoryError\" /opt/glassbox/clingine/log/clinigne.all.log";
-    String GET_SERVERS_EXCEPTION = "grep -C 10 \"Exception\" /opt/glassbox/clingine/log/servers.root.log";
+    String GET_SERVERS_DISK_SPACE_EXCEPTION = "grep -C 10 \"Usable disk space is\" /opt/glassbox/clingine/log/servers.root.log";
     String FIND_HEAP_DUMP = "find /opt/glassbox/clingine/bin -name *.hprof";
 }
