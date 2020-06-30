@@ -18,7 +18,7 @@ public class SlackMessage {
         MethodsClient methods = slack.methods(myToken);
         ChatPostMessageRequest request = ChatPostMessageRequest.builder()
                 .channel(channel).
-                        text("").
+                        text(msg).
                         build();
         ChatPostMessageResponse response = methods.chatPostMessage(request);
     }

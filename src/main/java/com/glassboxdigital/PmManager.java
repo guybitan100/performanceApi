@@ -84,7 +84,7 @@ public class PmManager {
     }
 
     public void checkStatus() throws Exception {
-        StringBuffer errorMessage = null;
+        StringBuffer errorMessage = new StringBuffer();
         if (clingine.isDiskFull()) {
             errorMessage.append("Clingine disk is over 90%");
         }
@@ -105,6 +105,7 @@ public class PmManager {
             }
             printAllErrors();
         }
+        SlackMessage.sendMessage(errorMessage.toString());
     }
 
     public void printAllErrors() throws Exception {
