@@ -36,7 +36,9 @@ public class ClickHouse extends SshClient implements ClickhouseCommandsInt {
         Commands commands = runCommands(new String[]{CLICK_HOUSE_SELECT_TOTAL_COUNT_PER_HOUR_SESSIONS});
         boolean status = true;
         for (Command cmd : commands.getCommands()) {
-            status = (cmd.getResultsLines().length + 3 != DateTimeUtil.getHour());
+            String str[] = cmd.getResultsLines()[0].split("\t");
+            int sessionHour = Integer.parseInt(str[2]);
+            status = (sessionHour + 3 != DateTimeUtil.getHour());
         }
         return status;
     }
