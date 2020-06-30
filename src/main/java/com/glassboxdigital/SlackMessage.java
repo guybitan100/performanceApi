@@ -22,8 +22,4 @@ public class SlackMessage {
                         build();
         ChatPostMessageResponse response = methods.chatPostMessage(request);
     }
-
-    public static void main(String args[]) throws Exception {
-        SlackMessage sm = new SlackMessage();
-    }
 }
