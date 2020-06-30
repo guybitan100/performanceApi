@@ -50,7 +50,7 @@ public class Clingine extends SshClient implements ClingineCommandsInt {
 
     public Commands printAllErrors(String fileName) throws Exception {
 
-        Commands cmds = runCommands(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY, GET_SERVERS_DISK_SPACE_EXCEPTION});
+        Commands cmds = runCommands(new String[]{FIND_HEAP_DUMP, GET_CLINGINE_OUT_OF_MEMORY, GET_SERVERS_DISK_SPACE_EXCEPTION,GET_COMMON_QUEUE_TOO_LARGE});
         if (!cmds.toString().isEmpty()) {
             TextFileLogger textFile = new TextFileLogger(fileName);
             textFile.write(cmds.toString());

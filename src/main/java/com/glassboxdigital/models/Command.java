@@ -1,7 +1,5 @@
 package com.glassboxdigital.models;
 
-import java.util.ArrayList;
-
 public class Command {
     String command;
     StringBuffer results;
@@ -27,5 +25,10 @@ public class Command {
 
     public StringBuffer getResults() {
         return results;
+    }
+
+    @Override
+    public String toString() {
+        return results.toString();
     }
 }
