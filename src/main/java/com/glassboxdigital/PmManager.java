@@ -38,11 +38,9 @@ public class PmManager {
         Sheet clingineTopSheet = workbookPerformance.createSheet("ClingineTop");
         Sheet cloffTopSheet = workbookPerformance.createSheet("CloffTop");
         Sheet tgGen1TopSheet = workbookPerformance.createSheet("TG1Top");
-        Sheet tgGen2TopSheet = workbookPerformance.createSheet("TG2Top");
         Sheet clinginePipelineMetricsSheet = workbookPerformance.createSheet("ClinginePipelineMetrics");
         Sheet clifkaSheet = workbookPerformance.createSheet("KafkaConsumerGroup");
         Sheet clickhouseSessionsSheet = workbookPerformance.createSheet("ClickhouseSessions");
-        Sheet clickhouseEventsSheet = workbookPerformance.createSheet("ClickhouseEvents");
         Sheet tg1SessionsSheet = workbookPerformance.createSheet("TG1-Sessions");
         Sheet tg2Sessions1Sheet = workbookPerformance.createSheet("TG2-Sessions1");
         Sheet tg2Sessions2Sheet = workbookPerformance.createSheet("TG2-Sessions2");
@@ -51,14 +49,10 @@ public class PmManager {
         clingine.createHeaderRow(clinginePipelineMetricsSheet, XslHeaders.headerRowClinginePipelineMetrics);
         clingine.createHeaderRow(clingineTopSheet, XslHeaders.headerRowTop);
         tg1.createHeaderRow(tgGen1TopSheet, XslHeaders.headerRowTop);
-        tg2.createHeaderRow(tgGen2TopSheet, XslHeaders.headerRowTop);
         clickHouse.createHeaderRow(cloffTopSheet, XslHeaders.headerRowTop);
         kafka.createHeaderRow(clifkaSheet, XslHeaders.headerRowBeaconOfflineGroup);
         clickHouse.createHeaderRow(clickhouseSessionsSheet, XslHeaders.headerRowClickhouseSessions);
-        clickHouse.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
-        clickHouse.createHeaderRow(clickhouseEventsSheet, XslHeaders.headerRowClickhouseEvents);
         tg1.createHeaderRow(tg1SessionsSheet, XslHeaders.headerRowTgSessions);
-        tg2.createHeaderRow(tg2Sessions1Sheet, XslHeaders.headerRowTgSessions);
         TimeOut timeOut = new TimeOut(duration);
         checkStatus();
         while (timeOut.isContinueRun()) {
@@ -70,9 +64,7 @@ public class PmManager {
                 clingine.publishTopRow(clingineTopSheet);
                 clickHouse.publishTopRow(cloffTopSheet);
                 tg1.publishTopRow(tgGen1TopSheet);
-                tg2.publishTopRow(tgGen2TopSheet);
                 clickHouse.publishSessionsCount(clickhouseSessionsSheet);
-                clickHouse.publishEventsCount(clickhouseEventsSheet);
                 kafka.publishKafkaConsumerGroup(clifkaSheet);
                 clingine.publishOpenfileRow(openFileSheet);
             } catch (Exception e) {
@@ -105,7 +97,7 @@ public class PmManager {
             }
             printAllErrors();
         }
-        SlackMessage.sendMessage(errorMessage.toString());
+        Email.sendEmail(errorMessage.toString());
     }
 
     public void printAllErrors() throws Exception {
