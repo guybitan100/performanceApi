@@ -72,7 +72,7 @@ public class PmManager {
     }
 
     public void checkStatus() throws Exception {
-        StringBuffer errorMessage = new StringBuffer("Performance status: ");
+        StringBuffer errorMessage = new StringBuffer();
         if (clingine.isDiskFull()) {
             errorMessage.append("Clingine disk is over 90%");
         }
