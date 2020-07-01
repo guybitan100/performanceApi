@@ -93,6 +93,7 @@ public class PmManager {
             }
             printAllErrors();
         }
+        //Send Mail
         if (!errorMessage.toString().isEmpty()) {
             Email.sendEmail(errorMessage.toString());
         }
